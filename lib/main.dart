@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'my_flutter_app_icons.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,7 +27,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.red.shade900,
           title: _currentIndex == 0
               ? Text("HomePage")
               : _currentIndex == 1
@@ -42,16 +43,16 @@ class _MyAppState extends State<MyApp> {
           children: _screens,
         ),
         bottomNavigationBar: Container(
-          color: Colors.black,
+          color: Colors.red.shade900,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: GNav(
-              backgroundColor: Colors.black,
+              backgroundColor: Colors.red.shade900,
               color: Colors.white,
-              activeColor: Colors.white,
-              tabBackgroundColor: Colors.grey.shade800,
+              activeColor: Colors.red.shade900,
+              tabBackgroundColor: Colors.white,
               gap: 8,
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.all(12),
               onTabChange: (index){
                 setState(() {
                   _currentIndex = index;
@@ -63,11 +64,11 @@ class _MyAppState extends State<MyApp> {
                   text: 'Home',
                 ),
                 GButton(
-                  icon: Icons.ac_unit,
+                  icon: MyFlutterApp.hand_rock,
                   text: 'Snow',
                 ),
                 GButton(
-                  icon: Icons.headphones,
+                  icon: MyFlutterApp.fast_food,
                   text: 'Head',
                 ),
                 GButton(
