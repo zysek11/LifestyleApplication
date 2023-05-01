@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'my_flutter_app_icons.dart';
+
+import 'Pages/DietScreen.dart';
+import 'Pages/ExerciseScreen.dart';
+import 'Pages/HomeScreen.dart';
+import 'Pages/SettingsScreen.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -16,8 +21,8 @@ class _MyAppState extends State<MyApp> {
 
   final List<Widget> _screens = [
     HomeScreen(),
-    AcScreen(),
-    HeadScreen(),
+    ExerciseScreen(),
+    DietScreen(),
     SettingsScreen(),
     // tu można dodać więcej ekranów
   ];
@@ -27,13 +32,13 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.red.shade900,
+          backgroundColor: const Color(0xFF2E8B57),
           title: _currentIndex == 0
               ? Text("HomePage")
               : _currentIndex == 1
-                  ? Text("AcPage")
+                  ? Text("ExercisePage")
                   : _currentIndex == 2
-                      ? Text("HeadPage")
+                      ? Text("DietPage")
                       : _currentIndex == 3
                           ? Text("SettingsPage")
                           : Text("HomePage"),
@@ -43,14 +48,14 @@ class _MyAppState extends State<MyApp> {
           children: _screens,
         ),
         bottomNavigationBar: Container(
-          color: Colors.red.shade900,
+          color: const Color(0xFF2E8B57),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: GNav(
-              backgroundColor: Colors.red.shade900,
-              color: Colors.white,
-              activeColor: Colors.red.shade900,
-              tabBackgroundColor: Colors.white,
+              backgroundColor: const Color(0xFF2E8B57),
+              color: Colors.grey.shade200,
+              activeColor: const Color(0xFF2E8B57),
+              tabBackgroundColor: Colors.grey.shade200,
               gap: 8,
               padding: EdgeInsets.all(12),
               onTabChange: (index){
@@ -64,12 +69,12 @@ class _MyAppState extends State<MyApp> {
                   text: 'Home',
                 ),
                 GButton(
-                  icon: MyFlutterApp.hand_rock,
-                  text: 'Snow',
+                  icon: Icons.sports_handball,
+                  text: 'Exercise',
                 ),
                 GButton(
-                  icon: MyFlutterApp.fast_food,
-                  text: 'Head',
+                  icon: Icons.fastfood,
+                  text: 'Diet',
                 ),
                 GButton(
                   icon: Icons.settings,
@@ -78,74 +83,6 @@ class _MyAppState extends State<MyApp> {
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.grey.shade600,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('home page'),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class AcScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.grey.shade600,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('ac page'),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class HeadScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color:Colors.grey.shade600,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('head page'),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SettingsScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color:Colors.grey.shade600,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('settings page'),
-          ],
         ),
       ),
     );
