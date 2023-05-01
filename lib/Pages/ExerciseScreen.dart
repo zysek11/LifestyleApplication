@@ -45,7 +45,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                         exerciseMenuIndex = 0;
                       });
                     },
-                      child: MenuBlock(queue: 0, emi: exerciseMenuIndex)),
+                      child: MenuBlock(queue: 0, emi: exerciseMenuIndex, name: "Stretch")),
                 ),
                 Expanded(
                   child: GestureDetector(
@@ -54,7 +54,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                           exerciseMenuIndex = 1;
                         });
                       },
-                      child: MenuBlock(queue: 1, emi: exerciseMenuIndex)),
+                      child: MenuBlock(queue: 1, emi: exerciseMenuIndex, name: "Gym")),
                 ),
                 Expanded(
                   child: GestureDetector(
@@ -63,7 +63,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                           exerciseMenuIndex = 2;
                         });
                       },
-                      child: MenuBlock(queue: 2, emi: exerciseMenuIndex)),
+                      child: MenuBlock(queue: 2, emi: exerciseMenuIndex, name: "Volleyball")),
                 ),
               ],
             ),

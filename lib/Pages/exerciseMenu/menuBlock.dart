@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class MenuBlock extends StatefulWidget {
   final int emi;
   final int queue;
-  const MenuBlock({Key? key, required this.queue, required this.emi}) : super(key: key);
+  final String name;
+  const MenuBlock({Key? key, required this.queue, required this.emi,
+    required this.name}) : super(key: key);
 
   @override
   _MenuBlockState createState() => _MenuBlockState();
@@ -32,9 +34,9 @@ class _MenuBlockState extends State<MenuBlock> {
           ),
         ),
       ),
-      child: const Align(
+      child:  Align(
         alignment: Alignment.center,
-        child: Text("menu1"),
+        child: Text(widget.name),
       ),
     );
   }
