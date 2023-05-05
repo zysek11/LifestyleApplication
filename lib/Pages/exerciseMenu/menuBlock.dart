@@ -23,7 +23,7 @@ class _MenuBlockState extends State<MenuBlock> {
       showBorder = false;
     }
 
-    return Container(
+    return AnimatedContainer(
       padding: const EdgeInsets.only(bottom: 10, top: 25),
       decoration: BoxDecoration(
         border: Border(
@@ -34,6 +34,7 @@ class _MenuBlockState extends State<MenuBlock> {
           ),
         ),
       ),
+      duration: const Duration(milliseconds: 250),
       child:  Align(
         alignment: Alignment.center,
         child: Text(widget.name),
