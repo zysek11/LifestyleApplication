@@ -8,6 +8,9 @@ class ExerciseStretch extends StatefulWidget {
 }
 
 class _ExerciseStretchState extends State<ExerciseStretch> {
+
+  int _itemCount = 5;
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -19,10 +22,12 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                 delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
                     return ListTile(
-                      title: Text('Item $index'),
+                      title: Container(
+                          color: Colors.cyanAccent,
+                          child: Text('Item $index')),
                     );
                   },
-                  childCount: 5,
+                  childCount: _itemCount,
                 ),
               ),
             ],
@@ -38,6 +43,9 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
               ),
               onPressed: () {
                 print('Kliknięto!');
+                setState(() {
+                  _itemCount++;
+                });
                 // Tutaj dodaj swoją funkcję, która ma zostać wykonana po kliknięciu przycisku
               },
               child: const Icon(Icons.add),
