@@ -13,17 +13,6 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
     return Expanded(
       child: Stack(
         children: [
-          Positioned(
-            bottom: 16,
-            right: 16,
-            child: FloatingActionButton(
-              backgroundColor: const Color(0xFF2E8B57),
-              onPressed: () {
-                // Tutaj dodaj swoją funkcję, która ma zostać wykonana po kliknięciu przycisku
-              },
-              child: Icon(Icons.add),
-            ),
-          ),
           CustomScrollView(
             slivers: [
               SliverList(
@@ -37,6 +26,22 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                 ),
               ),
             ],
+          ),
+          Positioned(
+            bottom: 16,
+            right: 16,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF2E8B57),
+                shape: const CircleBorder(),
+                padding: const EdgeInsets.all(16),
+              ),
+              onPressed: () {
+                print('Kliknięto!');
+                // Tutaj dodaj swoją funkcję, która ma zostać wykonana po kliknięciu przycisku
+              },
+              child: const Icon(Icons.add),
+            ),
           ),
         ],
       ),
