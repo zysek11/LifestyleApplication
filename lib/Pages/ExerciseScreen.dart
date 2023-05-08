@@ -67,6 +67,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                 ),
               ],
             ),
+            const SizedBox(height: 10),
             exerciseWidget,
           ],
         ),
