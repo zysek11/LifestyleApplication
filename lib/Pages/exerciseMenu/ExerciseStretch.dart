@@ -70,7 +70,7 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Nazwa cwiczenia: ${items[index]}',
+                                    'Nazwa cwiczenia: $item',
                                     style: const TextStyle(
                                         fontSize: 20,
                                         color: Color(0xFF2E8B57),
@@ -93,7 +93,7 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                                                         FontWeight.bold),
                                               ),
                                               TextSpan(
-                                                text: '${items[index]}',
+                                                text: '$item',
                                                 style: const TextStyle(
                                                   fontSize: 16,
                                                   color: Colors.black,
@@ -117,7 +117,7 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                                                         FontWeight.bold),
                                               ),
                                               TextSpan(
-                                                text: '${items[index]}',
+                                                text: '$item',
                                                 style: const TextStyle(
                                                   fontSize: 16,
                                                   color: Colors.black,
