@@ -11,6 +11,7 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
   int _selectedIndex = -1;
   final items = List<String>.generate(0, (i) => '${i + 1}');
 
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -164,11 +165,37 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                 padding: const EdgeInsets.all(16),
               ),
               onPressed: () {
-                print('Kliknięto!');
-                setState(() {
-                  items.add("${items.length + 1}");
-                });
-                // Tutaj dodaj swoją funkcję, która ma zostać wykonana po kliknięciu przycisku
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      final textController = TextEditingController();
+                      return AlertDialog(
+                        title: Text('Dodaj element'),
+                        content: TextField(
+                          controller: textController,
+                          decoration: InputDecoration(hintText: "Wpisz nazwę elementu"),
+                        ),
+                        actions: [
+                          TextButton(
+                            child: Text('Zapisz'),
+                            onPressed: () {
+                              final element = textController.text;
+                              setState(() {
+                                items.add(element); // dodanie elementu do listy
+                              });
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          TextButton(
+                            child: Text('Anuluj'),
+                            onPressed: () {
+                              Navigator.of(context).pop(); // zamknięcie okna dialogowego
+                            },
+                          )
+                        ],
+                      );
+                    }
+                );
               },
               child: const Icon(Icons.add),
             ),
