@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import '../../hive_classes/Stretching.dart';
 
 class ExerciseStretch extends StatefulWidget {
   const ExerciseStretch({Key? key}) : super(key: key);
