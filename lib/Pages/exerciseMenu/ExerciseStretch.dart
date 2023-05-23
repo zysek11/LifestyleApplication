@@ -11,8 +11,15 @@ class ExerciseStretch extends StatefulWidget {
 
 class _ExerciseStretchState extends State<ExerciseStretch> {
   int _selectedIndex = -1;
-  final items = List<String>.generate(0, (i) => '${i + 1}');
 
+  late Box<Stretching> exercises;
+
+  @override
+  void initState()
+  {
+    super.initState();
+    exercises = Hive.box<Stretching>('exercises');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,16 +33,17 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                   separatorBuilder: (context, index) => SizedBox(height: 10),
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: items.length,
+                  itemCount: exercises.length,
                   itemBuilder: (BuildContext context, int index) {
                     final bool showMore =
                         _selectedIndex == index ? true : false;
-                    final item = items[index];
+                    final item = exercises.getAt(index);
+                    final keyString = item?.key.toString();
                     return Dismissible(
-                      key: Key(item),
+                      key: Key(keyString!),
                       onDismissed: (direction) {
                         setState(() {
-                          items.removeAt(index);
+                          exercises.deleteAt(index);
                         });
                       },
                       background: Container(
@@ -68,80 +76,75 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                             },
                             leading: const Icon(Icons.sports_gymnastics, size: 32,
                               color: Color(0xFFEC9006),),
-                            title: Container(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Nazwa cwiczenia: $item',
-                                    style: const TextStyle(
-                                        fontSize: 20,
-                                        color: Color(0xFF2E8B57),
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  const SizedBox(height: 15),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: RichText(
-                                          text: TextSpan(
-                                            children: [
-                                              const TextSpan(
-                                                text: 'Serie: ',
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    color: Color(0xFF2E8B57),
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              TextSpan(
-                                                text: '$item',
-                                                style: const TextStyle(
+                            title: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Nazwa cwiczenia: ${item?.name}',
+                                  style: const TextStyle(
+                                      fontSize: 20,
+                                      color: Color(0xFF2E8B57),
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(height: 15),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            const TextSpan(
+                                              text: 'Serie: ',
+                                              style: TextStyle(
                                                   fontSize: 16,
-                                                  color: Colors.black,
-                                                ),
+                                                  color: Color(0xFF2E8B57),
+                                                  fontWeight:
+                                                      FontWeight.bold),
+                                            ),
+                                            TextSpan(
+                                              text: '${item?.series}',
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black,
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: RichText(
-                                          text: TextSpan(
-                                            children: [
-                                              const TextSpan(
-                                                text: 'Powtórzenia: ',
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    color: Color(0xFF2E8B57),
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              TextSpan(
-                                                text: '$item',
-                                                style: const TextStyle(
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            const TextSpan(
+                                              text: 'Powtórzenia: ',
+                                              style: TextStyle(
                                                   fontSize: 16,
-                                                  color: Colors.black,
-                                                ),
+                                                  color: Color(0xFF2E8B57),
+                                                  fontWeight:
+                                                      FontWeight.bold),
+                                            ),
+                                            TextSpan(
+                                              text: '${item?.repeats}',
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black,
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                  if (showMore) const SizedBox(height: 10),
-                                  if (showMore)
-                                    const Text(
-                                      "To jest dodatkowy napis\n"
-                                      "Tu jest druga linijka tego napisu\n"
-                                      "Tu jest trzecia i ostatnia linijka",
-                                      style: TextStyle(fontSize: 16),
-                                    )
-                                ],
-                              ),
+                                    ),
+                                  ],
+                                ),
+                                if (showMore) const SizedBox(height: 10),
+                                if (showMore)
+                                  Text( '${item?.description}',
+                                    style: const TextStyle(fontSize: 16),
+                                  )
+                              ],
                             ),
                             trailing: showMore == true
                                 ? const Icon(Icons.arrow_drop_up_sharp)
@@ -170,20 +173,47 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      final textController = TextEditingController();
+                      final textController1 = TextEditingController();
+                      final textController2 = TextEditingController();
+                      final textController3 = TextEditingController();
+                      final textController4 = TextEditingController();
                       return AlertDialog(
                         title: Text('Dodaj element'),
-                        content: TextField(
-                          controller: textController,
-                          decoration: InputDecoration(hintText: "Wpisz nazwę elementu"),
+                        content: SingleChildScrollView(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              TextField(
+                                controller: textController1,
+                                decoration: InputDecoration(hintText: "Nazwa cwiczenia:"),
+                              ),
+                              TextField(
+                                controller: textController2,
+                                decoration: InputDecoration(hintText: "Serie: "),
+                              ),
+                              TextField(
+                                controller: textController3,
+                                decoration: InputDecoration(hintText: "Powtorzenia: "),
+                              ),
+                              TextField(
+                                controller: textController4,
+                                decoration: InputDecoration(hintText: "Opis: "),
+                              ),
+                            ],
+                          ),
                         ),
                         actions: [
                           TextButton(
                             child: Text('Zapisz'),
                             onPressed: () {
-                              final element = textController.text;
+                              final exercise = Stretching(
+                                textController1.text,
+                                int.parse(textController2.text),
+                                int.parse(textController3.text),
+                                textController4.text,
+                              );
                               setState(() {
-                                items.add(element); // dodanie elementu do listy
+                                exercises.add(exercise); // dodanie elementu do listy
                               });
                               Navigator.of(context).pop();
                             },
