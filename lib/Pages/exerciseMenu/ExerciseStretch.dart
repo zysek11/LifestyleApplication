@@ -74,6 +74,71 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                                 print("kliknieto!");
                               });
                             },
+                            onLongPress: (){
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    final textController1 = TextEditingController(text: item?.name);
+                                    final textController2 = TextEditingController(text: (item?.series).toString());
+                                    final textController3 = TextEditingController(text: (item?.repeats).toString());
+                                    final textController4 = TextEditingController(text: item?.description);
+                                    return AlertDialog(
+                                      titlePadding: EdgeInsets.zero,
+                                      title: Container(
+                                        padding: const EdgeInsets.symmetric(vertical: 12),
+                                        color: const Color(0xFF2E8B57),
+                                        child: const Icon(Icons.edit,size: 50,),
+                                      ),
+                                      content: SingleChildScrollView(
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            TextField(
+                                              controller: textController1,
+                                              decoration: InputDecoration(labelText: "nazwa cwiczenia:"),
+                                            ),
+                                            TextField(
+                                              controller: textController2,
+                                              decoration: InputDecoration(labelText: "serie:"),
+                                            ),
+                                            TextField(
+                                              controller: textController3,
+                                              decoration: InputDecoration(labelText: "Powtorzenia:"),
+                                            ),
+                                            TextField(
+                                              controller: textController4,
+                                              decoration: const InputDecoration(labelText: "Opis:"),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          child: Text('Zapisz'),
+                                          onPressed: () {
+                                            final exercise = Stretching(
+                                              textController1.text,
+                                              int.parse(textController2.text),
+                                              int.parse(textController3.text),
+                                              textController4.text,
+                                            );
+                                            setState(() {
+                                              exercises.putAt(index,exercise); // dodanie elementu do listy
+                                            });
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        TextButton(
+                                          child: Text('Anuluj'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop(); // zamknięcie okna dialogowego
+                                          },
+                                        )
+                                      ],
+                                    );
+                                  }
+                              );
+                            },
                             leading: const Icon(Icons.sports_gymnastics, size: 32,
                               color: Color(0xFFEC9006),),
                             title: Column(
