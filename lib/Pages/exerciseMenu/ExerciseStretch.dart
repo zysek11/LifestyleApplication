@@ -92,17 +92,18 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                                       titlePadding: EdgeInsets.zero,
                                       title: Container(
                                         color: const Color(0xFF2E8B57),
+                                        padding: EdgeInsets.symmetric(vertical: 12),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
-                                            Text("Edytuj ",style: TextStyle(fontSize: 32),),
+                                            Text("Edytuj ",style: TextStyle(fontSize: 22),),
                                             Container(
                                               padding: const EdgeInsets.symmetric(
                                                   vertical: 12),
                                               child: const Icon(
                                                 Icons.edit,
-                                                size: 50,
+                                                size: 30,
                                               ),
                                             ),
                                           ],
@@ -371,17 +372,18 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                         titlePadding: EdgeInsets.zero,
                         title: Container(
                           color: const Color(0xFF2E8B57),
+                          padding: EdgeInsets.all(12),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("Dodaj ",style: TextStyle(fontSize: 32),),
+                              Text("Dodaj ",style: TextStyle(fontSize: 22),),
                               Container(
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 12),
                                 child: const Icon(
                                   Icons.add,
-                                  size: 50,
+                                  size: 30,
                                 ),
                               ),
                             ],
