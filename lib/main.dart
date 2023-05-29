@@ -7,13 +7,15 @@ import 'Pages/HomeScreen.dart';
 import 'Pages/SettingsScreen.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'hive_classes/Stretching.dart';
+import 'hive_classes/Gym.dart';
 
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(StretchingAdapter());
-  await Hive.openBox<Stretching>('exercises');
+  Hive.registerAdapter(GymAdapter());
+  await Hive.openBox('exercises');
   runApp(MyApp());
 }
 
