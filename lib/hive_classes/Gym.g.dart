@@ -8,7 +8,7 @@ part of 'Gym.dart';
 
 class GymAdapter extends TypeAdapter<Gym> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
   Gym read(BinaryReader reader) {
@@ -20,7 +20,7 @@ class GymAdapter extends TypeAdapter<Gym> {
       fields[0] as String,
       fields[1] as int,
       fields[2] as int,
-      fields[3] as int,
+      fields[3] as String,
       fields[4] as String,
     );
   }

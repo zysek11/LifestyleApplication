@@ -12,12 +12,12 @@ class ExerciseGym extends StatefulWidget {
 class _ExerciseGymState extends State<ExerciseGym> {
   int _selectedIndex = -1;
 
-  late Box<Gym> exercises;
+  late Box exercisesG;
 
   @override
   void initState() {
     super.initState();
-    exercises = Hive.box<Gym>('exercises');
+    exercisesG = Hive.box('exercisesGym');
   }
 
   @override
@@ -32,17 +32,17 @@ class _ExerciseGymState extends State<ExerciseGym> {
                   separatorBuilder: (context, index) => SizedBox(height: 10),
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: exercises.length,
+                  itemCount: exercisesG.length,
                   itemBuilder: (BuildContext context, int index) {
                     final bool showMore =
                     _selectedIndex == index ? true : false;
-                    final item = exercises.getAt(index);
+                    final item = exercisesG.getAt(index);
                     final keyString = item?.key.toString();
                     return Dismissible(
                       key: Key(keyString!),
                       onDismissed: (direction) {
                         setState(() {
-                          exercises.deleteAt(index);
+                          exercisesG.deleteAt(index);
                         });
                       },
                       background: Container(
@@ -84,8 +84,11 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                         text: (item?.series).toString());
                                     final textController3 =
                                     TextEditingController(
-                                        text: (item?.repeats).toString());
+                                        text: (item?.repeatsOrTimer).toString());
                                     final textController4 =
+                                    TextEditingController(
+                                        text: item?.breakTime);
+                                    final textController5 =
                                     TextEditingController(
                                         text: item?.description);
                                     return AlertDialog(
@@ -168,7 +171,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                             const SizedBox(height: 10,),
                                             const Align(
                                               alignment: Alignment.centerLeft,
-                                              child: Text("Opis:",
+                                              child: Text("Czas wykonywania i przerwa:",
                                                   style: TextStyle(
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.bold,
@@ -178,6 +181,24 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                             ),
                                             TextField(
                                               controller: textController4,
+                                              maxLines: null,
+                                              decoration: const InputDecoration(
+                                                  contentPadding: EdgeInsets.zero
+                                              ),
+                                            ),
+                                            const SizedBox(height: 10,),
+                                            const Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text("Opis:",
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Color(0xFF2E8B57),
+                                                  )
+                                              ),
+                                            ),
+                                            TextField(
+                                              controller: textController5,
                                               maxLines: null,
                                               decoration: const InputDecoration(
                                                   contentPadding: EdgeInsets.zero
@@ -197,7 +218,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                                   color: const Color(0xFF2E8B57),
                                                   borderRadius: BorderRadius.circular(5.0),
                                                 ),
-                                                child: Padding(
+                                                child:  Padding(
                                                     padding: EdgeInsets.all(12.0),
                                                     child: Row(
                                                       children: const [
@@ -214,14 +235,14 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                                 ),
                                               ),
                                               onPressed: () {
-                                                final exercise = Stretching(
+                                                final exercise = Gym(
                                                   textController1.text,
                                                   int.parse(textController2.text),
-                                                  int.parse(textController3.text),
+                                                  int.parse(textController3.text), "",
                                                   textController4.text,
                                                 );
                                                 setState(() {
-                                                  exercises.putAt(index, exercise); // dodanie elementu do listy
+                                                  exercisesG.putAt(index, exercise); // dodanie elementu do listy
                                                 });
                                                 Navigator.of(context).pop();
                                               },
@@ -264,7 +285,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                   });
                             },
                             leading: const Icon(
-                              Icons.sports_gymnastics,
+                              Icons.fitness_center,
                               size: 32,
                               color: Color(0xFFEC9006),
                             ),
@@ -317,7 +338,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                                   fontWeight: FontWeight.bold),
                                             ),
                                             TextSpan(
-                                              text: '${item?.repeats}',
+                                              text: '${item?.repeatsOrTimer}',
                                               style: const TextStyle(
                                                 fontSize: 16,
                                                 color: Colors.black,
@@ -328,6 +349,27 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                       ),
                                     ),
                                   ],
+                                ),
+                                const SizedBox(height: 10),
+                                RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      const TextSpan(
+                                        text: 'Czas serii / przerwa: ',
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: Color(0xFF2E8B57),
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      TextSpan(
+                                        text: '${item?.breakTime}',
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 if (showMore) const SizedBox(height: 10),
                                 if (showMore)
@@ -368,6 +410,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                       final textController2 = TextEditingController();
                       final textController3 = TextEditingController();
                       final textController4 = TextEditingController();
+                      final textController5 = TextEditingController();
                       return AlertDialog(
                         titlePadding: EdgeInsets.zero,
                         title: Container(
@@ -448,7 +491,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                               const SizedBox(height: 10,),
                               const Align(
                                 alignment: Alignment.centerLeft,
-                                child: Text("Opis:",
+                                child: Text("Czas wykonywania i przerwa:",
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -458,6 +501,24 @@ class _ExerciseGymState extends State<ExerciseGym> {
                               ),
                               TextField(
                                 controller: textController4,
+                                maxLines: null,
+                                decoration: const InputDecoration(
+                                    contentPadding: EdgeInsets.zero
+                                ),
+                              ),
+                              const SizedBox(height: 10,),
+                              const Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text("Opis:",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF2E8B57),
+                                    )
+                                ),
+                              ),
+                              TextField(
+                                controller: textController5,
                                 maxLines: null,
                                 decoration: const InputDecoration(
                                     contentPadding: EdgeInsets.zero
@@ -480,7 +541,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                   child: Padding(
                                       padding: EdgeInsets.all(12.0),
                                       child: Row(
-                                        children: const [
+                                        children: [
                                           Text("Zapisz",
                                             style: TextStyle(color: Colors.white, fontSize: 16),),
                                           SizedBox(width: 10),
@@ -494,14 +555,15 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  final exercise = Stretching(
+                                  final exercise = Gym(
                                     textController1.text,
                                     int.parse(textController2.text),
                                     int.parse(textController3.text),
                                     textController4.text,
+                                    textController5.text
                                   );
                                   setState(() {
-                                    exercises
+                                    exercisesG
                                         .add(exercise); // dodanie elementu do listy
                                   });
                                   Navigator.of(context).pop();

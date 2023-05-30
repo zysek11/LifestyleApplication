@@ -1,7 +1,7 @@
 import 'package:hive_flutter/hive_flutter.dart';
 part 'Gym.g.dart';
 
-@HiveType(typeId: 0)
+@HiveType(typeId: 1)
 class Gym extends HiveObject {
   @HiveField(0)
   String name = "";
@@ -13,7 +13,7 @@ class Gym extends HiveObject {
   int repeatsOrTimer = 0;
 
   @HiveField(3)
-  int breakTime = 0;
+  String breakTime = "";
 
   @HiveField(4)
   String description = "";

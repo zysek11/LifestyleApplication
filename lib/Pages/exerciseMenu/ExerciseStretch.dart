@@ -12,12 +12,13 @@ class ExerciseStretch extends StatefulWidget {
 class _ExerciseStretchState extends State<ExerciseStretch> {
   int _selectedIndex = -1;
 
-  late Box<Stretching> exercises;
+  late Box exercises;
 
   @override
   void initState() {
     super.initState();
-    exercises = Hive.box<Stretching>('exercises');
+    exercises = Hive.box('exercises');
+
   }
 
   @override

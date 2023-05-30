@@ -16,6 +16,8 @@ void main() async{
   Hive.registerAdapter(StretchingAdapter());
   Hive.registerAdapter(GymAdapter());
   await Hive.openBox('exercises');
+  await Hive.openBox('exercisesGym');
+  await Hive.openBox('exercisesVolley');
   runApp(MyApp());
 }
 
