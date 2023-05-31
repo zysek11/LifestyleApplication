@@ -10,13 +10,16 @@ class Gym extends HiveObject {
   int series = 0;
 
   @HiveField(2)
-  int repeatsOrTimer = 0;
+  int repeats = 0;
 
   @HiveField(3)
-  String breakTime = "";
+  String seriesTime = "0";
 
   @HiveField(4)
+  String breakTime = "";
+
+  @HiveField(5)
   String description = "";
 
-  Gym(this.name, this.series, this.repeatsOrTimer, this.breakTime, this.description);
+  Gym(this.name, this.series, this.repeats, this.seriesTime, this.breakTime, this.description);
 }

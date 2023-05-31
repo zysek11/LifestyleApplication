@@ -11,8 +11,8 @@ class ExerciseGym extends StatefulWidget {
 
 class _ExerciseGymState extends State<ExerciseGym> {
   int _selectedIndex = -1;
-
   late Box exercisesG;
+  bool isChecked = false;
 
   @override
   void initState() {
@@ -84,11 +84,14 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                         text: (item?.series).toString());
                                     final textController3 =
                                     TextEditingController(
-                                        text: (item?.repeatsOrTimer).toString());
+                                        text: (item?.repeats).toString());
                                     final textController4 =
                                     TextEditingController(
-                                        text: item?.breakTime);
+                                        text: (item?.seriesTime));
                                     final textController5 =
+                                    TextEditingController(
+                                        text: item?.breakTime);
+                                    final textController6 =
                                     TextEditingController(
                                         text: item?.description);
                                     return AlertDialog(
@@ -171,7 +174,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                             const SizedBox(height: 10,),
                                             const Align(
                                               alignment: Alignment.centerLeft,
-                                              child: Text("Czas wykonywania i przerwa:",
+                                              child: Text("Czas wykonywania:",
                                                   style: TextStyle(
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.bold,
@@ -181,7 +184,23 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                             ),
                                             TextField(
                                               controller: textController4,
-                                              maxLines: null,
+                                              decoration: const InputDecoration(
+                                                  contentPadding: EdgeInsets.zero
+                                              ),
+                                            ),
+                                            const SizedBox(height: 10,),
+                                            const Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text("Przerwa:",
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Color(0xFF2E8B57),
+                                                  )
+                                              ),
+                                            ),
+                                            TextField(
+                                              controller: textController5,
                                               decoration: const InputDecoration(
                                                   contentPadding: EdgeInsets.zero
                                               ),
@@ -198,7 +217,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                               ),
                                             ),
                                             TextField(
-                                              controller: textController5,
+                                              controller: textController6,
                                               maxLines: null,
                                               decoration: const InputDecoration(
                                                   contentPadding: EdgeInsets.zero
@@ -238,8 +257,10 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                                 final exercise = Gym(
                                                   textController1.text,
                                                   int.parse(textController2.text),
-                                                  int.parse(textController3.text), "",
+                                                  int.parse(textController3.text),
                                                   textController4.text,
+                                                  textController5.text,
+                                                  textController6.text,
                                                 );
                                                 setState(() {
                                                   exercisesG.putAt(index, exercise); // dodanie elementu do listy
@@ -327,24 +348,26 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                     ),
                                     Expanded(
                                       flex: 1,
-                                      child: RichText(
-                                        text: TextSpan(
-                                          children: [
-                                            const TextSpan(
-                                              text: 'Powtórzenia: ',
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Color(0xFF2E8B57),
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            TextSpan(
-                                              text: '${item?.repeatsOrTimer}',
-                                              style: const TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.black,
+                                      child: Center(
+                                        child: RichText(
+                                          text: TextSpan(
+                                            children: [
+                                              const TextSpan(
+                                                text: 'Powtórzenia: ',
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    color: Color(0xFF2E8B57),
+                                                    fontWeight: FontWeight.bold),
                                               ),
-                                            ),
-                                          ],
+                                              TextSpan(
+                                                text: '${item?.repeats}',
+                                                style: const TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -355,7 +378,28 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                   text: TextSpan(
                                     children: [
                                       const TextSpan(
-                                        text: 'Czas serii / przerwa: ',
+                                        text: 'Czas serii: ',
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: Color(0xFF2E8B57),
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      TextSpan(
+                                        text: '${item?.seriesTime}',
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      const TextSpan(
+                                        text: 'Czas przerwy: ',
                                         style: TextStyle(
                                             fontSize: 16,
                                             color: Color(0xFF2E8B57),
@@ -411,198 +455,246 @@ class _ExerciseGymState extends State<ExerciseGym> {
                       final textController3 = TextEditingController();
                       final textController4 = TextEditingController();
                       final textController5 = TextEditingController();
-                      return AlertDialog(
-                        titlePadding: EdgeInsets.zero,
-                        title: Container(
-                          color: const Color(0xFF2E8B57),
-                          padding: EdgeInsets.all(12),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("Dodaj ",style: TextStyle(fontSize: 22),),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 12),
-                                child: const Icon(
-                                  Icons.add,
-                                  size: 30,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        content: SingleChildScrollView(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text("Nazwa ćwiczenia:",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFF2E8B57),
-                                    )
-                                ),
-                              ),
-                              TextField(
-                                controller: textController1,
-                                decoration: const InputDecoration(
-                                    contentPadding: EdgeInsets.zero
-                                ),
-                              ),
-                              const SizedBox(height: 10,),
-                              const Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text("Serie:",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFF2E8B57),
-                                    )
-                                ),
-                              ),
-                              TextField(
-                                controller: textController2,
-                                keyboardType: TextInputType.number,
-                                decoration: const InputDecoration(
-                                    contentPadding: EdgeInsets.zero
-                                ),
-                              ),
-                              const SizedBox(height: 10,),
-                              const Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text("Powtorzenia:",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFF2E8B57),
-                                    )
-                                ),
-                              ),
-                              TextField(
-                                controller: textController3,
-                                keyboardType: TextInputType.number,
-                                decoration: const InputDecoration(
-                                    contentPadding: EdgeInsets.zero
-                                ),
-                              ),
-                              const SizedBox(height: 10,),
-                              const Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text("Czas wykonywania i przerwa:",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFF2E8B57),
-                                    )
-                                ),
-                              ),
-                              TextField(
-                                controller: textController4,
-                                maxLines: null,
-                                decoration: const InputDecoration(
-                                    contentPadding: EdgeInsets.zero
-                                ),
-                              ),
-                              const SizedBox(height: 10,),
-                              const Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text("Opis:",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFF2E8B57),
-                                    )
-                                ),
-                              ),
-                              TextField(
-                                controller: textController5,
-                                maxLines: null,
-                                decoration: const InputDecoration(
-                                    contentPadding: EdgeInsets.zero
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                        ,
-                        actions: [
-                          ButtonBar(
-                            alignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              TextButton(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFF2E8B57),
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
-                                  child: Padding(
-                                      padding: EdgeInsets.all(12.0),
-                                      child: Row(
-                                        children: [
-                                          Text("Zapisz",
-                                            style: TextStyle(color: Colors.white, fontSize: 16),),
-                                          SizedBox(width: 10),
-                                          Icon(
-                                            Icons.check,
-                                            size: 20,
-                                            color: Colors.white,
-                                          ),
-                                        ],
-                                      )
+                      final textController6 = TextEditingController();
+                      return Container(
+                        child: AlertDialog(
+                          titlePadding: EdgeInsets.zero,
+                          insetPadding: EdgeInsets.all(50),
+                          title: Container(
+                            color: const Color(0xFF2E8B57),
+                            padding: EdgeInsets.all(12),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("Dodaj ",style: TextStyle(fontSize: 22),),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 12),
+                                  child: const Icon(
+                                    Icons.add,
+                                    size: 30,
                                   ),
                                 ),
-                                onPressed: () {
-                                  final exercise = Gym(
-                                    textController1.text,
-                                    int.parse(textController2.text),
-                                    int.parse(textController3.text),
-                                    textController4.text,
-                                    textController5.text
-                                  );
-                                  setState(() {
-                                    exercisesG
-                                        .add(exercise); // dodanie elementu do listy
-                                  });
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                              TextButton(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    border: Border.all(
-                                        color: const Color(0xFF2E8B57),
-                                        width: 1
+                              ],
+                            ),
+                          ),
+                          content: StatefulBuilder(
+                            builder: (BuildContext context, StateSetter setState){
+                            return SingleChildScrollView(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text("Nazwa ćwiczenia:",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFF2E8B57),
+                                        )
                                     ),
-                                    borderRadius: BorderRadius.circular(5.0),
                                   ),
-                                  child: Padding(
-                                      padding: EdgeInsets.all(12.0),
-                                      child: Row(
-                                        children: const [
-                                          Text("Anuluj",
-                                            style: TextStyle(color: Color(0xFF2E8B57), fontSize: 16),
-                                          ),
-                                          SizedBox(width: 10),
-                                          Icon(
-                                            Icons.close,
-                                            size: 20,
-                                            color: Color(0xFF2E8B57),
-                                          ),
-                                        ],
-                                      )
+                                  TextField(
+                                    controller: textController1,
+                                    decoration: const InputDecoration(
+                                        contentPadding: EdgeInsets.zero
+                                    ),
                                   ),
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context).pop(); // zamknięcie okna dialogowego
-                                },
+                                  const SizedBox(height: 10,),
+                                  const Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text("Serie:",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFF2E8B57),
+                                        )
+                                    ),
+                                  ),
+                                  TextField(
+                                    controller: textController2,
+                                    keyboardType: TextInputType.number,
+                                    decoration: const InputDecoration(
+                                        contentPadding: EdgeInsets.zero
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10,),
+                                  const Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text("Powtorzenia:",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFF2E8B57),
+                                        )
+                                    ),
+                                  ),
+                                  TextField(
+                                    controller: textController3,
+                                    keyboardType: TextInputType.number,
+                                    decoration: const InputDecoration(
+                                        contentPadding: EdgeInsets.zero
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10,),
+                                  const Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text("Opis:",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFF2E8B57),
+                                        )
+                                    ),
+                                  ),
+                                  TextField(
+                                    controller: textController6,
+                                    maxLines: null,
+                                    decoration: const InputDecoration(
+                                        contentPadding: EdgeInsets.zero
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10,),
+                                  CheckboxListTile(
+                                    title: const Text("Pomiar czasu",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFF2E8B57),
+                                        )
+                                    ),
+                                    value: isChecked,
+                                    controlAffinity: ListTileControlAffinity.trailing,
+                                    contentPadding: EdgeInsets.zero,
+                                    activeColor: Color(0xFF2E8B57),
+                                    onChanged: (bool? value) {
+                                      setState(() {
+                                        isChecked = value ?? false;
+                                      });
+                                    },
+                                  ),
+                                  if(isChecked)
+                                    Column(
+                                      children: [
+                                        const SizedBox(height: 10,),
+                                        const Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text("Czas wykonywania:",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: Color(0xFF2E8B57),
+                                              )
+                                          ),
+                                        ),
+                                        TextField(
+                                          controller: textController4,
+                                          decoration: const InputDecoration(
+                                              contentPadding: EdgeInsets.zero
+                                          ),
+                                        ),
+                                        const SizedBox(height: 10,),
+                                        const Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text("Przerwa:",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: Color(0xFF2E8B57),
+                                              )
+                                          ),
+                                        ),
+                                        TextField(
+                                          controller: textController5,
+                                          decoration: const InputDecoration(
+                                              contentPadding: EdgeInsets.zero
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ],
+                            );}
+                          )
+                          ,
+                          actions: [
+                            ButtonBar(
+                              alignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                TextButton(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFF2E8B57),
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                    child: Padding(
+                                        padding: EdgeInsets.all(12.0),
+                                        child: Row(
+                                          children: [
+                                            Text("Zapisz",
+                                              style: TextStyle(color: Colors.white, fontSize: 16),),
+                                            SizedBox(width: 10),
+                                            Icon(
+                                              Icons.check,
+                                              size: 20,
+                                              color: Colors.white,
+                                            ),
+                                          ],
+                                        )
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    final exercise = Gym(
+                                      textController1.text,
+                                      int.parse(textController2.text),
+                                      int.parse(textController3.text),
+                                      textController4.text,
+                                      textController5.text,
+                                      textController6.text
+                                    );
+                                    setState(() {
+                                      exercisesG
+                                          .add(exercise); // dodanie elementu do listy
+                                    });
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      border: Border.all(
+                                          color: const Color(0xFF2E8B57),
+                                          width: 1
+                                      ),
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                    child: Padding(
+                                        padding: EdgeInsets.all(12.0),
+                                        child: Row(
+                                          children: const [
+                                            Text("Anuluj",
+                                              style: TextStyle(color: Color(0xFF2E8B57), fontSize: 16),
+                                            ),
+                                            SizedBox(width: 10),
+                                            Icon(
+                                              Icons.close,
+                                              size: 20,
+                                              color: Color(0xFF2E8B57),
+                                            ),
+                                          ],
+                                        )
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop(); // zamknięcie okna dialogowego
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       );
                     });
               },

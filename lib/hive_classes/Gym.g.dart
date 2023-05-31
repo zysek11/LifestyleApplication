@@ -22,22 +22,25 @@ class GymAdapter extends TypeAdapter<Gym> {
       fields[2] as int,
       fields[3] as String,
       fields[4] as String,
+      fields[5] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Gym obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
       ..write(obj.series)
       ..writeByte(2)
-      ..write(obj.repeatsOrTimer)
+      ..write(obj.repeats)
       ..writeByte(3)
-      ..write(obj.breakTime)
+      ..write(obj.seriesTime)
       ..writeByte(4)
+      ..write(obj.breakTime)
+      ..writeByte(5)
       ..write(obj.description);
   }
 
