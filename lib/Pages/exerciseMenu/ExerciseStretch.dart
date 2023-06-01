@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import '../../hive_classes/Gym.dart';
+import '../../hive_classes/Exercise.dart';
 
 class ExerciseStretch extends StatefulWidget {
   const ExerciseStretch({Key? key}) : super(key: key);
@@ -276,7 +276,7 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                                                     )),
                                               ),
                                               onPressed: () {
-                                                final exercise = Gym(
+                                                final exercise = Exercise(
                                                   textController1.text,
                                                   int.parse(
                                                       textController2.text),
@@ -694,7 +694,7 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                                         )),
                                   ),
                                   onPressed: () {
-                                    final exercise = Gym(
+                                    final exercise = Exercise(
                                         textController1.text,
                                         int.parse(textController2.text),
                                         int.parse(textController3.text),

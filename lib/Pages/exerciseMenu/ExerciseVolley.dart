@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import '../../hive_classes/Gym.dart';
+import '../../hive_classes/Exercise.dart';
 
 class ExerciseVolley extends StatefulWidget {
   const ExerciseVolley({Key? key}) : super(key: key);
@@ -275,7 +275,7 @@ class _ExerciseVolleyState extends State<ExerciseVolley> {
                                                     )),
                                               ),
                                               onPressed: () {
-                                                final exercise = Gym(
+                                                final exercise = Exercise(
                                                   textController1.text,
                                                   int.parse(
                                                       textController2.text),
@@ -693,7 +693,7 @@ class _ExerciseVolleyState extends State<ExerciseVolley> {
                                         )),
                                   ),
                                   onPressed: () {
-                                    final exercise = Gym(
+                                    final exercise = Exercise(
                                         textController1.text,
                                         int.parse(textController2.text),
                                         int.parse(textController3.text),

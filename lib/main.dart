@@ -5,13 +5,13 @@ import 'Pages/ExerciseScreen.dart';
 import 'Pages/HomeScreen.dart';
 import 'Pages/SettingsScreen.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'hive_classes/Gym.dart';
+import 'hive_classes/Exercise.dart';
 
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  Hive.registerAdapter(GymAdapter());
+  Hive.registerAdapter(ExerciseAdapter());
   await Hive.openBox('exercises');
   await Hive.openBox('exercisesGym');
   await Hive.openBox('exercisesVolley');

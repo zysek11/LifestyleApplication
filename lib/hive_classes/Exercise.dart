@@ -1,8 +1,8 @@
 import 'package:hive_flutter/hive_flutter.dart';
-part 'Gym.g.dart';
+part 'Exercise.g.dart';
 
 @HiveType(typeId: 1)
-class Gym extends HiveObject {
+class Exercise extends HiveObject {
   @HiveField(0)
   String name = "";
 
@@ -21,5 +21,5 @@ class Gym extends HiveObject {
   @HiveField(5)
   String description = "";
 
-  Gym(this.name, this.series, this.repeats, this.seriesTime, this.breakTime, this.description);
+  Exercise(this.name, this.series, this.repeats, this.seriesTime, this.breakTime, this.description);
 }
