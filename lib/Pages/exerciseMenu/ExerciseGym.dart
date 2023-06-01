@@ -35,7 +35,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                   itemCount: exercisesG.length,
                   itemBuilder: (BuildContext context, int index) {
                     final bool showMore =
-                    _selectedIndex == index ? true : false;
+                        _selectedIndex == index ? true : false;
                     final item = exercisesG.getAt(index);
                     final keyString = item?.key.toString();
                     return Dismissible(
@@ -78,35 +78,41 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     final textController1 =
-                                    TextEditingController(text: item?.name);
+                                        TextEditingController(text: item?.name);
                                     final textController2 =
-                                    TextEditingController(
-                                        text: (item?.series).toString());
+                                        TextEditingController(
+                                            text: (item?.series).toString());
                                     final textController3 =
-                                    TextEditingController(
-                                        text: (item?.repeats).toString());
+                                        TextEditingController(
+                                            text: (item?.repeats).toString());
                                     final textController4 =
-                                    TextEditingController(
-                                        text: (item?.seriesTime));
+                                        TextEditingController(
+                                            text: (item?.seriesTime));
                                     final textController5 =
-                                    TextEditingController(
-                                        text: item?.breakTime);
+                                        TextEditingController(
+                                            text: item?.breakTime);
                                     final textController6 =
-                                    TextEditingController(
-                                        text: item?.description);
+                                        TextEditingController(
+                                            text: item?.description);
                                     return AlertDialog(
                                       titlePadding: EdgeInsets.zero,
                                       title: Container(
                                         color: const Color(0xFF2E8B57),
-                                        padding: EdgeInsets.symmetric(vertical: 12),
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 12),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
-                                            Text("Edytuj ",style: TextStyle(fontSize: 22),),
+                                            Text(
+                                              "Edytuj ",
+                                              style: TextStyle(fontSize: 22),
+                                            ),
                                             Container(
-                                              padding: const EdgeInsets.symmetric(
-                                                  vertical: 12),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 12),
                                               child: const Icon(
                                                 Icons.edit,
                                                 size: 30,
@@ -126,16 +132,17 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.bold,
                                                     color: Color(0xFF2E8B57),
-                                                  )
-                                              ),
+                                                  )),
                                             ),
                                             TextField(
                                               controller: textController1,
                                               decoration: const InputDecoration(
-                                                  contentPadding: EdgeInsets.zero
-                                              ),
+                                                  contentPadding:
+                                                      EdgeInsets.zero),
                                             ),
-                                            const SizedBox(height: 10,),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
                                             const Align(
                                               alignment: Alignment.centerLeft,
                                               child: Text("Serie:",
@@ -143,17 +150,19 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.bold,
                                                     color: Color(0xFF2E8B57),
-                                                  )
-                                              ),
+                                                  )),
                                             ),
                                             TextField(
                                               controller: textController2,
-                                              keyboardType: TextInputType.number,
+                                              keyboardType:
+                                                  TextInputType.number,
                                               decoration: const InputDecoration(
-                                                  contentPadding: EdgeInsets.zero
-                                              ),
+                                                  contentPadding:
+                                                      EdgeInsets.zero),
                                             ),
-                                            const SizedBox(height: 10,),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
                                             const Align(
                                               alignment: Alignment.centerLeft,
                                               child: Text("Powtorzenia:",
@@ -161,17 +170,19 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.bold,
                                                     color: Color(0xFF2E8B57),
-                                                  )
-                                              ),
+                                                  )),
                                             ),
                                             TextField(
                                               controller: textController3,
-                                              keyboardType: TextInputType.number,
+                                              keyboardType:
+                                                  TextInputType.number,
                                               decoration: const InputDecoration(
-                                                  contentPadding: EdgeInsets.zero
-                                              ),
+                                                  contentPadding:
+                                                      EdgeInsets.zero),
                                             ),
-                                            const SizedBox(height: 10,),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
                                             const Align(
                                               alignment: Alignment.centerLeft,
                                               child: Text("Czas wykonywania:",
@@ -179,16 +190,17 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.bold,
                                                     color: Color(0xFF2E8B57),
-                                                  )
-                                              ),
+                                                  )),
                                             ),
                                             TextField(
                                               controller: textController4,
                                               decoration: const InputDecoration(
-                                                  contentPadding: EdgeInsets.zero
-                                              ),
+                                                  contentPadding:
+                                                      EdgeInsets.zero),
                                             ),
-                                            const SizedBox(height: 10,),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
                                             const Align(
                                               alignment: Alignment.centerLeft,
                                               child: Text("Przerwa:",
@@ -196,16 +208,17 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.bold,
                                                     color: Color(0xFF2E8B57),
-                                                  )
-                                              ),
+                                                  )),
                                             ),
                                             TextField(
                                               controller: textController5,
                                               decoration: const InputDecoration(
-                                                  contentPadding: EdgeInsets.zero
-                                              ),
+                                                  contentPadding:
+                                                      EdgeInsets.zero),
                                             ),
-                                            const SizedBox(height: 10,),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
                                             const Align(
                                               alignment: Alignment.centerLeft,
                                               child: Text("Opis:",
@@ -213,36 +226,44 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.bold,
                                                     color: Color(0xFF2E8B57),
-                                                  )
-                                              ),
+                                                  )),
                                             ),
                                             TextField(
                                               controller: textController6,
                                               maxLines: null,
                                               decoration: const InputDecoration(
-                                                  contentPadding: EdgeInsets.zero
-                                              ),
+                                                  contentPadding:
+                                                      EdgeInsets.zero),
                                             ),
                                           ],
                                         ),
-                                      )
-                                      ,
+                                      ),
                                       actions: [
                                         ButtonBar(
-                                          alignment: MainAxisAlignment.spaceEvenly,
+                                          alignment:
+                                              MainAxisAlignment.spaceEvenly,
                                           children: [
                                             TextButton(
                                               child: Container(
                                                 decoration: BoxDecoration(
-                                                  color: const Color(0xFF2E8B57),
-                                                  borderRadius: BorderRadius.circular(5.0),
+                                                  color:
+                                                      const Color(0xFF2E8B57),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0),
                                                 ),
-                                                child:  Padding(
-                                                    padding: EdgeInsets.all(12.0),
+                                                child: Padding(
+                                                    padding:
+                                                        EdgeInsets.all(12.0),
                                                     child: Row(
                                                       children: const [
-                                                        Text("Zapisz",
-                                                          style: TextStyle(color: Colors.white, fontSize: 16),),
+                                                        Text(
+                                                          "Zapisz",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 16),
+                                                        ),
                                                         SizedBox(width: 10),
                                                         Icon(
                                                           Icons.check,
@@ -250,20 +271,22 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                                           color: Colors.white,
                                                         ),
                                                       ],
-                                                    )
-                                                ),
+                                                    )),
                                               ),
                                               onPressed: () {
                                                 final exercise = Gym(
                                                   textController1.text,
-                                                  int.parse(textController2.text),
-                                                  int.parse(textController3.text),
+                                                  int.parse(
+                                                      textController2.text),
+                                                  int.parse(
+                                                      textController3.text),
                                                   textController4.text,
                                                   textController5.text,
                                                   textController6.text,
                                                 );
                                                 setState(() {
-                                                  exercisesG.putAt(index, exercise); // dodanie elementu do listy
+                                                  exercisesG.putAt(index,
+                                                      exercise); // dodanie elementu do listy
                                                 });
                                                 Navigator.of(context).pop();
                                               },
@@ -273,30 +296,38 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                                 decoration: BoxDecoration(
                                                   color: Colors.white,
                                                   border: Border.all(
-                                                      color: const Color(0xFF2E8B57),
-                                                      width: 1
-                                                  ),
-                                                  borderRadius: BorderRadius.circular(5.0),
+                                                      color: const Color(
+                                                          0xFF2E8B57),
+                                                      width: 1),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0),
                                                 ),
                                                 child: Padding(
-                                                    padding: EdgeInsets.all(12.0),
+                                                    padding:
+                                                        EdgeInsets.all(12.0),
                                                     child: Row(
                                                       children: const [
-                                                        Text("Anuluj",
-                                                          style: TextStyle(color: Color(0xFF2E8B57), fontSize: 16),
+                                                        Text(
+                                                          "Anuluj",
+                                                          style: TextStyle(
+                                                              color: Color(
+                                                                  0xFF2E8B57),
+                                                              fontSize: 16),
                                                         ),
                                                         SizedBox(width: 10),
                                                         Icon(
                                                           Icons.close,
                                                           size: 20,
-                                                          color: Color(0xFF2E8B57),
+                                                          color:
+                                                              Color(0xFF2E8B57),
                                                         ),
                                                       ],
-                                                    )
-                                                ),
+                                                    )),
                                               ),
                                               onPressed: () {
-                                                Navigator.of(context).pop(); // zamknięcie okna dialogowego
+                                                Navigator.of(context)
+                                                    .pop(); // zamknięcie okna dialogowego
                                               },
                                             ),
                                           ],
@@ -357,7 +388,8 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                                 style: TextStyle(
                                                     fontSize: 16,
                                                     color: Color(0xFF2E8B57),
-                                                    fontWeight: FontWeight.bold),
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                               ),
                                               TextSpan(
                                                 text: '${item?.repeats}',
@@ -373,47 +405,57 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                     ),
                                   ],
                                 ),
-                                const SizedBox(height: 10),
-                                RichText(
-                                  text: TextSpan(
+                                if (item?.seriesTime != "")
+                                  Column(
                                     children: [
-                                      const TextSpan(
-                                        text: 'Czas serii: ',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: Color(0xFF2E8B57),
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      TextSpan(
-                                        text: '${item?.seriesTime}',
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.black,
+                                      const SizedBox(height: 10),
+                                      RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            const TextSpan(
+                                              text: 'Czas serii: ',
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Color(0xFF2E8B57),
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            TextSpan(
+                                              text: '${item?.seriesTime}',
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],
                                   ),
-                                ),
-                                const SizedBox(height: 10),
-                                RichText(
-                                  text: TextSpan(
-                                    children: [
-                                      const TextSpan(
-                                        text: 'Czas przerwy: ',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: Color(0xFF2E8B57),
-                                            fontWeight: FontWeight.bold),
+                                if(item?.breakTime != "")
+                                Column(
+                                  children: [
+                                    const SizedBox(height: 10),
+                                    RichText(
+                                      text: TextSpan(
+                                        children: [
+                                          const TextSpan(
+                                            text: 'Czas przerwy: ',
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Color(0xFF2E8B57),
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          TextSpan(
+                                            text: '${item?.breakTime}',
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      TextSpan(
-                                        text: '${item?.breakTime}',
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                                 if (showMore) const SizedBox(height: 10),
                                 if (showMore)
@@ -459,7 +501,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                       return Container(
                         child: AlertDialog(
                           titlePadding: EdgeInsets.zero,
-                          insetPadding: EdgeInsets.all(50),
+                          insetPadding: EdgeInsets.all(0),
                           title: Container(
                             color: const Color(0xFF2E8B57),
                             padding: EdgeInsets.all(12),
@@ -467,10 +509,13 @@ class _ExerciseGymState extends State<ExerciseGym> {
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text("Dodaj ",style: TextStyle(fontSize: 22),),
+                                Text(
+                                  "Dodaj ",
+                                  style: TextStyle(fontSize: 22),
+                                ),
                                 Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 12),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 12),
                                   child: const Icon(
                                     Icons.add,
                                     size: 30,
@@ -479,8 +524,8 @@ class _ExerciseGymState extends State<ExerciseGym> {
                               ],
                             ),
                           ),
-                          content: StatefulBuilder(
-                            builder: (BuildContext context, StateSetter setState){
+                          content: StatefulBuilder(builder:
+                              (BuildContext context, StateSetter setState) {
                             return SingleChildScrollView(
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
@@ -492,16 +537,16 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
                                           color: Color(0xFF2E8B57),
-                                        )
-                                    ),
+                                        )),
                                   ),
                                   TextField(
                                     controller: textController1,
                                     decoration: const InputDecoration(
-                                        contentPadding: EdgeInsets.zero
-                                    ),
+                                        contentPadding: EdgeInsets.zero),
                                   ),
-                                  const SizedBox(height: 10,),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
                                   const Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text("Serie:",
@@ -509,17 +554,17 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
                                           color: Color(0xFF2E8B57),
-                                        )
-                                    ),
+                                        )),
                                   ),
                                   TextField(
                                     controller: textController2,
                                     keyboardType: TextInputType.number,
                                     decoration: const InputDecoration(
-                                        contentPadding: EdgeInsets.zero
-                                    ),
+                                        contentPadding: EdgeInsets.zero),
                                   ),
-                                  const SizedBox(height: 10,),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
                                   const Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text("Powtorzenia:",
@@ -527,17 +572,17 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
                                           color: Color(0xFF2E8B57),
-                                        )
-                                    ),
+                                        )),
                                   ),
                                   TextField(
                                     controller: textController3,
                                     keyboardType: TextInputType.number,
                                     decoration: const InputDecoration(
-                                        contentPadding: EdgeInsets.zero
-                                    ),
+                                        contentPadding: EdgeInsets.zero),
                                   ),
-                                  const SizedBox(height: 10,),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
                                   const Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text("Opis:",
@@ -545,27 +590,27 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
                                           color: Color(0xFF2E8B57),
-                                        )
-                                    ),
+                                        )),
                                   ),
                                   TextField(
                                     controller: textController6,
                                     maxLines: null,
                                     decoration: const InputDecoration(
-                                        contentPadding: EdgeInsets.zero
-                                    ),
+                                        contentPadding: EdgeInsets.zero),
                                   ),
-                                  const SizedBox(height: 10,),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
                                   CheckboxListTile(
                                     title: const Text("Pomiar czasu",
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
                                           color: Color(0xFF2E8B57),
-                                        )
-                                    ),
+                                        )),
                                     value: isChecked,
-                                    controlAffinity: ListTileControlAffinity.trailing,
+                                    controlAffinity:
+                                        ListTileControlAffinity.trailing,
                                     contentPadding: EdgeInsets.zero,
                                     activeColor: Color(0xFF2E8B57),
                                     onChanged: (bool? value) {
@@ -574,10 +619,12 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                       });
                                     },
                                   ),
-                                  if(isChecked)
+                                  if (isChecked)
                                     Column(
                                       children: [
-                                        const SizedBox(height: 10,),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
                                         const Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text("Czas wykonywania:",
@@ -585,16 +632,16 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold,
                                                 color: Color(0xFF2E8B57),
-                                              )
-                                          ),
+                                              )),
                                         ),
                                         TextField(
                                           controller: textController4,
                                           decoration: const InputDecoration(
-                                              contentPadding: EdgeInsets.zero
-                                          ),
+                                              contentPadding: EdgeInsets.zero),
                                         ),
-                                        const SizedBox(height: 10,),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
                                         const Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text("Przerwa:",
@@ -602,22 +649,19 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold,
                                                 color: Color(0xFF2E8B57),
-                                              )
-                                          ),
+                                              )),
                                         ),
                                         TextField(
                                           controller: textController5,
                                           decoration: const InputDecoration(
-                                              contentPadding: EdgeInsets.zero
-                                          ),
+                                              contentPadding: EdgeInsets.zero),
                                         ),
                                       ],
                                     ),
                                 ],
                               ),
-                            );}
-                          )
-                          ,
+                            );
+                          }),
                           actions: [
                             ButtonBar(
                               alignment: MainAxisAlignment.spaceEvenly,
@@ -632,8 +676,12 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                         padding: EdgeInsets.all(12.0),
                                         child: Row(
                                           children: [
-                                            Text("Zapisz",
-                                              style: TextStyle(color: Colors.white, fontSize: 16),),
+                                            Text(
+                                              "Zapisz",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 16),
+                                            ),
                                             SizedBox(width: 10),
                                             Icon(
                                               Icons.check,
@@ -641,21 +689,19 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                               color: Colors.white,
                                             ),
                                           ],
-                                        )
-                                    ),
+                                        )),
                                   ),
                                   onPressed: () {
                                     final exercise = Gym(
-                                      textController1.text,
-                                      int.parse(textController2.text),
-                                      int.parse(textController3.text),
-                                      textController4.text,
-                                      textController5.text,
-                                      textController6.text
-                                    );
+                                        textController1.text,
+                                        int.parse(textController2.text),
+                                        int.parse(textController3.text),
+                                        textController4.text,
+                                        textController5.text,
+                                        textController6.text);
                                     setState(() {
-                                      exercisesG
-                                          .add(exercise); // dodanie elementu do listy
+                                      exercisesG.add(
+                                          exercise); // dodanie elementu do listy
                                     });
                                     Navigator.of(context).pop();
                                   },
@@ -666,16 +712,18 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                       color: Colors.white,
                                       border: Border.all(
                                           color: const Color(0xFF2E8B57),
-                                          width: 1
-                                      ),
+                                          width: 1),
                                       borderRadius: BorderRadius.circular(5.0),
                                     ),
                                     child: Padding(
                                         padding: EdgeInsets.all(12.0),
                                         child: Row(
                                           children: const [
-                                            Text("Anuluj",
-                                              style: TextStyle(color: Color(0xFF2E8B57), fontSize: 16),
+                                            Text(
+                                              "Anuluj",
+                                              style: TextStyle(
+                                                  color: Color(0xFF2E8B57),
+                                                  fontSize: 16),
                                             ),
                                             SizedBox(width: 10),
                                             Icon(
@@ -684,11 +732,11 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                               color: Color(0xFF2E8B57),
                                             ),
                                           ],
-                                        )
-                                    ),
+                                        )),
                                   ),
                                   onPressed: () {
-                                    Navigator.of(context).pop(); // zamknięcie okna dialogowego
+                                    Navigator.of(context)
+                                        .pop(); // zamknięcie okna dialogowego
                                   },
                                 ),
                               ],

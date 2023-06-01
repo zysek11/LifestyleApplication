@@ -13,7 +13,7 @@ class Gym extends HiveObject {
   int repeats = 0;
 
   @HiveField(3)
-  String seriesTime = "0";
+  String seriesTime = "";
 
   @HiveField(4)
   String breakTime = "";

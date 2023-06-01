@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import '../../hive_classes/Stretching.dart';
+import '../../hive_classes/Gym.dart';
 
 class ExerciseStretch extends StatefulWidget {
   const ExerciseStretch({Key? key}) : super(key: key);
@@ -14,11 +14,12 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
 
   late Box exercises;
 
+  bool isChecked = false;
+
   @override
   void initState() {
     super.initState();
     exercises = Hive.box('exercises');
-
   }
 
   @override
@@ -36,7 +37,7 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                   itemCount: exercises.length,
                   itemBuilder: (BuildContext context, int index) {
                     final bool showMore =
-                        _selectedIndex == index ? true : false;
+                    _selectedIndex == index ? true : false;
                     final item = exercises.getAt(index);
                     final keyString = item?.key.toString();
                     return Dismissible(
@@ -79,28 +80,40 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     final textController1 =
-                                        TextEditingController(text: item?.name);
+                                    TextEditingController(text: item?.name);
                                     final textController2 =
-                                        TextEditingController(
-                                            text: (item?.series).toString());
+                                    TextEditingController(
+                                        text: (item?.series).toString());
                                     final textController3 =
-                                        TextEditingController(
-                                            text: (item?.repeats).toString());
+                                    TextEditingController(
+                                        text: (item?.repeats).toString());
                                     final textController4 =
-                                        TextEditingController(
-                                            text: item?.description);
+                                    TextEditingController(
+                                        text: (item?.seriesTime));
+                                    final textController5 =
+                                    TextEditingController(
+                                        text: item?.breakTime);
+                                    final textController6 =
+                                    TextEditingController(
+                                        text: item?.description);
                                     return AlertDialog(
                                       titlePadding: EdgeInsets.zero,
                                       title: Container(
                                         color: const Color(0xFF2E8B57),
-                                        padding: EdgeInsets.symmetric(vertical: 12),
+                                        padding:
+                                        EdgeInsets.symmetric(vertical: 12),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                           children: [
-                                            Text("Edytuj ",style: TextStyle(fontSize: 22),),
+                                            Text(
+                                              "Edytuj ",
+                                              style: TextStyle(fontSize: 22),
+                                            ),
                                             Container(
-                                              padding: const EdgeInsets.symmetric(
+                                              padding:
+                                              const EdgeInsets.symmetric(
                                                   vertical: 12),
                                               child: const Icon(
                                                 Icons.edit,
@@ -121,16 +134,17 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.bold,
                                                     color: Color(0xFF2E8B57),
-                                                  )
-                                              ),
+                                                  )),
                                             ),
                                             TextField(
                                               controller: textController1,
                                               decoration: const InputDecoration(
-                                                  contentPadding: EdgeInsets.zero
-                                              ),
+                                                  contentPadding:
+                                                  EdgeInsets.zero),
                                             ),
-                                            const SizedBox(height: 10,),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
                                             const Align(
                                               alignment: Alignment.centerLeft,
                                               child: Text("Serie:",
@@ -138,17 +152,19 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.bold,
                                                     color: Color(0xFF2E8B57),
-                                                  )
-                                              ),
+                                                  )),
                                             ),
                                             TextField(
                                               controller: textController2,
-                                              keyboardType: TextInputType.number,
+                                              keyboardType:
+                                              TextInputType.number,
                                               decoration: const InputDecoration(
-                                                  contentPadding: EdgeInsets.zero
-                                              ),
+                                                  contentPadding:
+                                                  EdgeInsets.zero),
                                             ),
-                                            const SizedBox(height: 10,),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
                                             const Align(
                                               alignment: Alignment.centerLeft,
                                               child: Text("Powtorzenia:",
@@ -156,17 +172,55 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.bold,
                                                     color: Color(0xFF2E8B57),
-                                                  )
-                                              ),
+                                                  )),
                                             ),
                                             TextField(
                                               controller: textController3,
-                                              keyboardType: TextInputType.number,
+                                              keyboardType:
+                                              TextInputType.number,
                                               decoration: const InputDecoration(
-                                                  contentPadding: EdgeInsets.zero
-                                              ),
+                                                  contentPadding:
+                                                  EdgeInsets.zero),
                                             ),
-                                            const SizedBox(height: 10,),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            const Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text("Czas wykonywania:",
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Color(0xFF2E8B57),
+                                                  )),
+                                            ),
+                                            TextField(
+                                              controller: textController4,
+                                              decoration: const InputDecoration(
+                                                  contentPadding:
+                                                  EdgeInsets.zero),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            const Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text("Przerwa:",
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Color(0xFF2E8B57),
+                                                  )),
+                                            ),
+                                            TextField(
+                                              controller: textController5,
+                                              decoration: const InputDecoration(
+                                                  contentPadding:
+                                                  EdgeInsets.zero),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
                                             const Align(
                                               alignment: Alignment.centerLeft,
                                               child: Text("Opis:",
@@ -174,55 +228,67 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.bold,
                                                     color: Color(0xFF2E8B57),
-                                                  )
-                                              ),
+                                                  )),
                                             ),
                                             TextField(
-                                              controller: textController4,
+                                              controller: textController6,
                                               maxLines: null,
                                               decoration: const InputDecoration(
-                                                  contentPadding: EdgeInsets.zero
-                                              ),
+                                                  contentPadding:
+                                                  EdgeInsets.zero),
                                             ),
                                           ],
                                         ),
-                                      )
-                                      ,
+                                      ),
                                       actions: [
                                         ButtonBar(
-                                          alignment: MainAxisAlignment.spaceEvenly,
+                                          alignment:
+                                          MainAxisAlignment.spaceEvenly,
                                           children: [
                                             TextButton(
                                               child: Container(
                                                 decoration: BoxDecoration(
-                                                  color: const Color(0xFF2E8B57),
-                                                  borderRadius: BorderRadius.circular(5.0),
+                                                  color:
+                                                  const Color(0xFF2E8B57),
+                                                  borderRadius:
+                                                  BorderRadius.circular(
+                                                      5.0),
                                                 ),
                                                 child: Padding(
-                                                  padding: EdgeInsets.all(12.0),
-                                                  child: Row(
-                                                    children: const [
-                                                      Text("Zapisz",
-                                                        style: TextStyle(color: Colors.white, fontSize: 16),),
-                                                      SizedBox(width: 10),
-                                                      Icon(
-                                                        Icons.check,
-                                                        size: 20,
-                                                        color: Colors.white,
-                                                      ),
-                                                    ],
-                                                  )
-                                                ),
+                                                    padding:
+                                                    EdgeInsets.all(12.0),
+                                                    child: Row(
+                                                      children: const [
+                                                        Text(
+                                                          "Zapisz",
+                                                          style: TextStyle(
+                                                              color:
+                                                              Colors.white,
+                                                              fontSize: 16),
+                                                        ),
+                                                        SizedBox(width: 10),
+                                                        Icon(
+                                                          Icons.check,
+                                                          size: 20,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ],
+                                                    )),
                                               ),
                                               onPressed: () {
-                                                final exercise = Stretching(
+                                                final exercise = Gym(
                                                   textController1.text,
-                                                  int.parse(textController2.text),
-                                                  int.parse(textController3.text),
+                                                  int.parse(
+                                                      textController2.text),
+                                                  int.parse(
+                                                      textController3.text),
                                                   textController4.text,
+                                                  textController5.text,
+                                                  textController6.text,
                                                 );
                                                 setState(() {
-                                                  exercises.putAt(index, exercise); // dodanie elementu do listy
+                                                  exercises.putAt(index,
+                                                      exercise); // dodanie elementu do listy
                                                 });
                                                 Navigator.of(context).pop();
                                               },
@@ -232,30 +298,38 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                                                 decoration: BoxDecoration(
                                                   color: Colors.white,
                                                   border: Border.all(
-                                                    color: const Color(0xFF2E8B57),
-                                                    width: 1
-                                                  ),
-                                                  borderRadius: BorderRadius.circular(5.0),
+                                                      color: const Color(
+                                                          0xFF2E8B57),
+                                                      width: 1),
+                                                  borderRadius:
+                                                  BorderRadius.circular(
+                                                      5.0),
                                                 ),
                                                 child: Padding(
-                                                    padding: EdgeInsets.all(12.0),
+                                                    padding:
+                                                    EdgeInsets.all(12.0),
                                                     child: Row(
                                                       children: const [
-                                                        Text("Anuluj",
-                                                          style: TextStyle(color: Color(0xFF2E8B57), fontSize: 16),
-                                                          ),
+                                                        Text(
+                                                          "Anuluj",
+                                                          style: TextStyle(
+                                                              color: Color(
+                                                                  0xFF2E8B57),
+                                                              fontSize: 16),
+                                                        ),
                                                         SizedBox(width: 10),
                                                         Icon(
                                                           Icons.close,
                                                           size: 20,
-                                                          color: Color(0xFF2E8B57),
+                                                          color:
+                                                          Color(0xFF2E8B57),
                                                         ),
                                                       ],
-                                                    )
-                                                ),
+                                                    )),
                                               ),
                                               onPressed: () {
-                                                Navigator.of(context).pop(); // zamknięcie okna dialogowego
+                                                Navigator.of(context)
+                                                    .pop(); // zamknięcie okna dialogowego
                                               },
                                             ),
                                           ],
@@ -265,7 +339,7 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                                   });
                             },
                             leading: const Icon(
-                              Icons.sports_gymnastics,
+                              Icons.fitness_center,
                               size: 32,
                               color: Color(0xFFEC9006),
                             ),
@@ -307,18 +381,48 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                                     ),
                                     Expanded(
                                       flex: 1,
-                                      child: RichText(
+                                      child: Center(
+                                        child: RichText(
+                                          text: TextSpan(
+                                            children: [
+                                              const TextSpan(
+                                                text: 'Powtórzenia: ',
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    color: Color(0xFF2E8B57),
+                                                    fontWeight:
+                                                    FontWeight.bold),
+                                              ),
+                                              TextSpan(
+                                                text: '${item?.repeats}',
+                                                style: const TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                if (item?.seriesTime != "")
+                                  Column(
+                                    children: [
+                                      const SizedBox(height: 10),
+                                      RichText(
                                         text: TextSpan(
                                           children: [
                                             const TextSpan(
-                                              text: 'Powtórzenia: ',
+                                              text: 'Czas serii: ',
                                               style: TextStyle(
                                                   fontSize: 16,
                                                   color: Color(0xFF2E8B57),
                                                   fontWeight: FontWeight.bold),
                                             ),
                                             TextSpan(
-                                              text: '${item?.repeats}',
+                                              text: '${item?.seriesTime}',
                                               style: const TextStyle(
                                                 fontSize: 16,
                                                 color: Colors.black,
@@ -327,9 +431,34 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                                           ],
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
+                                    ],
+                                  ),
+                                if(item?.breakTime != "")
+                                  Column(
+                                    children: [
+                                      const SizedBox(height: 10),
+                                      RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            const TextSpan(
+                                              text: 'Czas przerwy: ',
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Color(0xFF2E8B57),
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            TextSpan(
+                                              text: '${item?.breakTime}',
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 if (showMore) const SizedBox(height: 10),
                                 if (showMore)
                                   Text(
@@ -369,179 +498,253 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                       final textController2 = TextEditingController();
                       final textController3 = TextEditingController();
                       final textController4 = TextEditingController();
-                      return AlertDialog(
-                        titlePadding: EdgeInsets.zero,
-                        title: Container(
-                          color: const Color(0xFF2E8B57),
-                          padding: EdgeInsets.all(12),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("Dodaj ",style: TextStyle(fontSize: 22),),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 12),
-                                child: const Icon(
-                                  Icons.add,
-                                  size: 30,
+                      final textController5 = TextEditingController();
+                      final textController6 = TextEditingController();
+                      return Container(
+                        child: AlertDialog(
+                          titlePadding: EdgeInsets.zero,
+                          insetPadding: EdgeInsets.all(0),
+                          title: Container(
+                            color: const Color(0xFF2E8B57),
+                            padding: EdgeInsets.all(12),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Dodaj ",
+                                  style: TextStyle(fontSize: 22),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        content: SingleChildScrollView(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text("Nazwa ćwiczenia:",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFF2E8B57),
-                                  )
-                                ),
-                              ),
-                              TextField(
-                                controller: textController1,
-                                decoration: const InputDecoration(
-                                    contentPadding: EdgeInsets.zero
-                                ),
-                              ),
-                              const SizedBox(height: 10,),
-                              const Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text("Serie:",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFF2E8B57),
-                                    )
-                                ),
-                              ),
-                              TextField(
-                                controller: textController2,
-                                keyboardType: TextInputType.number,
-                                decoration: const InputDecoration(
-                                    contentPadding: EdgeInsets.zero
-                                ),
-                              ),
-                              const SizedBox(height: 10,),
-                              const Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text("Powtorzenia:",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFF2E8B57),
-                                    )
-                                ),
-                              ),
-                              TextField(
-                                controller: textController3,
-                                keyboardType: TextInputType.number,
-                                decoration: const InputDecoration(
-                                  contentPadding: EdgeInsets.zero
-                                ),
-                              ),
-                              const SizedBox(height: 10,),
-                              const Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text("Opis:",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFF2E8B57),
-                                    )
-                                ),
-                              ),
-                              TextField(
-                                controller: textController4,
-                                maxLines: null,
-                                decoration: const InputDecoration(
-                                    contentPadding: EdgeInsets.zero
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                        ,
-                        actions: [
-                          ButtonBar(
-                            alignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              TextButton(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFF2E8B57),
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
-                                  child: Padding(
-                                      padding: EdgeInsets.all(12.0),
-                                      child: Row(
-                                        children: const [
-                                          Text("Zapisz",
-                                            style: TextStyle(color: Colors.white, fontSize: 16),),
-                                          SizedBox(width: 10),
-                                          Icon(
-                                            Icons.check,
-                                            size: 20,
-                                            color: Colors.white,
-                                          ),
-                                        ],
-                                      )
+                                Container(
+                                  padding:
+                                  const EdgeInsets.symmetric(vertical: 12),
+                                  child: const Icon(
+                                    Icons.add,
+                                    size: 30,
                                   ),
                                 ),
-                                onPressed: () {
-                                  final exercise = Stretching(
-                                    textController1.text,
-                                    int.parse(textController2.text),
-                                    int.parse(textController3.text),
-                                    textController4.text,
-                                  );
-                                  setState(() {
-                                    exercises
-                                        .add(exercise); // dodanie elementu do listy
-                                  });
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                              TextButton(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    border: Border.all(
-                                        color: const Color(0xFF2E8B57),
-                                        width: 1
+                              ],
+                            ),
+                          ),
+                          content: StatefulBuilder(builder:
+                              (BuildContext context, StateSetter setState) {
+                            return SingleChildScrollView(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text("Nazwa ćwiczenia:",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFF2E8B57),
+                                        )),
+                                  ),
+                                  TextField(
+                                    controller: textController1,
+                                    decoration: const InputDecoration(
+                                        contentPadding: EdgeInsets.zero),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text("Serie:",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFF2E8B57),
+                                        )),
+                                  ),
+                                  TextField(
+                                    controller: textController2,
+                                    keyboardType: TextInputType.number,
+                                    decoration: const InputDecoration(
+                                        contentPadding: EdgeInsets.zero),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text("Powtorzenia:",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFF2E8B57),
+                                        )),
+                                  ),
+                                  TextField(
+                                    controller: textController3,
+                                    keyboardType: TextInputType.number,
+                                    decoration: const InputDecoration(
+                                        contentPadding: EdgeInsets.zero),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text("Opis:",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFF2E8B57),
+                                        )),
+                                  ),
+                                  TextField(
+                                    controller: textController6,
+                                    maxLines: null,
+                                    decoration: const InputDecoration(
+                                        contentPadding: EdgeInsets.zero),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  CheckboxListTile(
+                                    title: const Text("Pomiar czasu",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFF2E8B57),
+                                        )),
+                                    value: isChecked,
+                                    controlAffinity:
+                                    ListTileControlAffinity.trailing,
+                                    contentPadding: EdgeInsets.zero,
+                                    activeColor: Color(0xFF2E8B57),
+                                    onChanged: (bool? value) {
+                                      setState(() {
+                                        isChecked = value ?? false;
+                                      });
+                                    },
+                                  ),
+                                  if (isChecked)
+                                    Column(
+                                      children: [
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        const Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text("Czas wykonywania:",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: Color(0xFF2E8B57),
+                                              )),
+                                        ),
+                                        TextField(
+                                          controller: textController4,
+                                          decoration: const InputDecoration(
+                                              contentPadding: EdgeInsets.zero),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        const Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text("Przerwa:",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: Color(0xFF2E8B57),
+                                              )),
+                                        ),
+                                        TextField(
+                                          controller: textController5,
+                                          decoration: const InputDecoration(
+                                              contentPadding: EdgeInsets.zero),
+                                        ),
+                                      ],
                                     ),
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
-                                  child: Padding(
-                                      padding: EdgeInsets.all(12.0),
-                                      child: Row(
-                                        children: const [
-                                          Text("Anuluj",
-                                            style: TextStyle(color: Color(0xFF2E8B57), fontSize: 16),
-                                          ),
-                                          SizedBox(width: 10),
-                                          Icon(
-                                            Icons.close,
-                                            size: 20,
-                                            color: Color(0xFF2E8B57),
-                                          ),
-                                        ],
-                                      )
-                                  ),
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context).pop(); // zamknięcie okna dialogowego
-                                },
+                                ],
                               ),
-                            ],
-                          ),
-                        ],
+                            );
+                          }),
+                          actions: [
+                            ButtonBar(
+                              alignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                TextButton(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFF2E8B57),
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                    child: Padding(
+                                        padding: EdgeInsets.all(12.0),
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              "Zapisz",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 16),
+                                            ),
+                                            SizedBox(width: 10),
+                                            Icon(
+                                              Icons.check,
+                                              size: 20,
+                                              color: Colors.white,
+                                            ),
+                                          ],
+                                        )),
+                                  ),
+                                  onPressed: () {
+                                    final exercise = Gym(
+                                        textController1.text,
+                                        int.parse(textController2.text),
+                                        int.parse(textController3.text),
+                                        textController4.text,
+                                        textController5.text,
+                                        textController6.text);
+                                    setState(() {
+                                      exercises.add(
+                                          exercise); // dodanie elementu do listy
+                                    });
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      border: Border.all(
+                                          color: const Color(0xFF2E8B57),
+                                          width: 1),
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                    child: Padding(
+                                        padding: EdgeInsets.all(12.0),
+                                        child: Row(
+                                          children: const [
+                                            Text(
+                                              "Anuluj",
+                                              style: TextStyle(
+                                                  color: Color(0xFF2E8B57),
+                                                  fontSize: 16),
+                                            ),
+                                            SizedBox(width: 10),
+                                            Icon(
+                                              Icons.close,
+                                              size: 20,
+                                              color: Color(0xFF2E8B57),
+                                            ),
+                                          ],
+                                        )),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .pop(); // zamknięcie okna dialogowego
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       );
                     });
               },

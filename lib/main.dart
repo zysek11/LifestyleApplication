@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:lifestyle_application/hive_classes/Stretching.dart';
 import 'Pages/DietScreen.dart';
 import 'Pages/ExerciseScreen.dart';
 import 'Pages/HomeScreen.dart';
 import 'Pages/SettingsScreen.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'hive_classes/Stretching.dart';
 import 'hive_classes/Gym.dart';
 
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  Hive.registerAdapter(StretchingAdapter());
   Hive.registerAdapter(GymAdapter());
   await Hive.openBox('exercises');
   await Hive.openBox('exercisesGym');
