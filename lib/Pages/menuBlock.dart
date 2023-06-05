@@ -8,7 +8,7 @@ class MenuBlock extends StatefulWidget {
     required this.name}) : super(key: key);
 
   @override
-  _MenuBlockState createState() => _MenuBlockState();
+  State<MenuBlock> createState() => _MenuBlockState();
 }
 
 class _MenuBlockState extends State<MenuBlock> {

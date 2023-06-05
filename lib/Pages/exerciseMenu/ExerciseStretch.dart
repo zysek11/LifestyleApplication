@@ -6,7 +6,7 @@ class ExerciseStretch extends StatefulWidget {
   const ExerciseStretch({Key? key}) : super(key: key);
 
   @override
-  _ExerciseStretchState createState() => _ExerciseStretchState();
+  State<ExerciseStretch> createState() => _ExerciseStretchState();
 }
 
 class _ExerciseStretchState extends State<ExerciseStretch> {

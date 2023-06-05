@@ -6,7 +6,7 @@ class ExerciseVolley extends StatefulWidget {
   const ExerciseVolley({Key? key}) : super(key: key);
 
   @override
-  _ExerciseVolleyState createState() => _ExerciseVolleyState();
+  State<ExerciseVolley> createState() => _ExerciseVolleyState();
 }
 
 class _ExerciseVolleyState extends State<ExerciseVolley> {

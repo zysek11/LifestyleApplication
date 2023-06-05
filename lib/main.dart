@@ -15,12 +15,13 @@ void main() async{
   await Hive.openBox('exercises');
   await Hive.openBox('exercisesGym');
   await Hive.openBox('exercisesVolley');
+  await Hive.openBox('recipes');
   runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
