@@ -501,7 +501,6 @@ class _ExerciseGymState extends State<ExerciseGym> {
                       return Container(
                         child: AlertDialog(
                           titlePadding: EdgeInsets.zero,
-                          insetPadding: EdgeInsets.all(0),
                           title: Container(
                             color: const Color(0xFF2E8B57),
                             padding: EdgeInsets.all(12),
@@ -735,6 +734,9 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                         )),
                                   ),
                                   onPressed: () {
+                                    setState(() {
+                                      isChecked = false;
+                                    });
                                     Navigator.of(context)
                                         .pop(); // zamknięcie okna dialogowego
                                   },
