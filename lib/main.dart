@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:lifestyle_application/hive_classes/Recipe.dart';
 import 'Pages/DietScreen.dart';
 import 'Pages/ExerciseScreen.dart';
 import 'Pages/HomeScreen.dart';
@@ -12,6 +13,7 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(ExerciseAdapter());
+  Hive.registerAdapter(RecipeAdapter());
   await Hive.openBox('exercises');
   await Hive.openBox('exercisesGym');
   await Hive.openBox('exercisesVolley');
