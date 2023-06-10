@@ -42,6 +42,7 @@ class _DietRecipesState extends State<DietRecipes> {
                     final bool showMore =
                         _selectedIndex == index ? true : false;
                     final item = recipes.getAt(index);
+                    final List<String> skladniki = item.stringList;
                     final keyString = item?.key.toString();
                     return Dismissible(
                       key: Key(keyString!),
@@ -107,21 +108,22 @@ class _DietRecipesState extends State<DietRecipes> {
                                       child: Column(
                                         children: [
                                           Expanded(
-                                              flex: 2,
+                                              flex: 3,
                                               child: Padding(
                                                 padding: const EdgeInsets.all(5.0),
                                                 child: Container(
                                                   alignment: Alignment.topLeft,
-                                                  child: Text("Tekst",style: TextStyle(fontSize: 26),),
+                                                  child: Text(item.name,style: TextStyle(fontSize: 26),),
                                                 ),
                                               )
                                           ),
                                           Expanded(
+                                            flex: 2,
                                               child: Padding(
-                                                padding: const EdgeInsets.all(5.0),
+                                                padding: const EdgeInsets.symmetric(horizontal: 5.0),
                                                 child: Container(
                                                   alignment: Alignment.topLeft,
-                                                  child: Text("Tekst 2",style: TextStyle(fontSize: 19),),
+                                                  child: Text("Kalorie: ${item.calories}",style: TextStyle(fontSize: 19),),
                                                 ),
                                               )
                                           ),
@@ -154,7 +156,7 @@ class _DietRecipesState extends State<DietRecipes> {
                                                 child: Text("Carbs"))),
                                             Expanded(child: Container(
                                                 alignment: Alignment.center,
-                                                child: Text("Carbs"))),
+                                                child: Text(item.carbs.toString()))),
                                           ],
                                         ),
                                       ),
@@ -175,7 +177,7 @@ class _DietRecipesState extends State<DietRecipes> {
                                                 child: Text("Fat"))),
                                             Expanded(child: Container(
                                                 alignment: Alignment.center,
-                                                child: Text("Fat"))),
+                                                child: Text(item.fat.toString()))),
                                           ],
                                         ),
                                       ),
@@ -196,7 +198,7 @@ class _DietRecipesState extends State<DietRecipes> {
                                                 child: Text("Protein"))),
                                             Expanded(child: Container(
                                                 alignment: Alignment.center,
-                                                child: Text("Protein"))),
+                                                child: Text(item.proteins.toString()))),
                                           ],
                                         ),
                                       ),
@@ -205,8 +207,44 @@ class _DietRecipesState extends State<DietRecipes> {
                                   ],
                                 ),
                               ),
-                              SizedBox(
-                                height: 10,),
+                              SizedBox(height: 10,),
+                              if(showMore)
+                                Container(
+                                  padding: EdgeInsets.only(top: 20,bottom: 8,left: 10),
+                                  alignment: Alignment.topLeft,
+                                    child: Text("Skladniki: ", style: TextStyle(fontSize: 20),)
+                                ),
+                              if(showMore)
+                                ListView.builder(
+                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: item.stringList.length,
+                                  itemBuilder: (BuildContext context, int index) {
+                                    final ingredient = item.stringList[index];
+                                    return ListTile(
+                                      visualDensity:VisualDensity(horizontal: 0, vertical: -4),
+                                      dense: true,
+                                      contentPadding: EdgeInsets.zero,
+                                      leading: Icon(Icons.circle_rounded, size: 10, color: Colors.black,),
+                                      title: Text(
+                                        ingredient.toString(),
+                                        style: TextStyle(fontSize: 16),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              if(showMore) SizedBox(height: 10,),
+                              if (showMore)
+                                Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    '${item?.description}',
+                                    style: const TextStyle(fontSize: 16),
+                                  ),
+                                ),
+                              if(showMore) SizedBox(height: 10,),
                             ],
                           ),
                         ),
