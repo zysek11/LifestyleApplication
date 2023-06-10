@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:lifestyle_application/Pages/dietMenu/AddModRecipe.dart';
+import 'package:getwidget/getwidget.dart';
+import 'dart:io';
 
 class DietRecipes extends StatefulWidget {
   const DietRecipes({Key? key}) : super(key: key);
@@ -31,6 +33,7 @@ class _DietRecipesState extends State<DietRecipes> {
             slivers: [
               SliverToBoxAdapter(
                 child: ListView.separated(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   separatorBuilder: (context, index) => SizedBox(height: 10),
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -51,165 +54,160 @@ class _DietRecipesState extends State<DietRecipes> {
                         color: Colors.red,
                         child: const Icon(Icons.cancel),
                       ),
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                color: const Color(0xFF2E8B57),
-                                width: 2.0,
-                                style: BorderStyle.solid)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: ListTile(
-                            onTap: () {
-                              setState(() {
-                                if (_selectedIndex == index) {
-                                  // Ten sam element został kliknięty po raz drugi, więc go odznaczamy
-                                  _selectedIndex = -1;
-                                } else {
-                                  // Inny element został kliknięty, więc go zaznaczamy
-                                  _selectedIndex = index;
-                                }
-                                print("kliknieto!");
-                              });
-                            },
-                            onLongPress: () {},
-                            leading: const Icon(
-                              Icons.fitness_center,
-                              size: 32,
-                              color: Color(0xFFEC9006),
-                            ),
-                            title: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Nazwa',
-                                  style: const TextStyle(
-                                      fontSize: 20,
-                                      color: Color(0xFF2E8B57),
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const SizedBox(height: 15),
-                                Row(
+                      child: InkWell(
+                        onTap: () {
+                          setState(() {
+                            if (_selectedIndex == index) {
+                              // Ten sam element został kliknięty po raz drugi, więc go odznaczamy
+                              _selectedIndex = -1;
+                            } else {
+                              // Inny element został kliknięty, więc go zaznaczamy
+                              _selectedIndex = index;
+                            }
+                            print("kliknieto!");
+                          });
+                        },
+                        child: Container(
+                          width: double.maxFinite,
+                          padding: EdgeInsets.zero,
+                          clipBehavior: Clip.hardEdge,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15)),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.only(right: 10,bottom: 10),
+                                    alignment: Alignment.topLeft,
+                                    width: 125,
+                                    height: 125,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadiusDirectional.only(
+                                          topStart: Radius.circular(15),
+                                          bottomEnd: Radius.circular(15)),
+                                      color: Colors.grey.shade200,
+                                    ),
+                                    child: ClipRRect(
+                                        borderRadius: BorderRadiusDirectional.only(
+                                            topStart: Radius.circular(15),
+                                            bottomEnd: Radius.circular(15)),
+                                      child: Image.file(
+                                        File(item.imagePath),
+                                        fit: BoxFit.cover,
+                                        width: 125,
+                                        height: 125,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      height: 125,
+                                      child: Column(
+                                        children: [
+                                          Expanded(
+                                              flex: 2,
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(5.0),
+                                                child: Container(
+                                                  alignment: Alignment.topLeft,
+                                                  child: Text("Tekst",style: TextStyle(fontSize: 26),),
+                                                ),
+                                              )
+                                          ),
+                                          Expanded(
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(5.0),
+                                                child: Container(
+                                                  alignment: Alignment.topLeft,
+                                                  child: Text("Tekst 2",style: TextStyle(fontSize: 19),),
+                                                ),
+                                              )
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,),
+                              Container(
+                                height: 75,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
+                                    const Spacer(flex: 1,),
                                     Expanded(
-                                      flex: 1,
-                                      child: RichText(
-                                        text: TextSpan(
+                                      flex: 3,
+                                      child: Container(
+                                        alignment: Alignment.topCenter,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.shade200,
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        child: Column(
                                           children: [
-                                            const TextSpan(
-                                              text: 'Serie: ',
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Color(0xFF2E8B57),
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            TextSpan(
-                                              text: 'ilosc serii',
-                                              style: const TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.black,
-                                              ),
-                                            ),
+                                            Expanded(child: Container(
+                                                alignment: Alignment.center,
+                                                child: Text("Carbs"))),
+                                            Expanded(child: Container(
+                                                alignment: Alignment.center,
+                                                child: Text("Carbs"))),
                                           ],
                                         ),
                                       ),
                                     ),
+                                    const Spacer(flex: 1,),
                                     Expanded(
-                                      flex: 1,
-                                      child: Center(
-                                        child: RichText(
-                                          text: TextSpan(
-                                            children: [
-                                              const TextSpan(
-                                                text: 'Powtórzenia: ',
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    color: Color(0xFF2E8B57),
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              TextSpan(
-                                                text: 'ilosc powtorzen',
-                                                style: const TextStyle(
-                                                  fontSize: 16,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+                                      flex: 3,
+                                      child: Container(
+                                        alignment: Alignment.topCenter,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.shade200,
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Expanded(child: Container(
+                                                alignment: Alignment.center,
+                                                child: Text("Fat"))),
+                                            Expanded(child: Container(
+                                                alignment: Alignment.center,
+                                                child: Text("Fat"))),
+                                          ],
                                         ),
                                       ),
                                     ),
+                                    const Spacer(flex: 1,),
+                                    Expanded(
+                                      flex: 3,
+                                      child: Container(
+                                        alignment: Alignment.topCenter,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.shade200,
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Expanded(child: Container(
+                                                alignment: Alignment.center,
+                                                child: Text("Protein"))),
+                                            Expanded(child: Container(
+                                                alignment: Alignment.center,
+                                                child: Text("Protein"))),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    const Spacer(flex: 1,),
                                   ],
                                 ),
-                                if (item?.seriesTime != "")
-                                  Column(
-                                    children: [
-                                      const SizedBox(height: 10),
-                                      RichText(
-                                        text: TextSpan(
-                                          children: [
-                                            const TextSpan(
-                                              text: 'Czas serii: ',
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Color(0xFF2E8B57),
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            TextSpan(
-                                              text: ' czas serii',
-                                              style: const TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                if (item?.breakTime != "")
-                                  Column(
-                                    children: [
-                                      const SizedBox(height: 10),
-                                      RichText(
-                                        text: TextSpan(
-                                          children: [
-                                            const TextSpan(
-                                              text: 'Czas przerwy: ',
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Color(0xFF2E8B57),
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            TextSpan(
-                                              text: 'czas przerwy',
-                                              style: const TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                if (showMore) const SizedBox(height: 10),
-                                if (showMore)
-                                  Text(
-                                    'opiiis',
-                                    style: const TextStyle(fontSize: 16),
-                                  )
-                              ],
-                            ),
-                            trailing: showMore == true
-                                ? const Icon(Icons.arrow_drop_up_sharp)
-                                : const Icon(Icons.arrow_drop_down_sharp),
-                            dense: false,
-                            isThreeLine: false,
+                              ),
+                              SizedBox(
+                                height: 10,),
+                            ],
                           ),
                         ),
                       ),
