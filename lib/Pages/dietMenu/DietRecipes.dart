@@ -33,7 +33,7 @@ class _DietRecipesState extends State<DietRecipes> {
             slivers: [
               SliverToBoxAdapter(
                 child: ListView.separated(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.only(left: 15, right: 15, bottom: 10),
                   separatorBuilder: (context, index) => SizedBox(height: 10),
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
