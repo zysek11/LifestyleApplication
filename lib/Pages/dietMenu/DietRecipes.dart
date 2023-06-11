@@ -68,6 +68,19 @@ class _DietRecipesState extends State<DietRecipes> {
                             print("kliknieto!");
                           });
                         },
+                        onLongPress: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => AddModRecipe(editMode: true, index: index)),
+                          ).then((value) {
+                            if (value == true) {
+                              setState(() {
+                                // Zaktualizuj dane w stanie widoku
+                                recipes = Hive.box('recipes');
+                              });
+                            }
+                          });
+                        },
                         child: Container(
                           width: double.maxFinite,
                           padding: EdgeInsets.zero,
@@ -110,10 +123,27 @@ class _DietRecipesState extends State<DietRecipes> {
                                           Expanded(
                                               flex: 3,
                                               child: Padding(
-                                                padding: const EdgeInsets.all(5.0),
-                                                child: Container(
-                                                  alignment: Alignment.topLeft,
-                                                  child: Text(item.name,style: TextStyle(fontSize: 26),),
+                                                padding: const EdgeInsets.only(left:5.0,right:5.0,bottom:5.0,top:8),
+                                                child: Row(
+                                                  children: [
+                                                    Expanded(
+                                                      flex: 4,
+                                                      child: Container(
+                                                        alignment: Alignment.topLeft,
+                                                        child: Text(item.name,style: TextStyle(fontSize: 25),),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: Container(
+                                                        alignment: Alignment.topLeft,
+                                                          child: Icon(
+                                                            showMore ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                                                            size: 25,
+                                                          ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               )
                                           ),
@@ -123,8 +153,19 @@ class _DietRecipesState extends State<DietRecipes> {
                                                 padding: const EdgeInsets.symmetric(horizontal: 5.0),
                                                 child: Container(
                                                   alignment: Alignment.topLeft,
-                                                  child: Text("Kalorie: ${item.calories}",style: TextStyle(fontSize: 19),),
-                                                ),
+                                                  child: RichText(
+                                                    text: TextSpan(
+                                                      style: TextStyle(fontSize: 19, color: Colors.black),
+                                                      children: [
+                                                        TextSpan(text: 'Kalorie:  '),
+                                                        TextSpan(
+                                                          text: item.calories.toString(),
+                                                          style: TextStyle(color: Color(0xFFEC9006),
+                                                            fontWeight: FontWeight.bold),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),                                                ),
                                               )
                                           ),
                                         ],
@@ -151,12 +192,30 @@ class _DietRecipesState extends State<DietRecipes> {
                                         ),
                                         child: Column(
                                           children: [
-                                            Expanded(child: Container(
+                                            Expanded(
+                                              child: Container(
                                                 alignment: Alignment.center,
-                                                child: Text("Carbs"))),
-                                            Expanded(child: Container(
+                                                child: Text(
+                                                  "Carbs",
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Container(
                                                 alignment: Alignment.center,
-                                                child: Text(item.carbs.toString()))),
+                                                child: Text(item.carbs.toString(),
+                                                  style: TextStyle(
+                                                    color: Color(0xFFEC9006),
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16,
+                                                  ),),
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -172,12 +231,30 @@ class _DietRecipesState extends State<DietRecipes> {
                                         ),
                                         child: Column(
                                           children: [
-                                            Expanded(child: Container(
+                                            Expanded(
+                                              child: Container(
                                                 alignment: Alignment.center,
-                                                child: Text("Fat"))),
-                                            Expanded(child: Container(
+                                                child: Text(
+                                                  "Fat",
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Container(
                                                 alignment: Alignment.center,
-                                                child: Text(item.fat.toString()))),
+                                                child: Text(item.fat.toString(),
+                                                  style: TextStyle(
+                                                    color: Color(0xFFEC9006),
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16,
+                                                  ),),
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -193,12 +270,30 @@ class _DietRecipesState extends State<DietRecipes> {
                                         ),
                                         child: Column(
                                           children: [
-                                            Expanded(child: Container(
+                                            Expanded(
+                                              child: Container(
                                                 alignment: Alignment.center,
-                                                child: Text("Protein"))),
-                                            Expanded(child: Container(
+                                                child: Text(
+                                                  "Protein",
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Container(
                                                 alignment: Alignment.center,
-                                                child: Text(item.proteins.toString()))),
+                                                child: Text(item.proteins.toString(),
+                                                  style: TextStyle(
+                                                    color: Color(0xFFEC9006),
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16,
+                                                  ),),
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -207,14 +302,17 @@ class _DietRecipesState extends State<DietRecipes> {
                                   ],
                                 ),
                               ),
-                              SizedBox(height: 10,),
-                              if(showMore)
+                              SizedBox(height: 15,),
+                              if(showMore && item.stringList.length > 0)
                                 Container(
                                   padding: EdgeInsets.only(top: 20,bottom: 8,left: 10),
                                   alignment: Alignment.topLeft,
-                                    child: Text("Skladniki: ", style: TextStyle(fontSize: 20),)
+                                    child: Text("Skladniki: ", style: TextStyle(
+                                        fontSize: 20,
+                                        color: Color(0xFFEC9006),
+                                        fontWeight: FontWeight.bold),)
                                 ),
-                              if(showMore)
+                              if(showMore && item.stringList.length > 0)
                                 ListView.builder(
                                   padding: EdgeInsets.symmetric(horizontal: 10),
                                   shrinkWrap: true,
@@ -234,7 +332,10 @@ class _DietRecipesState extends State<DietRecipes> {
                                     );
                                   },
                                 ),
-                              if(showMore) SizedBox(height: 10,),
+                              if(showMore && item.stringList.length > 0)
+                                SizedBox(height: 15,),
+                              if(showMore && item.stringList.length == 0)
+                                SizedBox(height: 25,),
                               if (showMore)
                                 Container(
                                   padding: EdgeInsets.symmetric(horizontal: 10),
@@ -244,7 +345,7 @@ class _DietRecipesState extends State<DietRecipes> {
                                     style: const TextStyle(fontSize: 16),
                                   ),
                                 ),
-                              if(showMore) SizedBox(height: 10,),
+                              if(showMore) SizedBox(height: 15,),
                             ],
                           ),
                         ),
@@ -267,8 +368,15 @@ class _DietRecipesState extends State<DietRecipes> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AddModRecipe()),
-                );
+                  MaterialPageRoute(builder: (context) => AddModRecipe(editMode: false, index: -1)),
+                ).then((value) {
+                  if (value == true) {
+                    setState(() {
+                      // Zaktualizuj dane w stanie widoku
+                      recipes = Hive.box('recipes');
+                    });
+                  }
+                });
               },
               child: const Icon(Icons.add),
             ),

@@ -2,12 +2,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../../hive_classes/Recipe.dart';
+import '';
 
 class AddModRecipe extends StatefulWidget {
-  const AddModRecipe({Key? key}) : super(key: key);
+  const AddModRecipe({Key? key, required this.editMode, required this.index}) : super(key: key);
 
+  final int index;
+  final bool editMode;
   @override
   State<AddModRecipe> createState() => _AddModRecipeState();
 }
@@ -41,6 +43,28 @@ class _AddModRecipeState extends State<AddModRecipe> {
     }
   }
 
+  void getHiveFromIndex() {
+    final item = recipes.getAt(widget.index);
+    if (item != null) {
+      setState(() {
+        nameController.text = item.name;
+        calorieController.text = item.calories.toString();
+        carbsController.text = item.carbs.toString();
+        fatController.text = item.fat.toString();
+        proteinController.text = item.proteins.toString();
+        descController.text = item.description;
+        ingrControllers = item.stringList
+            .map((ingredient) => TextEditingController(text: ingredient))
+            .toList()
+            .cast<TextEditingController>(); // Dodana konwersja typów
+        ingredientList = item.stringList.toList(); // Przypisanie wartości do ingredientList
+        pickedImage = File(item.imagePath);
+        imageController.text = pickedImage!.path;
+        isPicked = true;
+      });
+    }
+  }
+
   void validateFields() {
     if (formKey.currentState!.validate()) {
       // Walidacja pól została pomyślnie zakończona
@@ -62,11 +86,13 @@ class _AddModRecipeState extends State<AddModRecipe> {
   void initState() {
     super.initState();
     recipes = Hive.box('recipes');
+    if (widget.editMode) {
+      getHiveFromIndex();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    bool autoValidate = false;
 
     return Scaffold(
       appBar: AppBar(
@@ -224,7 +250,12 @@ class _AddModRecipeState extends State<AddModRecipe> {
                                 descController.text
                               );
                               setState(() {
-                                recipes.add(recipe);
+                                if (widget.editMode == false) {
+                                  recipes.add(recipe);
+                                }
+                                else{
+                                  recipes.putAt(widget.index,recipe);
+                                }
                               });
                               print(recipe.name);
                               print(recipe.imagePath);
@@ -234,11 +265,11 @@ class _AddModRecipeState extends State<AddModRecipe> {
                               print(recipe.fat);
                               print(recipe.proteins);
                               print(recipe.description);
-                              Navigator.pop(context);
+                              Navigator.pop(context,true);
                             }
                         },
                         child: Text(
-                          "Dodaj przepis",
+                          widget.editMode ? "Aktualizuj przepis" : "Dodaj przepis",
                           style: TextStyle(fontSize: 18),
                         ),
                       ),
