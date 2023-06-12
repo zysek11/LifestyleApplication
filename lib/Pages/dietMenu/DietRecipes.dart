@@ -130,13 +130,15 @@ class _DietRecipesState extends State<DietRecipes> {
                                                       flex: 4,
                                                       child: Container(
                                                         alignment: Alignment.topLeft,
-                                                        child: Text(item.name,style: TextStyle(fontSize: 25),),
+                                                        child: Text(item.name,style: TextStyle(fontSize: 23),
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow.ellipsis,),
                                                       ),
                                                     ),
                                                     Expanded(
                                                       flex: 1,
                                                       child: Container(
-                                                        alignment: Alignment.topLeft,
+                                                        alignment: Alignment.topCenter,
                                                           child: Icon(
                                                             showMore ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
                                                             size: 25,
@@ -177,7 +179,7 @@ class _DietRecipesState extends State<DietRecipes> {
                               SizedBox(
                                 height: 10,),
                               Container(
-                                height: 75,
+                                height: 70,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
