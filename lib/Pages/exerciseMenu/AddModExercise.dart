@@ -69,6 +69,19 @@ class _AddModExerciseState extends State<AddModExercise> {
       isCorrect = false;
     }
   }
+  
+  IconData _getIconForBoxName(String boxName) {
+    switch (boxName) {
+      case 'exercises':
+        return Icons.sports_gymnastics;
+      case 'exercisesGym':
+        return Icons.fitness_center;
+      case 'exercisesVolley':
+        return Icons.sports_volleyball;
+      default:
+        return Icons.add;
+    }
+  }
 
   //void saveExercise() {
   //  for (var i = 0; i < ingrControllers.length; i++) {
@@ -104,10 +117,13 @@ class _AddModExerciseState extends State<AddModExercise> {
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height * 0.3,
-                  decoration: BoxDecoration(
-                    image: const DecorationImage(
-                      image: AssetImage('assets/images/plus2.png'),
-                      fit: BoxFit.cover,
+                  child: Container(
+                    color: Colors.grey.shade200,
+                    child: Icon(
+                      _getIconForBoxName(widget.boxName),
+                      size: 125,
+                      color: Color(
+                          0xFFEC9006),
                     ),
                   ),
                 ),
@@ -135,6 +151,7 @@ class _AddModExerciseState extends State<AddModExercise> {
                         unitText: "ilosc",
                         maxLength: 2,
                         keybordType: TextInputType.number,
+                        textAlign: TextAlign.start,
                         tec: seriesController,
                       ),
                       SizedBox(height: 10),
@@ -143,6 +160,7 @@ class _AddModExerciseState extends State<AddModExercise> {
                         unitText: "ilosc",
                         maxLength: 3,
                         keybordType: TextInputType.number,
+                        textAlign: TextAlign.start,
                         tec: repeatsController,
                       ),
                       SizedBox(height: 10,),
@@ -150,17 +168,19 @@ class _AddModExerciseState extends State<AddModExercise> {
                       NameCont(name: "Czas"),
                       MacroRow(
                         carbohydratesHint: "Wykonywanie cwiczenia",
-                        unitText: "sek",
-                        maxLength: 3,
+                        unitText: "",
+                        maxLength: 10,
                         keybordType: TextInputType.number,
+                        textAlign: TextAlign.start,
                         tec: seriesTimeController,
                       ),
                       SizedBox(height: 10,),
                       MacroRow(
                         carbohydratesHint: "Przerwa",
-                        unitText: "sek",
-                        maxLength: 3,
+                        unitText: "",
+                        maxLength: 10,
                         keybordType: TextInputType.number,
+                        textAlign: TextAlign.start,
                         tec: breakTimeController,
                       ),
                       SizedBox(height: 20),
@@ -183,8 +203,8 @@ class _AddModExerciseState extends State<AddModExercise> {
                           {
                             final exercise = Exercise(
                                 nameController.text,
-                                int.parse(repeatsController.text),
                                 int.parse(seriesController.text),
+                                int.parse(repeatsController.text),
                                 seriesTimeController.text,
                                 breakTimeController.text,
                                 descController.text
@@ -228,6 +248,7 @@ class MacroRow extends StatelessWidget {
   final String unitText;
   final int maxLength;
   final TextInputType keybordType;
+  final TextAlign textAlign;
   final TextEditingController tec;
 
   const MacroRow(
@@ -236,6 +257,7 @@ class MacroRow extends StatelessWidget {
         required this.unitText,
         required this.maxLength,
         required this.keybordType,
+        required this.textAlign,
         required this.tec})
       : super(key: key);
 
@@ -250,6 +272,7 @@ class MacroRow extends StatelessWidget {
               hintTF: carbohydratesHint,
               maxLength: maxLength,
               keybordType: keybordType,
+              textAlign: textAlign,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'To pole jest wymagane';
@@ -286,6 +309,7 @@ class TextFieldBlack extends StatelessWidget {
   final int maxLines;
   final int minLines;
   final TextInputType keybordType;
+  final TextAlign textAlign;
   final String? Function(String?)? validator;
   final TextEditingController tec;
 
@@ -297,6 +321,7 @@ class TextFieldBlack extends StatelessWidget {
     this.maxLines = 1,
     this.minLines = 1,
     this.keybordType = TextInputType.text,
+    this.textAlign = TextAlign.start,
     this.validator,
     required this.tec
   }) : super(key: key);
@@ -311,6 +336,7 @@ class TextFieldBlack extends StatelessWidget {
         maxLines: maxLines,
         minLines: minLines,
         keyboardType: keybordType,
+        textAlign: textAlign,
         validator: validator,
         style: TextStyle(color: Colors.black, fontSize: 20),
         decoration: InputDecoration(

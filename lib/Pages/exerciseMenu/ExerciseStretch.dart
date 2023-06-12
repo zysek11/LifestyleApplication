@@ -100,7 +100,7 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(5.0),
                                       child: Icon(
-                                        Icons.fitness_center, // Ikona hantla
+                                        Icons.sports_gymnastics, // Ikona hantla
                                         size: 80, // Rozmiar ikony
                                         color: Color(
                                             0xFFEC9006), // Kolor ikony

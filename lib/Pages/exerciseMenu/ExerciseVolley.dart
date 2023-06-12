@@ -99,7 +99,7 @@ class _ExerciseVolleyState extends State<ExerciseVolley> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(5.0),
                                       child: Icon(
-                                        Icons.fitness_center, // Ikona hantla
+                                        Icons.sports_volleyball, // Ikona hantla
                                         size: 80, // Rozmiar ikony
                                         color: Color(
                                             0xFFEC9006), // Kolor ikony
