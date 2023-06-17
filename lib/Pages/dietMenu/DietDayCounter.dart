@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:simple_progress_indicators/simple_progress_indicators.dart';
+import 'dart:async';
 
 class DietDayCounter extends StatefulWidget {
   const DietDayCounter({Key? key}) : super(key: key);

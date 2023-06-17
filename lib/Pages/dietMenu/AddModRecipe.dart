@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../hive_classes/Recipe.dart';
-import '';
 
 class AddModRecipe extends StatefulWidget {
   const AddModRecipe({Key? key, required this.editMode, required this.index}) : super(key: key);
