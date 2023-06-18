@@ -7,6 +7,7 @@ import 'Pages/HomeScreen.dart';
 import 'Pages/SettingsScreen.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'hive_classes/Exercise.dart';
+import 'hive_classes/Food.dart';
 
 
 void main() async{
@@ -14,10 +15,12 @@ void main() async{
   await Hive.initFlutter();
   Hive.registerAdapter(ExerciseAdapter());
   Hive.registerAdapter(RecipeAdapter());
+  Hive.registerAdapter(FoodAdapter());
   await Hive.openBox('exercises');
   await Hive.openBox('exercisesGym');
   await Hive.openBox('exercisesVolley');
   await Hive.openBox('recipes');
+  await Hive.openBox('foods');
   runApp(MyApp());
 }
 

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:lifestyle_application/Pages/dietMenu/AddDailyFood.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:simple_progress_indicators/simple_progress_indicators.dart';
 import 'dart:async';
@@ -15,10 +17,12 @@ class _DietDayCounterState extends State<DietDayCounter> {
   ValueNotifier<double> fat = ValueNotifier(0.0);
   ValueNotifier<double> carbs = ValueNotifier(0.0);
   ValueNotifier<double> protein = ValueNotifier(0.0);
+  late Box foods;
 
   @override
   void initState() {
     super.initState();
+    foods = Hive.box('foods');
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       Future.delayed(const Duration(milliseconds: 100), () {
         fat.value = 0.6; // Zmiana wartości fat
@@ -231,6 +235,31 @@ class _DietDayCounterState extends State<DietDayCounter> {
                 ),
               ),
             ],
+          ),
+          Positioned(
+            bottom: 16,
+            right: 16,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF2E8B57),
+                shape: const CircleBorder(),
+                padding: const EdgeInsets.all(16),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AddDailyFood(editMode: false, index: -1)),
+                ).then((value) {
+                  if (value == true) {
+                    setState(() {
+                      // Zaktualizuj dane w stanie widoku
+                      foods = Hive.box('foods');
+                    });
+                  }
+                });
+              },
+              child: const Icon(Icons.add),
+            ),
           ),
         ],
       ),
