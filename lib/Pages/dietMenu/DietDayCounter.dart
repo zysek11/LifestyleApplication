@@ -35,21 +35,25 @@ class _DietDayCounterState extends State<DietDayCounter> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Stack(
-        children: [
-          CustomScrollView(
-              // ... reszta kodu CustomScrollView
-              ),
-          Column(
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.3,
-                width: MediaQuery.of(context).size.width * 1.0,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: Card(
-                    elevation: 0,
-                    child: Row(
+      child: SizedBox(
+        width: double.infinity,
+        child: Column(
+          children: [
+            Container(
+              height: 290,
+              child: Card(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                ),
+                elevation: 0,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Text("Dziennik kaloryczny", style:
+                      TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
+                    ),
+                    Row(
                       children: [
                         Expanded(
                           flex: 5,
@@ -135,7 +139,6 @@ class _DietDayCounterState extends State<DietDayCounter> {
                             ),
                           ),
                         ),
-
                         Expanded(
                           flex: 4,
                           child: Padding(
@@ -231,37 +234,340 @@ class _DietDayCounterState extends State<DietDayCounter> {
                         )
                       ],
                     ),
-                  ),
+                  ],
                 ),
               ),
-            ],
-          ),
-          Positioned(
-            bottom: 16,
-            right: 16,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF2E8B57),
-                shape: const CircleBorder(),
-                padding: const EdgeInsets.all(16),
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AddDailyFood(editMode: false, index: -1)),
-                ).then((value) {
-                  if (value == true) {
-                    setState(() {
-                      // Zaktualizuj dane w stanie widoku
-                      foods = Hive.box('foods');
-                    });
-                  }
-                });
-              },
-              child: const Icon(Icons.add),
             ),
-          ),
-        ],
+            Expanded(
+              child: Stack(
+                children: [
+                  CustomScrollView(
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: ListView.separated(
+                          padding:
+                          const EdgeInsets.only(left: 10, right: 10, bottom: 10,top: 5),
+                          separatorBuilder: (context, index) => SizedBox(height: 10),
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: foods.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final item = foods.getAt(index);
+                            final keyString = item?.key.toString();
+                            return Dismissible(
+                              key: Key(keyString!),
+                              onDismissed: (direction) {
+                                setState(() {
+                                  foods.deleteAt(index);
+                                });
+                              },
+                              background: Container(
+                                color: Colors.red,
+                                child: const Icon(Icons.cancel),
+                              ),
+                              child: InkWell(
+                                onLongPress: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AddDailyFood(
+                                            editMode: true, index: index)),
+                                  ).then((value) {
+                                    if (value == true) {
+                                      setState(() {
+                                        // Zaktualizuj dane w stanie widoku
+                                        foods = Hive.box('foods');
+                                      });
+                                    }
+                                  });
+                                },
+                                child: Container(
+                                  width: double.maxFinite,
+                                  padding: EdgeInsets.zero,
+                                  clipBehavior: Clip.hardEdge,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(15)),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Container(
+                                            alignment: Alignment.topLeft,
+                                            width: 100,
+                                            height: 100,
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(5.0),
+                                              child: Icon(
+                                                Icons.fastfood, // Ikona hantla
+                                                size: 80, // Rozmiar ikony
+                                                color: Color(
+                                                    0xFFEC9006), // Kolor ikony
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Container(
+                                              height: 100,
+                                              child: Column(
+                                                children: [
+                                                  Expanded(
+                                                      flex: 2,
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.only(
+                                                            left: 5.0,
+                                                            right: 5.0,
+                                                            bottom: 5.0,
+                                                            top: 8),
+                                                        child: Expanded(
+                                                          child: Container(
+                                                            alignment:
+                                                            Alignment.topLeft,
+                                                            child: Text(
+                                                              item.name,
+                                                              style: TextStyle(
+                                                                  fontSize: 23),
+                                                              maxLines: 2,
+                                                              overflow: TextOverflow
+                                                                  .ellipsis,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )),
+                                                  Expanded(
+                                                    flex: 2,
+                                                    child: Row(
+                                                      children: [
+                                                        Expanded(
+                                                          flex: 2,
+                                                          child: Padding(
+                                                            padding: const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 5.0),
+                                                            child: Container(
+                                                              alignment:
+                                                              Alignment.topLeft,
+                                                              child: Text(
+                                                                item.type.toString(),
+                                                                style: const TextStyle(
+                                                                    color: Color(
+                                                                        0xFFEC9006),
+                                                                    fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 19),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          flex: 3,
+                                                          child: Container(
+                                                            alignment:
+                                                            Alignment.topLeft,
+                                                            child: RichText(
+                                                              text: TextSpan(
+                                                                style: const TextStyle(
+                                                                    fontSize: 19,
+                                                                    color:
+                                                                    Colors.black),
+                                                                children: [
+                                                                  const TextSpan(
+                                                                      text:
+                                                                      'Kalorie:  '),
+                                                                  TextSpan(
+                                                                    text: item.calories
+                                                                        .toString(),
+                                                                    style: const TextStyle(
+                                                                        color: Color(
+                                                                            0xFFEC9006),
+                                                                        fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ), // Pusty kontener
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Container(
+                                        height: 70,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            const Spacer(flex: 1,),
+                                            Expanded(
+                                              flex: 3,
+                                              child: Container(
+                                                alignment: Alignment.topCenter,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey.shade200,
+                                                  borderRadius: BorderRadius.circular(10),
+                                                ),
+                                                child: Column(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Container(
+                                                        alignment: Alignment.center,
+                                                        child: Text(
+                                                          "Carbs",
+                                                          style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight: FontWeight.bold,
+                                                            fontSize: 16,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: Container(
+                                                        alignment: Alignment.center,
+                                                        child: Text(item.carbs.toString(),
+                                                          style: TextStyle(
+                                                            color: Color(0xFFEC9006),
+                                                            fontWeight: FontWeight.bold,
+                                                            fontSize: 16,
+                                                          ),),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            const Spacer(flex: 1,),
+                                            Expanded(
+                                              flex: 3,
+                                              child: Container(
+                                                alignment: Alignment.topCenter,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey.shade200,
+                                                  borderRadius: BorderRadius.circular(10),
+                                                ),
+                                                child: Column(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Container(
+                                                        alignment: Alignment.center,
+                                                        child: Text(
+                                                          "Fat",
+                                                          style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight: FontWeight.bold,
+                                                            fontSize: 16,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: Container(
+                                                        alignment: Alignment.center,
+                                                        child: Text(item.fat.toString(),
+                                                          style: TextStyle(
+                                                            color: Color(0xFFEC9006),
+                                                            fontWeight: FontWeight.bold,
+                                                            fontSize: 16,
+                                                          ),),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            const Spacer(flex: 1,),
+                                            Expanded(
+                                              flex: 3,
+                                              child: Container(
+                                                alignment: Alignment.topCenter,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey.shade200,
+                                                  borderRadius: BorderRadius.circular(10),
+                                                ),
+                                                child: Column(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Container(
+                                                        alignment: Alignment.center,
+                                                        child: Text(
+                                                          "Protein",
+                                                          style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight: FontWeight.bold,
+                                                            fontSize: 16,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: Container(
+                                                        alignment: Alignment.center,
+                                                        child: Text(item.proteins.toString(),
+                                                          style: TextStyle(
+                                                            color: Color(0xFFEC9006),
+                                                            fontWeight: FontWeight.bold,
+                                                            fontSize: 16,
+                                                          ),),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            const Spacer(flex: 1,),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 15,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                  Positioned(
+                    bottom: 16,
+                    right: 16,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF2E8B57),
+                        shape: const CircleBorder(),
+                        padding: const EdgeInsets.all(16),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => AddDailyFood(editMode: false, index: -1)),
+                        ).then((value) {
+                          if (value == true) {
+                            setState(() {
+                              // Zaktualizuj dane w stanie widoku
+                              foods = Hive.box('foods');
+                            });
+                          }
+                        });
+                      },
+                      child: const Icon(Icons.add),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
