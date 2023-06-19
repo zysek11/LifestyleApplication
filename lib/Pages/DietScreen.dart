@@ -14,7 +14,7 @@ class DietScreen extends StatefulWidget {
 
 class _DietScreenState extends State<DietScreen> {
 
-  int dietMenuIndex = 0;
+  int dietMenuIndex = 1;
 
   @override
   Widget build(BuildContext context) {

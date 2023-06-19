@@ -23,13 +23,17 @@ class DayFoodAdapter extends TypeAdapter<DayFood> {
       fields[3] as int,
       fields[4] as int,
       fields[5] as int,
+      fields[8] as int,
+      fields[6] as int,
+      fields[7] as int,
+      fields[9] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, DayFood obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.date)
       ..writeByte(1)
@@ -41,7 +45,15 @@ class DayFoodAdapter extends TypeAdapter<DayFood> {
       ..writeByte(4)
       ..write(obj.fat_counter)
       ..writeByte(5)
-      ..write(obj.proteins_counter);
+      ..write(obj.proteins_counter)
+      ..writeByte(6)
+      ..write(obj.carbs_limit)
+      ..writeByte(7)
+      ..write(obj.fat_limit)
+      ..writeByte(8)
+      ..write(obj.calories_limit)
+      ..writeByte(9)
+      ..write(obj.proteins_limit);
   }
 
   @override

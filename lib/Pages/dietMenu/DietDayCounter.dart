@@ -49,9 +49,33 @@ class _DietDayCounterState extends State<DietDayCounter> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 10.0),
-                      child: Text("Dziennik kaloryczny", style:
-                      TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
+                      padding: const EdgeInsets.only(top: 0.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              alignment:Alignment.center,
+                              child: Text("Dziennik kaloryczny", style:
+                              TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(right: 10.0), // Dostosuj padding, jeśli jest potrzebny
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: InkWell(
+                                onTap: () {
+                                  // Kod obsługujący kliknięcie przycisku
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.all(8.0), // Dostosuj padding, jeśli jest potrzebny
+                                  child: Icon(Icons.edit),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     Expanded(
                       child: Row(
