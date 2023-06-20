@@ -191,11 +191,14 @@ class _AddDailyFoodState extends State<AddDailyFood> {
                               if (widget.editMode == false) {
                                 foods.add(food);
                                 thisDay.foodList.add(food);
+                                thisDay.calories_counter += food.calories;
+                                thisDay.carbs_counter += food.carbs;
+                                thisDay.fat_counter += food.fat;
+                                thisDay.proteins_counter += food.proteins;
                                 dayFood.putAt(dayFood.length-1,thisDay);
                               }
                               else{
                                 foods.putAt(widget.index,food);
-                                dayFood.getAt(dayFood.length-1).foodList[widget.index] = food;
                                 thisDay.foodList[widget.index] = food;
                                 dayFood.putAt(dayFood.length-1,thisDay);
                               }

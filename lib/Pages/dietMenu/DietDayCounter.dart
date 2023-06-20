@@ -20,9 +20,9 @@ class DietDayCounter extends StatefulWidget {
 
 class _DietDayCounterState extends State<DietDayCounter> {
   late ValueNotifier<double> start;
-  ValueNotifier<double> fat = ValueNotifier(0.0);
-  ValueNotifier<double> carbs = ValueNotifier(0.0);
-  ValueNotifier<double> protein = ValueNotifier(0.0);
+  ValueNotifier<double> fat = ValueNotifier<double>(0.0);
+  ValueNotifier<double> carbs = ValueNotifier<double>(0.0);
+  ValueNotifier<double> protein = ValueNotifier<double>(0.0);
   late Box foods;
   late Box caloriesConst;
   late Box dayFood;
@@ -36,26 +36,43 @@ class _DietDayCounterState extends State<DietDayCounter> {
   late int proteinDay;
 
   void getTodayDataFromIndex(){
-    if(dayFood.isNotEmpty){
-      DayFood todayFood;
+    DayFood todayFood;
+    if (dayFood.isNotEmpty) {
       String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
       String lastNotedDate = DateFormat('yyyy-MM-dd').format(dayFood.getAt(dayFood.length-1).date);
-      if(currentDate == lastNotedDate){
+      if (currentDate == lastNotedDate) {
         todayFood = dayFood.getAt(dayFood.length-1);
-      }
-      else {
+      } else {
         todayFood = DayFood(
-            DateTime.now(), [], 0, 0, 0, 0,
-            int.parse(calorieController), int.parse(carbsController),
-            int.parse(fatController), int.parse(proteinController)
+          DateTime.now(), [], 0, 0, 0, 0,
+          int.parse(calorieController), int.parse(carbsController),
+          int.parse(fatController), int.parse(proteinController),
         );
         dayFood.add(todayFood);
       }
+    } else {
+      todayFood = DayFood(
+        DateTime.now(), [], 0, 0, 0, 0,
+        int.parse(calorieController), int.parse(carbsController),
+        int.parse(fatController), int.parse(proteinController),
+      );
+      dayFood.add(todayFood);
+    }
+    setState((){
     calorieDay = todayFood.calories_counter;
     carbsDay = todayFood.carbs_counter;
     fatDay = todayFood.fat_counter;
     proteinDay = todayFood.proteins_counter;
-    }
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        fat.value =  fatDay / double.parse(fatController); // Zmiana wartości fat
+        carbs.value = carbsDay / double.parse(carbsController); // Zmiana wartości fat
+        protein.value = proteinDay / double.parse(proteinController); // Zmiana wartości fat
+        print("ilosc elementow dayfood: "+dayFood.getAt(0).foodList.length.toString());
+      });
+    });
+    start = ValueNotifier<double>(calorieDay.toDouble());
+    });
   }
   void getHiveFromIndex() {
     // dla calorii
@@ -90,14 +107,6 @@ class _DietDayCounterState extends State<DietDayCounter> {
     caloriesConst = Hive.box('caloriesConst');
     getHiveFromIndex();
     getTodayDataFromIndex();
-    start = ValueNotifier(calorieDay.toDouble());
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      Future.delayed(const Duration(milliseconds: 100), () {
-        fat.value =  fatDay / double.parse(fatController); // Zmiana wartości fat
-        carbs.value = carbsDay / double.parse(carbsController); // Zmiana wartości fat
-        protein.value = proteinDay / double.parse(proteinController); // Zmiana wartości fat
-      });
-    });
   }
 
   @override
@@ -132,17 +141,18 @@ class _DietDayCounterState extends State<DietDayCounter> {
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
+                                onTap: () async{
+                                  await Navigator.push(
                                     context,
                                     MaterialPageRoute(builder: (context) => EditCalories()),
                                   ).then((value) {
-                                    if (value == true) {
                                       setState(() {
                                         // Zaktualizuj dane w stanie widoku
                                         caloriesConst = Hive.box('caloriesConst');
+                                        dayFood = Hive.box('dayFood');
+                                        getHiveFromIndex();
+                                        getTodayDataFromIndex();
                                       });
-                                    }
                                   });
                                 },
                                 child: Padding(
@@ -178,7 +188,7 @@ class _DietDayCounterState extends State<DietDayCounter> {
                                             Colors.yellow,
                                             Colors.green
                                           ],
-                                          maxValue: 3800,
+                                          maxValue: double.parse(calorieController),
                                           valueNotifier: start,
                                           mergeMode: true,
                                           animationDuration: 1,
@@ -362,8 +372,14 @@ class _DietDayCounterState extends State<DietDayCounter> {
                               key: Key(keyString!),
                               onDismissed: (direction) {
                                 setState(() {
-                                  foods.deleteAt(index);
-                                  dayFood.getAt(dayFood.length-1).foodList.removeAt(index);
+                                  foods.delete(item2.key);
+                                  DayFood thisDay = dayFood.getAt(dayFood.length-1);
+                                  thisDay.calories_counter -= thisDay.foodList[index].calories;
+                                  thisDay.carbs_counter -= thisDay.foodList[index].carbs;
+                                  thisDay.fat_counter -= thisDay.foodList[index].fat;
+                                  thisDay.proteins_counter -= thisDay.foodList[index].proteins;
+                                  thisDay.foodList.removeAt(index);
+                                  dayFood.putAt(dayFood.length-1, thisDay);
                                 });
                               },
                               background: Container(
@@ -383,6 +399,7 @@ class _DietDayCounterState extends State<DietDayCounter> {
                                         // Zaktualizuj dane w stanie widoku
                                         foods = Hive.box('foods');
                                         dayFood = Hive.box('dayFood');
+                                        getTodayDataFromIndex();
                                       });
                                     }
                                   });
@@ -651,8 +668,8 @@ class _DietDayCounterState extends State<DietDayCounter> {
                         shape: const CircleBorder(),
                         padding: const EdgeInsets.all(16),
                       ),
-                      onPressed: () {
-                        Navigator.push(
+                      onPressed: () async {
+                        await Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => AddDailyFood(editMode: false, index: -1)),
                         ).then((value) {
@@ -661,6 +678,8 @@ class _DietDayCounterState extends State<DietDayCounter> {
                               // Zaktualizuj dane w stanie widoku
                               foods = Hive.box('foods');
                               dayFood = Hive.box('dayFood');
+                              getHiveFromIndex();
+                              getTodayDataFromIndex();
                             });
                           }
                         });
