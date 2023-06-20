@@ -5,6 +5,11 @@ import 'package:lifestyle_application/Pages/dietMenu/EditCalories.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:simple_progress_indicators/simple_progress_indicators.dart';
 import 'dart:async';
+import 'dart:core';
+import 'package:intl/intl.dart';
+
+import '../../hive_classes/DayFood.dart';
+import '../../hive_classes/Food.dart';
 
 class DietDayCounter extends StatefulWidget {
   const DietDayCounter({Key? key}) : super(key: key);
@@ -20,12 +25,40 @@ class _DietDayCounterState extends State<DietDayCounter> {
   ValueNotifier<double> protein = ValueNotifier(0.0);
   late Box foods;
   late Box caloriesConst;
+  late Box dayFood;
   late String calorieController;
   late String carbsController;
   late String fatController;
   late String proteinController;
+  late int calorieDay;
+  late int carbsDay;
+  late int fatDay;
+  late int proteinDay;
 
+  void getTodayDataFromIndex(){
+    if(dayFood.isNotEmpty){
+      DayFood todayFood;
+      String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+      String lastNotedDate = DateFormat('yyyy-MM-dd').format(dayFood.getAt(dayFood.length-1).date);
+      if(currentDate == lastNotedDate){
+        todayFood = dayFood.getAt(dayFood.length-1);
+      }
+      else {
+        todayFood = DayFood(
+            DateTime.now(), [], 0, 0, 0, 0,
+            int.parse(calorieController), int.parse(carbsController),
+            int.parse(fatController), int.parse(proteinController)
+        );
+        dayFood.add(todayFood);
+      }
+    calorieDay = todayFood.calories_counter;
+    carbsDay = todayFood.carbs_counter;
+    fatDay = todayFood.fat_counter;
+    proteinDay = todayFood.proteins_counter;
+    }
+  }
   void getHiveFromIndex() {
+    // dla calorii
     if (caloriesConst.isNotEmpty) {
       final item = caloriesConst.getAt(0);
       if (item != null) {
@@ -53,14 +86,15 @@ class _DietDayCounterState extends State<DietDayCounter> {
   void initState() {
     super.initState();
     foods = Hive.box('foods');
+    dayFood = Hive.box('dayFood');
     caloriesConst = Hive.box('caloriesConst');
     getHiveFromIndex();
-    start = ValueNotifier(double.parse(calorieController));
+    start = ValueNotifier(calorieDay.toDouble());
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       Future.delayed(const Duration(milliseconds: 100), () {
-        fat.value = 0.4 * double.parse(fatController); // Zmiana wartości fat
-        carbs.value = 0.3 * double.parse(carbsController); // Zmiana wartości fat
-        protein.value = 0.8 * double.parse(proteinController); // Zmiana wartości fat
+        fat.value =  fatDay / double.parse(fatController); // Zmiana wartości fat
+        carbs.value = carbsDay / double.parse(carbsController); // Zmiana wartości fat
+        protein.value = proteinDay / double.parse(proteinController); // Zmiana wartości fat
       });
     });
   }
@@ -184,7 +218,7 @@ class _DietDayCounterState extends State<DietDayCounter> {
                                           TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
                                       ),
                                       Container(
-                                        child: Text("1850",style:
+                                        child: Text(calorieDay.toString(),style:
                                         TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
                                       )
                                     ],
@@ -319,15 +353,16 @@ class _DietDayCounterState extends State<DietDayCounter> {
                           separatorBuilder: (context, index) => SizedBox(height: 10),
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: foods.length,
+                          itemCount: dayFood.getAt(dayFood.length-1).foodList.length,
                           itemBuilder: (BuildContext context, int index) {
-                            final item2 = foods.getAt(index);
+                            final item2 = dayFood.getAt(dayFood.length-1).foodList[index];
                             final keyString = item2?.key.toString();
                             return Dismissible(
                               key: Key(keyString!),
                               onDismissed: (direction) {
                                 setState(() {
                                   foods.deleteAt(index);
+                                  dayFood.getAt(dayFood.length-1).foodList.removeAt(index);
                                 });
                               },
                               background: Container(
@@ -346,6 +381,7 @@ class _DietDayCounterState extends State<DietDayCounter> {
                                       setState(() {
                                         // Zaktualizuj dane w stanie widoku
                                         foods = Hive.box('foods');
+                                        dayFood = Hive.box('dayFood');
                                       });
                                     }
                                   });
@@ -623,6 +659,7 @@ class _DietDayCounterState extends State<DietDayCounter> {
                             setState(() {
                               // Zaktualizuj dane w stanie widoku
                               foods = Hive.box('foods');
+                              dayFood = Hive.box('dayFood');
                             });
                           }
                         });

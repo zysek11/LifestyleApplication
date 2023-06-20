@@ -69,7 +69,7 @@ class _AddDailyFoodState extends State<AddDailyFood> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF2E8B57),
-        title: const Text("Add or modify recipe"),
+        title: const Text("Add or modify food"),
       ),
       body: Padding(
         padding: const EdgeInsets.only(bottom: 8.0),

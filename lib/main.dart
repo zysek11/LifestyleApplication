@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:lifestyle_application/hive_classes/DayFood.dart';
 import 'package:lifestyle_application/hive_classes/Recipe.dart';
 import 'Pages/DietScreen.dart';
 import 'Pages/ExerciseScreen.dart';
@@ -18,12 +19,14 @@ void main() async{
   Hive.registerAdapter(RecipeAdapter());
   Hive.registerAdapter(FoodAdapter());
   Hive.registerAdapter(CaloriesConstAdapter());
+  Hive.registerAdapter(DayFoodAdapter());
   await Hive.openBox('exercises');
   await Hive.openBox('exercisesGym');
   await Hive.openBox('exercisesVolley');
   await Hive.openBox('recipes');
   await Hive.openBox('foods');
   await Hive.openBox('caloriesConst');
+  await Hive.openBox('dayFood');
   runApp(MyApp());
 }
 
