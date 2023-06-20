@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:lifestyle_application/Pages/dietMenu/AddDailyFood.dart';
+import 'package:lifestyle_application/Pages/dietMenu/EditCalories.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:simple_progress_indicators/simple_progress_indicators.dart';
 import 'dart:async';
@@ -13,21 +14,53 @@ class DietDayCounter extends StatefulWidget {
 }
 
 class _DietDayCounterState extends State<DietDayCounter> {
-  ValueNotifier<double> start = ValueNotifier(1850.0);
+  late ValueNotifier<double> start;
   ValueNotifier<double> fat = ValueNotifier(0.0);
   ValueNotifier<double> carbs = ValueNotifier(0.0);
   ValueNotifier<double> protein = ValueNotifier(0.0);
   late Box foods;
+  late Box caloriesConst;
+  late String calorieController;
+  late String carbsController;
+  late String fatController;
+  late String proteinController;
+
+  void getHiveFromIndex() {
+    if (caloriesConst.isNotEmpty) {
+      final item = caloriesConst.getAt(0);
+      if (item != null) {
+        setState(() {
+          calorieController = item.calories_const.toString();
+          carbsController = item.carbs_const.toString();
+          fatController = item.fat_const.toString();
+          proteinController = item.proteins_const.toString();
+        });
+      } else {
+        calorieController = '0';
+        carbsController = '0';
+        fatController = '0';
+        proteinController = '0';
+      }
+    } else {
+      calorieController = '0';
+      carbsController = '0';
+      fatController = '0';
+      proteinController = '0';
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     foods = Hive.box('foods');
+    caloriesConst = Hive.box('caloriesConst');
+    getHiveFromIndex();
+    start = ValueNotifier(double.parse(calorieController));
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       Future.delayed(const Duration(milliseconds: 100), () {
-        fat.value = 0.6; // Zmiana wartości fat
-        carbs.value = 0.4; // Zmiana wartości fat
-        protein.value = 0.8; // Zmiana wartości fat
+        fat.value = 0.4 * double.parse(fatController); // Zmiana wartości fat
+        carbs.value = 0.3 * double.parse(carbsController); // Zmiana wartości fat
+        protein.value = 0.8 * double.parse(proteinController); // Zmiana wartości fat
       });
     });
   }
@@ -65,7 +98,17 @@ class _DietDayCounterState extends State<DietDayCounter> {
                               alignment: Alignment.centerRight,
                               child: InkWell(
                                 onTap: () {
-                                  // Kod obsługujący kliknięcie przycisku
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => EditCalories()),
+                                  ).then((value) {
+                                    if (value == true) {
+                                      setState(() {
+                                        // Zaktualizuj dane w stanie widoku
+                                        foods = Hive.box('');
+                                      });
+                                    }
+                                  });
                                 },
                                 child: Padding(
                                   padding: EdgeInsets.all(8.0), // Dostosuj padding, jeśli jest potrzebny
@@ -127,7 +170,7 @@ class _DietDayCounterState extends State<DietDayCounter> {
                                           TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
                                       ),
                                       Container(
-                                        child: Text("3800",style:
+                                        child: Text(calorieController,style:
                                           TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
                                       )
                                     ],
