@@ -105,7 +105,7 @@ class _DietDayCounterState extends State<DietDayCounter> {
                                     if (value == true) {
                                       setState(() {
                                         // Zaktualizuj dane w stanie widoku
-                                        foods = Hive.box('');
+                                        caloriesConst = Hive.box('caloriesConst');
                                       });
                                     }
                                   });
@@ -321,8 +321,8 @@ class _DietDayCounterState extends State<DietDayCounter> {
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: foods.length,
                           itemBuilder: (BuildContext context, int index) {
-                            final item = foods.getAt(index);
-                            final keyString = item?.key.toString();
+                            final item2 = foods.getAt(index);
+                            final keyString = item2?.key.toString();
                             return Dismissible(
                               key: Key(keyString!),
                               onDismissed: (direction) {
@@ -392,7 +392,7 @@ class _DietDayCounterState extends State<DietDayCounter> {
                                                           alignment:
                                                           Alignment.topLeft,
                                                           child: Text(
-                                                            item.name,
+                                                            item2.name,
                                                             style: const TextStyle(
                                                                 fontSize: 23),
                                                             maxLines: 2,
@@ -415,7 +415,7 @@ class _DietDayCounterState extends State<DietDayCounter> {
                                                               alignment:
                                                               Alignment.topLeft,
                                                               child: Text(
-                                                                item.type.toString(),
+                                                                item2.type.toString(),
                                                                 style: const TextStyle(
                                                                     color: Color(
                                                                         0xFFEC9006),
@@ -443,7 +443,7 @@ class _DietDayCounterState extends State<DietDayCounter> {
                                                                       text:
                                                                       'Kalorie:  '),
                                                                   TextSpan(
-                                                                    text: item.calories
+                                                                    text: item2.calories
                                                                         .toString(),
                                                                     style: const TextStyle(
                                                                         color: Color(
@@ -498,7 +498,7 @@ class _DietDayCounterState extends State<DietDayCounter> {
                                                     Expanded(
                                                       child: Container(
                                                         alignment: Alignment.center,
-                                                        child: Text(item.carbs.toString(),
+                                                        child: Text(item2.carbs.toString(),
                                                           style: TextStyle(
                                                             color: Color(0xFFEC9006),
                                                             fontWeight: FontWeight.bold,
@@ -537,7 +537,7 @@ class _DietDayCounterState extends State<DietDayCounter> {
                                                     Expanded(
                                                       child: Container(
                                                         alignment: Alignment.center,
-                                                        child: Text(item.fat.toString(),
+                                                        child: Text(item2.fat.toString(),
                                                           style: TextStyle(
                                                             color: Color(0xFFEC9006),
                                                             fontWeight: FontWeight.bold,
@@ -576,7 +576,7 @@ class _DietDayCounterState extends State<DietDayCounter> {
                                                     Expanded(
                                                       child: Container(
                                                         alignment: Alignment.center,
-                                                        child: Text(item.proteins.toString(),
+                                                        child: Text(item2.proteins.toString(),
                                                           style: TextStyle(
                                                             color: Color(0xFFEC9006),
                                                             fontWeight: FontWeight.bold,

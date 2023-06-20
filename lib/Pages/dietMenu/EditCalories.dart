@@ -26,10 +26,10 @@ class _EditCaloriesState extends State<EditCalories> {
       final item = caloriesConst.getAt(0);
       if (item != null) {
         setState(() {
-          calorieController.text = item.calories.toString();
-          carbsController.text = item.carbs.toString();
-          fatController.text = item.fat.toString();
-          proteinController.text = item.proteins.toString();
+          calorieController.text = item.calories_const.toString();
+          carbsController.text = item.carbs_const.toString();
+          fatController.text = item.fat_const.toString();
+          proteinController.text = item.proteins_const.toString();
         });
       }
     }
