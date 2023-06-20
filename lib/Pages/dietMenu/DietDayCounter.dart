@@ -89,6 +89,7 @@ class _DietDayCounterState extends State<DietDayCounter> {
     dayFood = Hive.box('dayFood');
     caloriesConst = Hive.box('caloriesConst');
     getHiveFromIndex();
+    getTodayDataFromIndex();
     start = ValueNotifier(calorieDay.toDouble());
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       Future.delayed(const Duration(milliseconds: 100), () {

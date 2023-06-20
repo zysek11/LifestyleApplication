@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../hive_classes/CaloriesConst.dart';
+import '../../hive_classes/DayFood.dart';
 import '../../hive_classes/Recipe.dart';
 
 class EditCalories extends StatefulWidget {
@@ -20,6 +21,7 @@ class _EditCaloriesState extends State<EditCalories> {
   TextEditingController fatController =  TextEditingController();
   TextEditingController proteinController =  TextEditingController();
   late Box caloriesConst;
+  late Box dayFood;
 
   void getHiveFromIndex() {
     if (caloriesConst.isNotEmpty) {
@@ -50,6 +52,7 @@ class _EditCaloriesState extends State<EditCalories> {
   void initState() {
     super.initState();
     caloriesConst = Hive.box('caloriesConst');
+    dayFood = Hive.box('dayFood');
     getHiveFromIndex();
   }
 
@@ -117,6 +120,7 @@ class _EditCaloriesState extends State<EditCalories> {
                           validateFields();
                           if (isCorrect)
                           {
+                            DayFood thisDay = dayFood.getAt(dayFood.length-1);
                             final calories_const = CaloriesConst(
                                 int.parse(calorieController.text),
                                 int.parse(carbsController.text),
@@ -126,9 +130,19 @@ class _EditCaloriesState extends State<EditCalories> {
                             setState(() {
                               if (caloriesConst.isNotEmpty) {
                                 caloriesConst.putAt(0, calories_const);
+                                thisDay.calories_limit = int.parse(calorieController.text);
+                                thisDay.carbs_limit = int.parse(carbsController.text);
+                                thisDay.fat_limit = int.parse(fatController.text);
+                                thisDay.proteins_limit = int.parse(proteinController.text);
+                                dayFood.putAt(dayFood.length-1, thisDay);
                               }
                               else {
                                 caloriesConst.add(calories_const);
+                                thisDay.calories_limit = int.parse(calorieController.text);
+                                thisDay.carbs_limit = int.parse(carbsController.text);
+                                thisDay.fat_limit = int.parse(fatController.text);
+                                thisDay.proteins_limit = int.parse(proteinController.text);
+                                dayFood.putAt(dayFood.length-1, thisDay);
                               }
                             });
                             print(calories_const.calories_const);

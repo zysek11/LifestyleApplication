@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../hive_classes/DayFood.dart';
 import '../../hive_classes/Food.dart';
 import '../../hive_classes/Recipe.dart';
 
@@ -27,6 +28,7 @@ class _AddDailyFoodState extends State<AddDailyFood> {
   TextEditingController fatController =  TextEditingController();
   TextEditingController proteinController =  TextEditingController();
   late Box foods;
+  late Box dayFood;
 
 
   void getHiveFromIndex() {
@@ -58,6 +60,7 @@ class _AddDailyFoodState extends State<AddDailyFood> {
   void initState() {
     super.initState();
     foods = Hive.box('foods');
+    dayFood = Hive.box('dayFood');
     if (widget.editMode) {
       getHiveFromIndex();
     }
@@ -183,12 +186,18 @@ class _AddDailyFoodState extends State<AddDailyFood> {
                                 int.parse(fatController.text),
                                 int.parse(proteinController.text)
                             );
+                            DayFood thisDay = dayFood.getAt(dayFood.length-1);
                             setState(() {
                               if (widget.editMode == false) {
                                 foods.add(food);
+                                thisDay.foodList.add(food);
+                                dayFood.putAt(dayFood.length-1,thisDay);
                               }
                               else{
                                 foods.putAt(widget.index,food);
+                                dayFood.getAt(dayFood.length-1).foodList[widget.index] = food;
+                                thisDay.foodList[widget.index] = food;
+                                dayFood.putAt(dayFood.length-1,thisDay);
                               }
                             });
                             print(food.name);
