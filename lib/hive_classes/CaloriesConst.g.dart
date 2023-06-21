@@ -8,7 +8,7 @@ part of 'CaloriesConst.dart';
 
 class CaloriesConstAdapter extends TypeAdapter<CaloriesConst> {
   @override
-  final int typeId = 5;
+  final int typeId = 3;
 
   @override
   CaloriesConst read(BinaryReader reader) {

@@ -1,7 +1,7 @@
 import 'package:hive_flutter/hive_flutter.dart';
 part 'CaloriesConst.g.dart';
 
-@HiveType(typeId: 5)
+@HiveType(typeId: 3)
 class CaloriesConst extends HiveObject {
 
   @HiveField(0)

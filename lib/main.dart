@@ -9,7 +9,7 @@ import 'Pages/SettingsScreen.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'hive_classes/CaloriesConst.dart';
 import 'hive_classes/Exercise.dart';
-import 'hive_classes/Food.dart';
+import 'hive_classes/DayFood.dart';
 
 
 void main() async{
@@ -37,10 +37,10 @@ class _MyAppState extends State<MyApp> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
-    HomeScreen(),
-    ExerciseScreen(),
-    DietScreen(),
-    SettingsScreen(),
+    const HomeScreen(),
+    const ExerciseScreen(),
+    const DietScreen(),
+    const SettingsScreen(),
     // tu można dodać więcej ekranów
   ];
 
