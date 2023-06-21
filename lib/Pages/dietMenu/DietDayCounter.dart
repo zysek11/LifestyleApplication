@@ -48,7 +48,13 @@ class _DietDayCounterState extends State<DietDayCounter> {
       String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
       String lastNotedDate = DateFormat('yyyy-MM-dd').format(dayFood.getAt(dayFood.length-1).date);
       if (currentDate == lastNotedDate) {
+        print("stara data: "+ lastNotedDate.toString());
         todayFood = dayFood.getAt(dayFood.length-1);
+        //todayFood.calories_counter = 1200;
+        //dayFood.putAt(dayFood.length-1, todayFood);
+        print("stare kalorie: "+ todayFood.calories_limit.toString());
+        print("stare counter kalorie: "+ todayFood.calories_counter.toString());
+        print("ilosc dni: "+ dayFood.length.toString());
       } else {
         todayFood = DayFood(
           DateTime.now(), [], 0, 0, 0, 0,
@@ -192,16 +198,16 @@ class _DietDayCounterState extends State<DietDayCounter> {
                                           maximum: double.parse(calorieController),
                                           showLabels: true,
                                           labelOffset: 15,
-                                          axisLabelStyle: GaugeTextStyle(
+                                          axisLabelStyle: const GaugeTextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 11,
                                           ),
                                           showTicks:false,
                                           radiusFactor: 1,
-                                          axisLineStyle: AxisLineStyle(
+                                          axisLineStyle: const AxisLineStyle(
                                             cornerStyle: CornerStyle.bothCurve,
-                                            gradient: const SweepGradient(
+                                            gradient: SweepGradient(
                                               colors: [
                                                 Colors.redAccent,
                                                 Colors.yellow,
