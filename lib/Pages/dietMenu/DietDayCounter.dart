@@ -7,7 +7,8 @@ import 'package:simple_progress_indicators/simple_progress_indicators.dart';
 import 'dart:async';
 import 'dart:core';
 import 'package:intl/intl.dart';
-
+import 'package:syncfusion_flutter_gauges/gauges.dart';
+import '../../hive_classes/CaloriesConst.dart';
 import '../../hive_classes/DayFood.dart';
 import '../../hive_classes/Food.dart';
 
@@ -19,11 +20,10 @@ class DietDayCounter extends StatefulWidget {
 }
 
 class _DietDayCounterState extends State<DietDayCounter> {
-  late ValueNotifier<double> start;
+  ValueNotifier<double> start = ValueNotifier<double>(0.0);
   ValueNotifier<double> fat = ValueNotifier<double>(0.0);
   ValueNotifier<double> carbs = ValueNotifier<double>(0.0);
   ValueNotifier<double> protein = ValueNotifier<double>(0.0);
-  late Box foods;
   late Box caloriesConst;
   late Box dayFood;
   late String calorieController;
@@ -34,6 +34,13 @@ class _DietDayCounterState extends State<DietDayCounter> {
   late int carbsDay;
   late int fatDay;
   late int proteinDay;
+
+
+  @override
+  void dispose() {
+    start.dispose();
+    super.dispose();
+  }
 
   void getTodayDataFromIndex(){
     DayFood todayFood;
@@ -73,6 +80,7 @@ class _DietDayCounterState extends State<DietDayCounter> {
     });
     start = ValueNotifier<double>(calorieDay.toDouble());
     });
+
   }
   void getHiveFromIndex() {
     // dla calorii
@@ -85,24 +93,22 @@ class _DietDayCounterState extends State<DietDayCounter> {
           fatController = item.fat_const.toString();
           proteinController = item.proteins_const.toString();
         });
-      } else {
-        calorieController = '0';
-        carbsController = '0';
-        fatController = '0';
-        proteinController = '0';
       }
     } else {
-      calorieController = '0';
-      carbsController = '0';
-      fatController = '0';
-      proteinController = '0';
+      caloriesConst.add(CaloriesConst(1000, 100, 100, 100));
+      final item = caloriesConst.getAt(0);
+      setState(() {
+        calorieController = item.calories_const.toString();
+        carbsController = item.carbs_const.toString();
+        fatController = item.fat_const.toString();
+        proteinController = item.proteins_const.toString();
+    });
     }
   }
 
   @override
   void initState() {
     super.initState();
-    foods = Hive.box('foods');
     dayFood = Hive.box('dayFood');
     caloriesConst = Hive.box('caloriesConst');
     getHiveFromIndex();
@@ -175,38 +181,61 @@ class _DietDayCounterState extends State<DietDayCounter> {
                                       top: 30,bottom: 20),
                               child: Column(
                                 children: [
-                                  ValueListenableBuilder<double>(
-                                    valueListenable: start,
-                                    builder: (BuildContext context, double value, Widget? child) {
-                                      return Container(
-                                        width: 85,
-                                        height: 85,
-                                        child: SimpleCircularProgressBar(
-                                          startAngle: 0,
-                                          progressColors: const [
-                                            Colors.redAccent,
-                                            Colors.yellow,
-                                            Colors.green
+                                  Container(
+                                    width: 85,
+                                    height: 85,
+                                    child: SfRadialGauge(
+                                      axes: <RadialAxis>[
+                                        RadialAxis(
+                                          minimum: 0,
+                                          maximum: double.parse(calorieController),
+                                          showLabels: false,
+                                          showTicks: false,
+                                          radiusFactor: 1,
+                                          axisLineStyle: AxisLineStyle(
+                                            cornerStyle: CornerStyle.bothCurve,
+                                            gradient: const SweepGradient(
+                                              colors: [
+                                                Colors.redAccent,
+                                                Colors.yellow,
+                                                Colors.green,
+                                              ],
+                                              stops: <double>[
+                                                0,  0.5,  1
+                                              ]
+                                            ),
+                                            thickness: 15,
+                                          ),
+                                          pointers: <GaugePointer>[
+                                            RangePointer(
+                                              value: start.value,
+                                              width: 15,
+                                              enableAnimation: true,
+                                              animationDuration: 500,
+                                              cornerStyle: CornerStyle.bothCurve,
+                                              sizeUnit: GaugeSizeUnit.logicalPixel,
+                                            )
                                           ],
-                                          maxValue: double.parse(calorieController),
-                                          valueNotifier: start,
-                                          mergeMode: true,
-                                          animationDuration: 1,
-                                          onGetText: (double value) {
-                                            return Text(
-                                              '${value.toInt()}',
-                                              style: const TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black,
+                                          annotations: <GaugeAnnotation>[
+                                            GaugeAnnotation(
+                                              widget: Text(
+                                                start.value.toStringAsFixed(0),
+                                                style: TextStyle(
+                                                  fontSize: 25,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
                                               ),
-                                            );
-                                          },
-                                        ),
-                                      );
-                                    },
+                                              positionFactor: 0.3,
+                                              axisValue: 5,
+                                              angle: 90,
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                  SizedBox(height: 20,),
+                                  SizedBox(height: 10,),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
@@ -243,7 +272,7 @@ class _DietDayCounterState extends State<DietDayCounter> {
                                           TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
                                       ),
                                       Container(
-                                        child: Text("2550",style:
+                                        child: Text((int.parse(calorieController) - calorieDay).toString(),style:
                                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                                       )
                                     ],
@@ -364,22 +393,21 @@ class _DietDayCounterState extends State<DietDayCounter> {
                           separatorBuilder: (context, index) => SizedBox(height: 10),
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: dayFood.getAt(dayFood.length-1).foodList.length,
+                          itemCount: dayFood.getAt(dayFood.length - 1).foodList.length,
                           itemBuilder: (BuildContext context, int index) {
-                            final item2 = dayFood.getAt(dayFood.length-1).foodList[index];
-                            final keyString = item2?.key.toString();
+                            final item2 = dayFood.getAt(dayFood.length - 1).foodList[index];
                             return Dismissible(
-                              key: Key(keyString!),
+                              key: ObjectKey(item2),
                               onDismissed: (direction) {
                                 setState(() {
-                                  foods.delete(item2.key);
-                                  DayFood thisDay = dayFood.getAt(dayFood.length-1);
+                                  DayFood thisDay = dayFood.getAt(dayFood.length - 1);
                                   thisDay.calories_counter -= thisDay.foodList[index].calories;
                                   thisDay.carbs_counter -= thisDay.foodList[index].carbs;
                                   thisDay.fat_counter -= thisDay.foodList[index].fat;
                                   thisDay.proteins_counter -= thisDay.foodList[index].proteins;
                                   thisDay.foodList.removeAt(index);
-                                  dayFood.putAt(dayFood.length-1, thisDay);
+                                  dayFood.putAt(dayFood.length - 1, thisDay);
+                                  getTodayDataFromIndex();
                                 });
                               },
                               background: Container(
@@ -397,7 +425,6 @@ class _DietDayCounterState extends State<DietDayCounter> {
                                     if (value == true) {
                                       setState(() {
                                         // Zaktualizuj dane w stanie widoku
-                                        foods = Hive.box('foods');
                                         dayFood = Hive.box('dayFood');
                                         getTodayDataFromIndex();
                                       });
@@ -676,7 +703,6 @@ class _DietDayCounterState extends State<DietDayCounter> {
                           if (value == true) {
                             setState(() {
                               // Zaktualizuj dane w stanie widoku
-                              foods = Hive.box('foods');
                               dayFood = Hive.box('dayFood');
                               getHiveFromIndex();
                               getTodayDataFromIndex();

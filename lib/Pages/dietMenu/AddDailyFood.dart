@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../hive_classes/DayFood.dart';
 import '../../hive_classes/Food.dart';
 import '../../hive_classes/Recipe.dart';
+import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class AddDailyFood extends StatefulWidget {
   const AddDailyFood({Key? key, required this.editMode, required this.index}) : super(key: key);
@@ -27,12 +28,11 @@ class _AddDailyFoodState extends State<AddDailyFood> {
   TextEditingController carbsController = TextEditingController();
   TextEditingController fatController =  TextEditingController();
   TextEditingController proteinController =  TextEditingController();
-  late Box foods;
   late Box dayFood;
 
 
   void getHiveFromIndex() {
-    final item = foods.getAt(widget.index);
+    final item = dayFood.getAt(dayFood.length-1).foodList[widget.index];
     if (item != null) {
       setState(() {
         nameController.text = item.name;
@@ -59,7 +59,6 @@ class _AddDailyFoodState extends State<AddDailyFood> {
   @override
   void initState() {
     super.initState();
-    foods = Hive.box('foods');
     dayFood = Hive.box('dayFood');
     if (widget.editMode) {
       getHiveFromIndex();
@@ -178,18 +177,16 @@ class _AddDailyFoodState extends State<AddDailyFood> {
                           validateFields();
                           if (isCorrect)
                           {
-                            final food = Food(
-                                nameController.text,
-                                typeController,
-                                int.parse(calorieController.text),
-                                int.parse(carbsController.text),
-                                int.parse(fatController.text),
-                                int.parse(proteinController.text)
+                            final food = Food(name: nameController.text,
+                                type: typeController,
+                                calories: int.parse(calorieController.text),
+                                carbs: int.parse(carbsController.text),
+                                fat: int.parse(fatController.text),
+                                proteins: int.parse(proteinController.text)
                             );
                             DayFood thisDay = dayFood.getAt(dayFood.length-1);
                             setState(() {
                               if (widget.editMode == false) {
-                                foods.add(food);
                                 thisDay.foodList.add(food);
                                 thisDay.calories_counter += food.calories;
                                 thisDay.carbs_counter += food.carbs;
@@ -198,7 +195,14 @@ class _AddDailyFoodState extends State<AddDailyFood> {
                                 dayFood.putAt(dayFood.length-1,thisDay);
                               }
                               else{
-                                foods.putAt(widget.index,food);
+                                thisDay.calories_counter = thisDay.calories_counter -
+                                    thisDay.foodList[widget.index].calories + food.calories;
+                                thisDay.carbs_counter = thisDay.carbs_counter -
+                                    thisDay.foodList[widget.index].carbs + food.carbs;
+                                thisDay.fat_counter = thisDay.fat_counter -
+                                    thisDay.foodList[widget.index].fat + food.fat;
+                                thisDay.proteins_counter = thisDay.proteins_counter -
+                                    thisDay.foodList[widget.index].proteins + food.proteins;
                                 thisDay.foodList[widget.index] = food;
                                 dayFood.putAt(dayFood.length-1,thisDay);
                               }

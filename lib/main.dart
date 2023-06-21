@@ -17,14 +17,12 @@ void main() async{
   await Hive.initFlutter();
   Hive.registerAdapter(ExerciseAdapter());
   Hive.registerAdapter(RecipeAdapter());
-  Hive.registerAdapter(FoodAdapter());
   Hive.registerAdapter(CaloriesConstAdapter());
   Hive.registerAdapter(DayFoodAdapter());
   await Hive.openBox('exercises');
   await Hive.openBox('exercisesGym');
   await Hive.openBox('exercisesVolley');
   await Hive.openBox('recipes');
-  await Hive.openBox('foods');
   await Hive.openBox('caloriesConst');
   await Hive.openBox('dayFood');
   runApp(MyApp());
