@@ -75,10 +75,10 @@ class _DietDayCounterState extends State<DietDayCounter> {
         fat.value =  fatDay / double.parse(fatController); // Zmiana wartości fat
         carbs.value = carbsDay / double.parse(carbsController); // Zmiana wartości fat
         protein.value = proteinDay / double.parse(proteinController); // Zmiana wartości fat
-        print("ilosc elementow dayfood: "+dayFood.getAt(0).foodList.length.toString());
+        print("ilosc elementow dayfood: "+dayFood.getAt(dayFood.length-1).foodList.length.toString());
       });
     });
-    start = ValueNotifier<double>(calorieDay.toDouble());
+    start.value = calorieDay.toDouble();
     });
 
   }
@@ -109,8 +109,8 @@ class _DietDayCounterState extends State<DietDayCounter> {
   @override
   void initState() {
     super.initState();
-    dayFood = Hive.box('dayFood');
     caloriesConst = Hive.box('caloriesConst');
+    dayFood = Hive.box('dayFood');
     getHiveFromIndex();
     getTodayDataFromIndex();
   }
@@ -155,7 +155,7 @@ class _DietDayCounterState extends State<DietDayCounter> {
                                       setState(() {
                                         // Zaktualizuj dane w stanie widoku
                                         caloriesConst = Hive.box('caloriesConst');
-                                        dayFood = Hive.box('dayFood');
+                                        //dayFood = Hive.box('dayFood');
                                         getHiveFromIndex();
                                         getTodayDataFromIndex();
                                       });
@@ -182,15 +182,22 @@ class _DietDayCounterState extends State<DietDayCounter> {
                               child: Column(
                                 children: [
                                   Container(
-                                    width: 85,
-                                    height: 85,
+                                    width: 135,
+                                    height: 135,
                                     child: SfRadialGauge(
                                       axes: <RadialAxis>[
                                         RadialAxis(
+                                          interval: double.parse(calorieController)/4,
                                           minimum: 0,
                                           maximum: double.parse(calorieController),
-                                          showLabels: false,
-                                          showTicks: false,
+                                          showLabels: true,
+                                          labelOffset: 15,
+                                          axisLabelStyle: GaugeTextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 11,
+                                          ),
+                                          showTicks:false,
                                           radiusFactor: 1,
                                           axisLineStyle: AxisLineStyle(
                                             cornerStyle: CornerStyle.bothCurve,
@@ -201,55 +208,42 @@ class _DietDayCounterState extends State<DietDayCounter> {
                                                 Colors.green,
                                               ],
                                               stops: <double>[
-                                                0,  0.5,  1
-                                              ]
+                                                0, 0.5, 1
+                                              ],
                                             ),
-                                            thickness: 15,
+                                            thickness: 10,
                                           ),
                                           pointers: <GaugePointer>[
-                                            RangePointer(
+                                            NeedlePointer(
                                               value: start.value,
-                                              width: 15,
+                                              knobStyle: KnobStyle(knobRadius: 0),
+                                              needleStartWidth: 1,
+                                              needleEndWidth: 3,
+                                              lengthUnit: GaugeSizeUnit.factor,
+                                              needleLength: 0.35,
                                               enableAnimation: true,
                                               animationDuration: 500,
-                                              cornerStyle: CornerStyle.bothCurve,
-                                              sizeUnit: GaugeSizeUnit.logicalPixel,
-                                            )
-                                          ],
-                                          annotations: <GaugeAnnotation>[
-                                            GaugeAnnotation(
-                                              widget: Text(
-                                                start.value.toStringAsFixed(0),
-                                                style: TextStyle(
-                                                  fontSize: 25,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                              positionFactor: 0.3,
-                                              axisValue: 5,
-                                              angle: 90,
                                             ),
+
                                           ],
-                                        )
+                                        ),
                                       ],
                                     ),
                                   ),
-                                  SizedBox(height: 10,),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        child: Text("Prog kaloryczny:", style:
-                                          TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-                                      ),
-                                      Container(
-                                        child: Text(calorieController,style:
-                                          TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(height: 10,),
+                                  SizedBox(height: 0,),
+                                  //Row(
+                                  //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  //  children: [
+                                  //    Container(
+                                  //      child: Text("Prog kaloryczny:", style:
+                                  //        TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                                  //    ),
+                                  //    Container(
+                                  //      child: Text(calorieController,style:
+                                  //        TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                                  //    )
+                                  //  ],
+                                  //),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
@@ -293,13 +287,13 @@ class _DietDayCounterState extends State<DietDayCounter> {
                                       Container(
                                         alignment: Alignment.topLeft,
                                         child: Text(
-                                          "Tluszcze:",
+                                          "Weglowodany:",
                                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                         ),
                                       ),
                                       SizedBox(height: 10),
                                       ValueListenableBuilder<double>(
-                                        valueListenable: fat,
+                                        valueListenable: protein,
                                         builder: (context, value, child) {
                                           return AnimatedProgressBar(
                                             height: 12,
@@ -323,13 +317,13 @@ class _DietDayCounterState extends State<DietDayCounter> {
                                       Container(
                                         alignment: Alignment.topLeft,
                                         child: Text(
-                                          "Weglowodany:",
+                                          "Tluszcze:",
                                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                         ),
                                       ),
                                       SizedBox(height: 10),
                                       ValueListenableBuilder<double>(
-                                        valueListenable: carbs,
+                                        valueListenable: fat,
                                         builder: (context, value, child) {
                                           return AnimatedProgressBar(
                                             height: 12,
