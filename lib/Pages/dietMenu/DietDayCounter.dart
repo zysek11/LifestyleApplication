@@ -48,13 +48,9 @@ class _DietDayCounterState extends State<DietDayCounter> {
       String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
       String lastNotedDate = DateFormat('yyyy-MM-dd').format(dayFood.getAt(dayFood.length-1).date);
       if (currentDate == lastNotedDate) {
-        print("stara data: "+ lastNotedDate.toString());
         todayFood = dayFood.getAt(dayFood.length-1);
         //todayFood.calories_counter = 1200;
         //dayFood.putAt(dayFood.length-1, todayFood);
-        print("stare kalorie: "+ todayFood.calories_limit.toString());
-        print("stare counter kalorie: "+ todayFood.calories_counter.toString());
-        print("ilosc dni: "+ dayFood.length.toString());
       } else {
         todayFood = DayFood(
           DateTime.now(), [], 0, 0, 0, 0,
@@ -196,6 +192,7 @@ class _DietDayCounterState extends State<DietDayCounter> {
                                           interval: double.parse(calorieController)/4,
                                           minimum: 0,
                                           maximum: double.parse(calorieController),
+                                          showLastLabel: true,
                                           showLabels: true,
                                           labelOffset: 15,
                                           axisLabelStyle: const GaugeTextStyle(
@@ -203,21 +200,17 @@ class _DietDayCounterState extends State<DietDayCounter> {
                                             fontWeight: FontWeight.bold,
                                             fontSize: 11,
                                           ),
-                                          showTicks:false,
+                                          showTicks:true,
                                           radiusFactor: 1,
                                           axisLineStyle: const AxisLineStyle(
-                                            cornerStyle: CornerStyle.bothCurve,
+                                            color: Colors.white,
                                             gradient: SweepGradient(
                                               colors: [
                                                 Colors.redAccent,
                                                 Colors.yellow,
                                                 Colors.green,
                                               ],
-                                              stops: <double>[
-                                                0, 0.5, 1
-                                              ],
                                             ),
-                                            thickness: 10,
                                           ),
                                           pointers: <GaugePointer>[
                                             NeedlePointer(

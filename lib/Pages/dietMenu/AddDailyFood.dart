@@ -177,12 +177,12 @@ class _AddDailyFoodState extends State<AddDailyFood> {
                           validateFields();
                           if (isCorrect)
                           {
-                            final food = Food(name: nameController.text,
-                                type: typeController,
-                                calories: int.parse(calorieController.text),
-                                carbs: int.parse(carbsController.text),
-                                fat: int.parse(fatController.text),
-                                proteins: int.parse(proteinController.text)
+                            final food = Food(nameController.text,
+                                typeController,
+                                int.parse(calorieController.text),
+                                int.parse(carbsController.text),
+                                int.parse(fatController.text),
+                                int.parse(proteinController.text)
                             );
                             DayFood thisDay = dayFood.getAt(dayFood.length-1);
                             setState(() {
