@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../hive_classes/Recipe.dart';
@@ -234,38 +235,40 @@ class _AddModRecipeState extends State<AddModRecipe> {
                         ),
                         onPressed: () {
                           validateFields();
-                          if (isCorrect)
-                            {
+                          if (isCorrect) {
+                            if (isPicked) {
                               saveRecipe();
-                              ingredientList.removeWhere((element) => element.isEmpty);
+                              ingredientList.removeWhere((element) =>
+                              element.isEmpty);
                               final recipe = Recipe(
-                                nameController.text,
-                                imageController.text,
-                                ingredientList,
-                                int.parse(calorieController.text),
-                                int.parse(carbsController.text),
-                                int.parse(fatController.text),
-                                int.parse(proteinController.text),
-                                descController.text
+                                  nameController.text,
+                                  imageController.text,
+                                  ingredientList,
+                                  int.parse(calorieController.text),
+                                  int.parse(carbsController.text),
+                                  int.parse(fatController.text),
+                                  int.parse(proteinController.text),
+                                  descController.text
                               );
                               setState(() {
                                 if (widget.editMode == false) {
                                   recipes.add(recipe);
                                 }
-                                else{
-                                  recipes.putAt(widget.index,recipe);
+                                else {
+                                  recipes.putAt(widget.index, recipe);
                                 }
                               });
-                              print(recipe.name);
-                              print(recipe.imagePath);
-                              print(recipe.stringList);
-                              print(recipe.calories);
-                              print(recipe.carbs);
-                              print(recipe.fat);
-                              print(recipe.proteins);
-                              print(recipe.description);
-                              Navigator.pop(context,true);
+                              Navigator.pop(context, true);
                             }
+                            else{
+                              Fluttertoast.showToast(msg: "Wybierz zdjecie z galerii",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                backgroundColor: Colors.grey.shade200,
+                                textColor: Colors.black,
+                                fontSize: 16);
+                            }
+                          }
                         },
                         child: Text(
                           widget.editMode ? "Aktualizuj przepis" : "Dodaj przepis",

@@ -6,6 +6,7 @@ import '../../hive_classes/DayFood.dart';
 import '../../hive_classes/Food.dart';
 import '../../hive_classes/Recipe.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AddDailyFood extends StatefulWidget {
   const AddDailyFood({Key? key, required this.editMode, required this.index}) : super(key: key);
