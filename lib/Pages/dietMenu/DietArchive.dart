@@ -32,7 +32,7 @@ class _DietArchiveState extends State<DietArchive> {
             crossAxisCount: 2,
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
-            childAspectRatio: 0.85,
+            childAspectRatio: 0.80,
           ),
           itemCount: dayFood.length -1,
           itemBuilder: (BuildContext context, int index) {
@@ -71,7 +71,7 @@ class _DietArchiveState extends State<DietArchive> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5.0),
                         child: Text(DateFormat('yyyy-MM-dd').format(item.date),
-                          style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold,
+                          style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold,
                             color: Color(0xFFEC9006),),
                         ),
                       ), // Odstęp między datą a ikonką
@@ -82,7 +82,7 @@ class _DietArchiveState extends State<DietArchive> {
                         color: Color(0xFFEC9006),),// Przykładowy kolor tła ikonki
                         // Tutaj możesz dodać ikonkę jedzenia
                       ),
-                      SizedBox(height: 12,),
+                      SizedBox(height: 25,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
