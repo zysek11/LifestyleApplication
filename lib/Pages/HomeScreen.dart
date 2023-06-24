@@ -23,7 +23,7 @@ class HomeScreen extends StatelessWidget {
           Container(
             width: double.infinity,
             child: Card(
-              color: const Color(0xFF3F9C68),
+              color: const Color(0xFF4FAD79),
               elevation: 5,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
@@ -43,10 +43,10 @@ class HomeScreen extends StatelessWidget {
                   ),
                   Container(
                     padding: EdgeInsets.only(left: 10,right:10,top:5,bottom:10),
-                    child: Text('Tutaj możesz wpisać cokolwiek,'
-                        'Tutaj możesz wpisać cokolwiek,'
-                        'Tutaj możesz wpisać cokolwiek',style: TextStyle(
-                        fontSize: 16
+                    child: Text('Ćwicząc każdego dnia osiągniesz sukces?\n'
+                        'Ćwicz a będziesz w najlepszej formie!\n'
+                        'Patryk Programista',style: TextStyle(
+                        fontSize: 18
                     ),),
                   ),
                 ],
