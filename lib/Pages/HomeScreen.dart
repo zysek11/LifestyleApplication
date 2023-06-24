@@ -23,19 +23,31 @@ class HomeScreen extends StatelessWidget {
           Container(
             width: double.infinity,
             child: Card(
+              color: const Color(0xFF3F9C68),
               elevation: 5,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0), // Zaokrąglenie rogów
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(20.0),
+                    bottomLeft: Radius.circular(20.0),
+                    bottomRight: Radius.circular(20.0),
+                  ), // Zaokrąglenie rogów
               ),// Wysokość cienia
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    padding: EdgeInsets.all(10),
-                    child: Text('Czy wiesz, że ...'),
+                    padding: EdgeInsets.only(left: 10,right:10,top:10),
+                    child: Text('Czy wiesz, że ...',style: TextStyle(
+                      fontSize: 18
+                    ),),
                   ),
                   Container(
-                    padding: EdgeInsets.all(10),
-                    child: Text('Tutaj możesz wpisać cokolwiek'),
+                    padding: EdgeInsets.only(left: 10,right:10,top:5,bottom:10),
+                    child: Text('Tutaj możesz wpisać cokolwiek,'
+                        'Tutaj możesz wpisać cokolwiek,'
+                        'Tutaj możesz wpisać cokolwiek',style: TextStyle(
+                        fontSize: 16
+                    ),),
                   ),
                 ],
               ),
