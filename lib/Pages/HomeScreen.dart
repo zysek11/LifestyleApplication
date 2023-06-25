@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '';
+import 'miniApps/BmiCalculator.dart';
+import 'miniApps/BmrCalculator.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -51,6 +54,61 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+          ),
+          SizedBox(height: 30,),
+          Container(
+            alignment: Alignment.topLeft,
+              child: Text("Twoje mini-aplikacje",style: TextStyle(
+                fontSize: 25,
+              ),),),
+          SizedBox(height: 10,),
+          Container(
+            // Inne właściwości kontenera...
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                InkWell(
+                  onTap: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const BmrCalculator()),
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.calculate_rounded, // Wybierz odpowiednią ikonę z biblioteki flutter_icons
+                        size: 64,
+                        color: const Color(0xFF2E8B57),
+                      ),
+                      Text("BMR",style: TextStyle(
+                        fontSize: 18,
+                      ),)
+                    ],
+                  ),
+                ),
+                InkWell(
+                    onTap: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const BmiCalculator()),
+                      );
+                    },
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.compare, // Wybierz odpowiednią ikonę z biblioteki flutter_icons
+                        size: 64,
+                        color: const Color(0xFF2E8B57),
+                      ),
+                      Text("BMI",style: TextStyle(
+                        fontSize: 18,
+                      ),)
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
         ],
