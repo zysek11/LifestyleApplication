@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import '';
 import 'miniApps/BmiCalculator.dart';
 import 'miniApps/BmrCalculator.dart';
@@ -22,18 +23,15 @@ class HomeScreen extends StatelessWidget {
               style: TextStyle(fontSize: 25),
             ),
           ),
-          SizedBox(height: 10),
+          Lottie.asset('assets/animations/happy_fruit.json',
+              width: 200,height: 200),
           Container(
             width: double.infinity,
             child: Card(
               color: const Color(0xFF4FAD79),
               elevation: 5,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(20.0),
-                    bottomLeft: Radius.circular(20.0),
-                    bottomRight: Radius.circular(20.0),
-                  ), // Zaokrąglenie rogów
+                  borderRadius: BorderRadius.circular(20) // Zaokrąglenie rogów
               ),// Wysokość cienia
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
