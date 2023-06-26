@@ -81,6 +81,7 @@ flutter:
     - assets/images/dieta.png
     - assets/animations/diet_animation.json
     - assets/animations/happy_fruit.json
+    - assets/animations/bad_diet_animation.json
 
   # To add assets to your application, add an assets section, like this:
   # assets:
