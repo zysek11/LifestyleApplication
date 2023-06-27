@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -11,7 +12,9 @@ class SettingsScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('settings page'),
+            Text('Work in progress...',style: TextStyle(fontSize: 24,color: Colors.grey.shade700),),
+            Lottie.asset('assets/animations/work_in_progress.json',
+                width: 250, height: 250),
           ],
         ),
       ),

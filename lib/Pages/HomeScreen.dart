@@ -32,7 +32,18 @@ class _HomeScreenState extends State<HomeScreen> {
     "Dieta bogata w błonnik przynosi wiele korzyści dla zdrowia, takich jak utrzymanie prawidłowej wagi i poprawa trawienia.",
     "Dieta bez soli polega na ograniczeniu spożycia sodu i soli kuchennej, co jest korzystne dla osób z nadciśnieniem.",
     "Dieta bez laktozy wyklucza spożywanie nabiału lub produktów zawierających laktozę.",
-    "Dieta sokowa polega na spożywaniu świeżo wyciskanych soków owocowych i warzywnych, często w ramach detoksu organizmu."
+    "Dieta sokowa polega na spożywaniu świeżo wyciskanych soków owocowych i warzywnych, często w ramach detoksu organizmu.",
+    "Dieta pescetariańska to dieta, w której wyklucza się mięso, ale pozwala się na spożywanie ryb i owoców morza.",
+    "Dieta makrobiotyczna opiera się na zasadzie równowagi yin i yang oraz spożywaniu naturalnych, niewyszukanych produktów.",
+    "Dieta bezglutenowa nie tylko jest konieczna dla osób z celiakią, ale także może być stosowana przez osoby z nietolerancją glutenu lub w celu poprawy zdrowia jelit.",
+    "Dieta bezmleczna eliminuje spożywanie zarówno nabiału, jak i innych produktów mlecznych.",
+    "Dieta owocowo-warzywna polega na spożywaniu głównie owoców, warzyw i soków, często w formie detoksu lub oczyszczania organizmu.",
+    "Dieta wysokobiałkowa skupia się na spożywaniu większej ilości białka, co może być korzystne dla osób aktywnych fizycznie lub dążących do budowy mięśni.",
+    "Dieta kwasnoprzetworowa ogranicza spożycie żywności kwasotwórczej, takiej jak mięso, nabiał, rafinowane produkty zbożowe i słodycze.",
+    "Dieta bezglutenowa może wymagać uważnego czytania etykiet produktów, ponieważ wiele spożywczych produktów przetworzonych zawiera gluten jako składnik.",
+    "Dieta eliminacyjna polega na wykluczeniu potencjalnie uczulających lub nietolerowanych pokarmów w celu ustalenia ich wpływu na zdrowie.",
+    "Dieta wysokotłuszczowa, znana również jako dieta ketogeniczna, polega na spożywaniu wysokiej zawartości tłuszczu, umiarkowanej ilości białka i niskiej ilości węglowodanów w celu indukcji stanu ketozy.",
+    "Dieta eliminacyjna FODMAP może pomóc w łagodzeniu objawów zespołu jelita drażliwego poprzez eliminację pokarmów bogatych w fermentowalne węglowodany."
   ];
   String randomCiekawostka = '';
 

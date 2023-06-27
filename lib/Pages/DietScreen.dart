@@ -15,62 +15,105 @@ class DietScreen extends StatefulWidget {
 class _DietScreenState extends State<DietScreen> {
 
   int dietMenuIndex = 1;
+  late PageController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = PageController(initialPage: 1);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    Widget exerciseWidget;
-    switch(dietMenuIndex){
-      case 0:
-        exerciseWidget = const DietRecipes();
-        break;
-      case 1:
-        exerciseWidget = const DietDayCounter();
-        break;
-      case 2:
-        exerciseWidget = const DietArchive();
-        break;
-      default:
-        exerciseWidget = const DietRecipes();
-    }
-    return Container(
-      color: Colors.grey.shade200,
-      child: Center(
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: GestureDetector(
-                      onTap: (){
-                        setState(() {
-                          dietMenuIndex = 0;
-                        });
-                      },
-                      child: MenuBlock(queue: 0, emi: dietMenuIndex, name: "Recipes")),
+    return GestureDetector(
+      onHorizontalDragEnd: (DragEndDetails details) {
+        if (details.velocity.pixelsPerSecond.dx > 0) {
+          // Swipe w prawo
+          if (dietMenuIndex > 0) {
+            setState(() {
+              dietMenuIndex--;
+              _controller.previousPage(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut);
+            });
+          }
+        } else if (details.velocity.pixelsPerSecond.dx < 0) {
+          // Swipe w lewo
+          if (dietMenuIndex < 2) {
+            setState(() {
+              dietMenuIndex++;
+              _controller.nextPage(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut);
+            });
+          }
+        }
+      },
+      child: Container(
+        color: Colors.grey.shade200,
+        child: Center(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                        onTap: (){
+                          setState(() {
+                            dietMenuIndex = 0;
+                            _controller.animateToPage(0,
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.easeInOut);
+                          });
+                        },
+                        child: MenuBlock(queue: 0, emi: dietMenuIndex, name: "Recipes")),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                        onTap: (){
+                          setState(() {
+                            dietMenuIndex = 1;
+                            _controller.animateToPage(1,
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.easeInOut);
+                          });
+                        },
+                        child: MenuBlock(queue: 1, emi: dietMenuIndex, name: "Daily Counter")),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                        onTap: (){
+                          setState(() {
+                            dietMenuIndex = 2;
+                            _controller.animateToPage(2,
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.easeInOut);
+                          });
+                        },
+                        child: MenuBlock(queue: 2, emi: dietMenuIndex, name: "Archive")),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Expanded(
+                child: PageView(
+                  controller: _controller,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: const [
+                    DietRecipes(),
+                    DietDayCounter(),
+                    DietArchive(),
+                  ],
                 ),
-                Expanded(
-                  child: GestureDetector(
-                      onTap: (){
-                        setState(() {
-                          dietMenuIndex = 1;
-                        });
-                      },
-                      child: MenuBlock(queue: 1, emi: dietMenuIndex, name: "Daily Counter")),
-                ),
-                Expanded(
-                  child: GestureDetector(
-                      onTap: (){
-                        setState(() {
-                          dietMenuIndex = 2;
-                        });
-                      },
-                      child: MenuBlock(queue: 2, emi: dietMenuIndex, name: "Archive")),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            exerciseWidget,
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );
