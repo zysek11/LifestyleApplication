@@ -186,7 +186,7 @@ class _AddModExerciseState extends State<AddModExercise> {
                       SizedBox(height: 20),
                       NameCont(name: "Opis"),
                       TextFieldBlack(
-                        hintTF: "Opis przepisu...",
+                        hintTF: "Opis cwiczenia...",
                         maxLines: 5,
                         tec: descController,
                       ),
