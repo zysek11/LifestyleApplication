@@ -72,7 +72,7 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => AddModExercise(
-                                    editMode: true, index: index,boxName: "exercises",)),
+                                    editMode: true, index: index,boxName: "exercises",gymMode: false,)),
                           ).then((value) {
                             if (value == true) {
                               setState(() {
@@ -379,7 +379,7 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          AddModExercise(editMode: false, index: -1, boxName: "exercises",)),
+                          AddModExercise(editMode: false, index: -1, boxName: "exercises",gymMode: false,)),
                 ).then((value) {
                   if (value == true) {
                     setState(() {

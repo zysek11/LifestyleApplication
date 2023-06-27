@@ -70,7 +70,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => AddModExercise(
-                                    editMode: true, index: index, boxName: "exercisesGym",)),
+                                    editMode: true, index: index, boxName: "exercisesGym",gymMode: true,)),
                           ).then((value) {
                             if (value == true) {
                               setState(() {
@@ -231,6 +231,35 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                   ),
                                 ],
                               ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 15.0),
+                                child: Container(
+                                  alignment:
+                                  Alignment.topLeft,
+                                  child: RichText(
+                                    text: TextSpan(
+                                      style: TextStyle(
+                                          fontSize: 19,
+                                          color:
+                                          Colors.black),
+                                      children: [
+                                        TextSpan(
+                                            text:
+                                            'Typ:  '),
+                                        TextSpan(
+                                          text: item.type,
+                                          style: TextStyle(
+                                              color: Color(
+                                                  0xFFEC9006),
+                                              fontWeight:
+                                              FontWeight
+                                                  .bold),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ), // Pusty kontener
                               if (showMore)
                                 Container(
                                   height: 70,
@@ -377,7 +406,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          AddModExercise(editMode: false, index: -1, boxName: "exercisesGym",)),
+                          AddModExercise(editMode: false, index: -1, boxName: "exercisesGym",gymMode: true,)),
                 ).then((value) {
                   if (value == true) {
                     setState(() {

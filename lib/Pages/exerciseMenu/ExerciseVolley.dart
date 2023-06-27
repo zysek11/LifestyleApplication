@@ -71,7 +71,7 @@ class _ExerciseVolleyState extends State<ExerciseVolley> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => AddModExercise(
-                                    editMode: true, index: index, boxName: "exercisesVolley",)),
+                                    editMode: true, index: index, boxName: "exercisesVolley",gymMode: false,)),
                           ).then((value) {
                             if (value == true) {
                               setState(() {
@@ -378,7 +378,7 @@ class _ExerciseVolleyState extends State<ExerciseVolley> {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          AddModExercise(editMode: false, index: -1, boxName: "exercisesVolley",)),
+                          AddModExercise(editMode: false, index: -1, boxName: "exercisesVolley",gymMode: false,)),
                 ).then((value) {
                   if (value == true) {
                     setState(() {

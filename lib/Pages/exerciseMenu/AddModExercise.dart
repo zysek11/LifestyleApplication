@@ -4,13 +4,15 @@ import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../hive_classes/Exercise.dart';
 import '';
+import '../../hive_classes/Gym.dart';
 
 class AddModExercise extends StatefulWidget {
-  const AddModExercise({Key? key, required this.editMode, required this.index, required this.boxName}) : super(key: key);
+  const AddModExercise({Key? key, required this.editMode, required this.index, required this.boxName, required this.gymMode}) : super(key: key);
 
   final int index;
   final String boxName;
   final bool editMode;
+  final bool gymMode;
   @override
   State<AddModExercise> createState() => _AddModExerciseState();
 }
@@ -20,8 +22,11 @@ class _AddModExerciseState extends State<AddModExercise> {
   //bool isPicked = false;
   bool isChecked = false;
   bool isCorrect = false;
+  List<String> _types = ['klata', 'plecy', 'nogi', 'barki', 'biceps','triceps','brzuch'];
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController nameController =  TextEditingController();
+  TextEditingController typeController =  TextEditingController();
+  String defaultType = 'klata';
   TextEditingController seriesController =  TextEditingController();
   TextEditingController repeatsController =  TextEditingController();
   TextEditingController seriesTimeController = TextEditingController();
@@ -47,6 +52,9 @@ class _AddModExerciseState extends State<AddModExercise> {
     if (item != null) {
       setState(() {
         nameController.text = item.name;
+        if(widget.gymMode == true) {
+            typeController.text = item.type.toString();
+          }
         seriesController.text = item.series.toString();
         repeatsController.text = item.repeats.toString();
         seriesTimeController.text = item.seriesTime.toString();
@@ -144,6 +152,29 @@ class _AddModExerciseState extends State<AddModExercise> {
                         },
                         tec: nameController,
                       ),
+                      if (widget.gymMode == true) SizedBox(height: 20),
+                      if (widget.gymMode == true)
+                        Row(
+                          children: [
+                            Text("Typ cwiczenia:  ",style: TextStyle(fontSize: 20),),
+                            DropdownButton<String>(
+                              value: defaultType,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  defaultType = newValue!;
+                                });
+                              },
+                              isDense: true,
+                              items: _types.map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value,
+                                      style: TextStyle(fontSize: 20)),
+                                );
+                              }).toList(),
+                            ),
+                          ],
+                        ),
                       SizedBox(height: 20),
                       NameCont(name: "Serie i powtorzenia"),
                       MacroRow(
@@ -201,14 +232,28 @@ class _AddModExerciseState extends State<AddModExercise> {
                           validateFields();
                           if (isCorrect)
                           {
-                            final exercise = Exercise(
-                                nameController.text,
-                                int.parse(seriesController.text),
-                                int.parse(repeatsController.text),
-                                seriesTimeController.text,
-                                breakTimeController.text,
-                                descController.text
-                            );
+                            final exercise;
+                            if(widget.gymMode == true) {
+                              exercise = Gym(
+                                  nameController.text,
+                                  defaultType,
+                                  int.parse(seriesController.text),
+                                  int.parse(repeatsController.text),
+                                  seriesTimeController.text,
+                                  breakTimeController.text,
+                                  descController.text
+                              );
+                              }
+                            else {
+                              exercise = Exercise(
+                                  nameController.text,
+                                  int.parse(seriesController.text),
+                                  int.parse(repeatsController.text),
+                                  seriesTimeController.text,
+                                  breakTimeController.text,
+                                  descController.text
+                              );
+                            }
                             setState(() {
                               if (widget.editMode == false) {
                                 exercises.add(exercise);
