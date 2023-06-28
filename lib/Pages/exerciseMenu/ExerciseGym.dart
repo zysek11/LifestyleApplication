@@ -14,6 +14,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
   int _selectedIndex = -1;
   late Box exercisesG;
   bool isChecked = false;
+  List<bool> buttonList = List<bool>.filled(7, true);
 
   @override
   void initState() {
@@ -29,15 +30,14 @@ class _ExerciseGymState extends State<ExerciseGym> {
           slivers: [
             SliverToBoxAdapter(
               child: ListView.separated(
-                padding:
-                const EdgeInsets.only(left: 15, right: 15, bottom: 10),
+                padding: const EdgeInsets.only(
+                    left: 15, right: 15, bottom: 10, top: 100),
                 separatorBuilder: (context, index) => SizedBox(height: 10),
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: exercisesG.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final bool showMore =
-                  _selectedIndex == index ? true : false;
+                  final bool showMore = _selectedIndex == index ? true : false;
                   final item = exercisesG.getAt(index);
                   final keyString = item?.key.toString();
                   return Dismissible(
@@ -69,7 +69,11 @@ class _ExerciseGymState extends State<ExerciseGym> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => AddModExercise(
-                                  editMode: true, index: index, boxName: "exercisesGym",gymMode: true,)),
+                                    editMode: true,
+                                    index: index,
+                                    boxName: "exercisesGym",
+                                    gymMode: true,
+                                  )),
                         ).then((value) {
                           if (value == true) {
                             setState(() {
@@ -99,8 +103,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                     child: Icon(
                                       Icons.fitness_center, // Ikona hantla
                                       size: 80, // Rozmiar ikony
-                                      color: Color(
-                                          0xFFEC9006), // Kolor ikony
+                                      color: Color(0xFFEC9006), // Kolor ikony
                                     ),
                                   ),
                                 ),
@@ -123,7 +126,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                                     flex: 4,
                                                     child: Container(
                                                       alignment:
-                                                      Alignment.topLeft,
+                                                          Alignment.topLeft,
                                                       child: Text(
                                                         item.name,
                                                         style: TextStyle(
@@ -138,13 +141,13 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                                     flex: 1,
                                                     child: Container(
                                                       alignment:
-                                                      Alignment.topCenter,
+                                                          Alignment.topCenter,
                                                       child: Icon(
                                                         showMore
                                                             ? Icons
-                                                            .keyboard_arrow_up
+                                                                .keyboard_arrow_up
                                                             : Icons
-                                                            .keyboard_arrow_down,
+                                                                .keyboard_arrow_down,
                                                         size: 25,
                                                       ),
                                                     ),
@@ -160,21 +163,20 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                                 flex: 2,
                                                 child: Padding(
                                                   padding: const EdgeInsets
-                                                      .symmetric(
+                                                          .symmetric(
                                                       horizontal: 5.0),
                                                   child: Container(
                                                     alignment:
-                                                    Alignment.topLeft,
+                                                        Alignment.topLeft,
                                                     child: RichText(
                                                       text: TextSpan(
                                                         style: TextStyle(
                                                             fontSize: 19,
                                                             color:
-                                                            Colors.black),
+                                                                Colors.black),
                                                         children: [
                                                           TextSpan(
-                                                              text:
-                                                              'Serie:  '),
+                                                              text: 'Serie:  '),
                                                           TextSpan(
                                                             text: item.series
                                                                 .toString(),
@@ -182,8 +184,8 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                                                 color: Color(
                                                                     0xFFEC9006),
                                                                 fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                                                                    FontWeight
+                                                                        .bold),
                                                           ),
                                                         ],
                                                       ),
@@ -194,18 +196,16 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                               Expanded(
                                                 flex: 3,
                                                 child: Container(
-                                                  alignment:
-                                                  Alignment.topLeft,
+                                                  alignment: Alignment.topLeft,
                                                   child: RichText(
                                                     text: TextSpan(
                                                       style: TextStyle(
                                                           fontSize: 19,
-                                                          color:
-                                                          Colors.black),
+                                                          color: Colors.black),
                                                       children: [
                                                         TextSpan(
                                                             text:
-                                                            'Powtorzenia:  '),
+                                                                'Powtorzenia:  '),
                                                         TextSpan(
                                                           text: item.repeats
                                                               .toString(),
@@ -213,8 +213,8 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                                               color: Color(
                                                                   0xFFEC9006),
                                                               fontWeight:
-                                                              FontWeight
-                                                                  .bold),
+                                                                  FontWeight
+                                                                      .bold),
                                                         ),
                                                       ],
                                                     ),
@@ -231,28 +231,21 @@ class _ExerciseGymState extends State<ExerciseGym> {
                               ],
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(bottom: 15.0, left: 10,right: 10),
+                              padding: const EdgeInsets.only(
+                                  bottom: 15.0, left: 10, right: 10),
                               child: Container(
-                                alignment:
-                                Alignment.topLeft,
+                                alignment: Alignment.topLeft,
                                 child: RichText(
                                   text: TextSpan(
                                     style: TextStyle(
-                                        fontSize: 19,
-                                        color:
-                                        Colors.black),
+                                        fontSize: 19, color: Colors.black),
                                     children: [
-                                      TextSpan(
-                                          text:
-                                          'Typ:  '),
+                                      TextSpan(text: 'Typ:  '),
                                       TextSpan(
                                         text: item.type,
                                         style: TextStyle(
-                                            color: Color(
-                                                0xFFEC9006),
-                                            fontWeight:
-                                            FontWeight
-                                                .bold),
+                                            color: Color(0xFFEC9006),
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ],
                                   ),
@@ -264,7 +257,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                 height: 70,
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceEvenly,
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     const Spacer(
                                       flex: 1,
@@ -276,7 +269,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                         decoration: BoxDecoration(
                                           color: Colors.grey.shade200,
                                           borderRadius:
-                                          BorderRadius.circular(10),
+                                              BorderRadius.circular(10),
                                         ),
                                         child: Column(
                                           children: [
@@ -287,8 +280,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                                   "Wykonanie",
                                                   style: TextStyle(
                                                     color: Colors.black,
-                                                    fontWeight:
-                                                    FontWeight.bold,
+                                                    fontWeight: FontWeight.bold,
                                                     fontSize: 16,
                                                   ),
                                                 ),
@@ -301,8 +293,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                                   item.seriesTime.toString(),
                                                   style: TextStyle(
                                                     color: Color(0xFFEC9006),
-                                                    fontWeight:
-                                                    FontWeight.bold,
+                                                    fontWeight: FontWeight.bold,
                                                     fontSize: 16,
                                                   ),
                                                 ),
@@ -322,7 +313,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                         decoration: BoxDecoration(
                                           color: Colors.grey.shade200,
                                           borderRadius:
-                                          BorderRadius.circular(10),
+                                              BorderRadius.circular(10),
                                         ),
                                         child: Column(
                                           children: [
@@ -333,8 +324,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                                   "Przerwa",
                                                   style: TextStyle(
                                                     color: Colors.black,
-                                                    fontWeight:
-                                                    FontWeight.bold,
+                                                    fontWeight: FontWeight.bold,
                                                     fontSize: 16,
                                                   ),
                                                 ),
@@ -347,8 +337,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                                   item.breakTime.toString(),
                                                   style: TextStyle(
                                                     color: Color(0xFFEC9006),
-                                                    fontWeight:
-                                                    FontWeight.bold,
+                                                    fontWeight: FontWeight.bold,
                                                     fontSize: 16,
                                                   ),
                                                 ),
@@ -391,6 +380,107 @@ class _ExerciseGymState extends State<ExerciseGym> {
             ),
           ],
         ),
+        SizedBox(
+          height: 100,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        buttonList[0] = !buttonList[0];
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: buttonList[0] ? Color(0xFF2E8B57) : Colors.white,
+                    ),
+                    child: Text('Klata',style: TextStyle(fontSize: 17,
+                        color: buttonList[0] ? Colors.white : Color(0xFF2E8B57)),),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        buttonList[1] = !buttonList[1];
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: buttonList[1] ? Color(0xFF2E8B57) : Colors.white,
+                    ),
+                    child: Text('Plecy',style: TextStyle(fontSize: 17,
+                        color: buttonList[1] ? Colors.white : Color(0xFF2E8B57)),),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        buttonList[2] = !buttonList[2];
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: buttonList[2] ? Color(0xFF2E8B57) : Colors.white,
+                    ),
+                    child: Text('Nogi',style: TextStyle(fontSize: 17,
+                        color: buttonList[2] ? Colors.white : Color(0xFF2E8B57)),),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        buttonList[3] = !buttonList[3];
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: buttonList[3] ? Color(0xFF2E8B57) : Colors.white,
+                    ),
+                    child: Text('Barki',style: TextStyle(fontSize: 17,
+                        color: buttonList[3] ? Colors.white : Color(0xFF2E8B57)),),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        buttonList[4] = !buttonList[4];
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: buttonList[4] ? Color(0xFF2E8B57) : Colors.white,
+                    ),
+                    child: Text('Biceps',style: TextStyle(fontSize: 17,
+                        color: buttonList[4] ? Colors.white : Color(0xFF2E8B57)),),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        buttonList[5] = !buttonList[5];
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: buttonList[5] ? Color(0xFF2E8B57) : Colors.white,
+                    ),
+                    child: Text('Triceps',style: TextStyle(fontSize: 17,
+                        color: buttonList[5] ? Colors.white : Color(0xFF2E8B57)),),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        buttonList[6] = !buttonList[6];
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: buttonList[6] ? Color(0xFF2E8B57) : Colors.white,
+                    ),
+                    child: Text('Brzuch',style: TextStyle(fontSize: 17,
+                        color: buttonList[6] ? Colors.white : Color(0xFF2E8B57)),),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
         Positioned(
           bottom: 16,
           right: 16,
@@ -404,8 +494,12 @@ class _ExerciseGymState extends State<ExerciseGym> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        AddModExercise(editMode: false, index: -1, boxName: "exercisesGym",gymMode: true,)),
+                    builder: (context) => AddModExercise(
+                          editMode: false,
+                          index: -1,
+                          boxName: "exercisesGym",
+                          gymMode: true,
+                        )),
               ).then((value) {
                 if (value == true) {
                   setState(() {
