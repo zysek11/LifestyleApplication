@@ -43,7 +43,7 @@ class _BmrCalculatorState extends State<BmrCalculator> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF2E8B57),
-        title: Text('BMR Calculator'),
+        title: Text('Kalkulator BMR'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 15),

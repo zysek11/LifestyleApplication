@@ -46,7 +46,7 @@ class _BmiCalculatorState extends State<BmiCalculator> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF2E8B57),
-        title: Text('BMI Calculator'),
+        title: Text('Kalkulator BMI'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 15),

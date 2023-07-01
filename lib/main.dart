@@ -53,21 +53,11 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: const Color(0xFF2E8B57),
-          title: _currentIndex == 0
-              ? Text("HomePage")
-              : _currentIndex == 1
-                  ? Text("ExercisePage")
-                  : _currentIndex == 2
-                      ? Text("DietPage")
-                      : _currentIndex == 3
-                          ? Text("SettingsPage")
-                          : Text("HomePage"),
-        ),
-        body: IndexedStack(
-          index: _currentIndex,
-          children: _screens,
+        body: SafeArea(
+          child: IndexedStack(
+            index: _currentIndex,
+            children: _screens,
+          ),
         ),
         bottomNavigationBar: Container(
           color: const Color(0xFF2E8B57),
@@ -78,6 +68,7 @@ class _MyAppState extends State<MyApp> {
               color: Colors.grey.shade200,
               activeColor: const Color(0xFF2E8B57),
               tabBackgroundColor: Colors.grey.shade200,
+              duration: Duration(milliseconds: 150),
               gap: 8,
               padding: EdgeInsets.all(12),
               onTabChange: (index){
@@ -88,19 +79,19 @@ class _MyAppState extends State<MyApp> {
               tabs: const [
                 GButton(
                   icon: Icons.home,
-                  text: 'Home',
+                  text: 'Start',
                 ),
                 GButton(
                   icon: Icons.sports_handball,
-                  text: 'Exercise',
+                  text: 'Cwiczenia',
                 ),
                 GButton(
                   icon: Icons.fastfood,
-                  text: 'Diet',
+                  text: 'Dieta',
                 ),
                 GButton(
                   icon: Icons.settings,
-                  text: 'Settings',
+                  text: 'Ustawienia',
                 ),
               ],
             ),

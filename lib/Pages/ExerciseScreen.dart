@@ -71,7 +71,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                               curve: Curves.easeInOut);
                         });
                       },
-                        child: MenuBlock(queue: 0, emi: exerciseMenuIndex, name: "Stretch")),
+                        child: MenuBlock(queue: 0, emi: exerciseMenuIndex, name: "Rozciąganie")),
                   ),
                   Expanded(
                     child: GestureDetector(
@@ -83,7 +83,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                                 curve: Curves.easeInOut);
                           });
                         },
-                        child: MenuBlock(queue: 1, emi: exerciseMenuIndex, name: "Gym")),
+                        child: MenuBlock(queue: 1, emi: exerciseMenuIndex, name: "Siłownia")),
                   ),
                   Expanded(
                     child: GestureDetector(
@@ -95,7 +95,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                                 curve: Curves.easeInOut);
                           });
                         },
-                        child: MenuBlock(queue: 2, emi: exerciseMenuIndex, name: "Volleyball")),
+                        child: MenuBlock(queue: 2, emi: exerciseMenuIndex, name: "Siatkówka")),
                   ),
                 ],
               ),

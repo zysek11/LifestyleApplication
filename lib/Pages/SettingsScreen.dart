@@ -12,7 +12,7 @@ class SettingsScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Work in progress...',style: TextStyle(fontSize: 24,color: Colors.grey.shade700),),
+            Text('Praca w toku...',style: TextStyle(fontSize: 24,color: Colors.grey.shade700),),
             Lottie.asset('assets/animations/work_in_progress.json',
                 width: 250, height: 250),
           ],

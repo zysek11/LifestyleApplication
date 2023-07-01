@@ -72,7 +72,7 @@ class _DietScreenState extends State<DietScreen> {
                                 curve: Curves.easeInOut);
                           });
                         },
-                        child: MenuBlock(queue: 0, emi: dietMenuIndex, name: "Recipes")),
+                        child: MenuBlock(queue: 0, emi: dietMenuIndex, name: "Przepisy")),
                   ),
                   Expanded(
                     child: GestureDetector(
@@ -84,7 +84,7 @@ class _DietScreenState extends State<DietScreen> {
                                 curve: Curves.easeInOut);
                           });
                         },
-                        child: MenuBlock(queue: 1, emi: dietMenuIndex, name: "Daily Counter")),
+                        child: MenuBlock(queue: 1, emi: dietMenuIndex, name: "Dzienny licznik")),
                   ),
                   Expanded(
                     child: GestureDetector(
@@ -96,7 +96,7 @@ class _DietScreenState extends State<DietScreen> {
                                 curve: Curves.easeInOut);
                           });
                         },
-                        child: MenuBlock(queue: 2, emi: dietMenuIndex, name: "Archive")),
+                        child: MenuBlock(queue: 2, emi: dietMenuIndex, name: "Archiwum")),
                   ),
                 ],
               ),
