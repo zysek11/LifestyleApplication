@@ -25,8 +25,7 @@ class _BmrCalculatorState extends State<BmrCalculator> {
   // kontrola przyciskow
   bool button = true;
   // kontrola scrolla
-  ScrollController _scrollController = ScrollController();
-
+  final ScrollController _scrollController = ScrollController();
   void validateFields() {
     if (formKey.currentState!.validate()) {
       // Walidacja pól została pomyślnie zakończona
@@ -208,11 +207,13 @@ class _BmrCalculatorState extends State<BmrCalculator> {
                           calculateCalories += (300 * indexOfGoal);
                           calculateCalories += (133 * indexOfActivity);
                         }
-                        _scrollController.animateTo(
-                          _scrollController.position.maxScrollExtent,
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                        );
+                        Future.delayed(const Duration(milliseconds: 100), () {
+                          _scrollController.animateTo(
+                            _scrollController.position.maxScrollExtent,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
+                        });
                       });
                     },
                     style: ElevatedButton.styleFrom(

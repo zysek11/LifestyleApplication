@@ -35,7 +35,9 @@ class DayFood extends HiveObject {
   @HiveField(9)
   int proteins_limit = 0;
 
-  DayFood(this.date, this.foodList, this.calories_counter, this.carbs_counter,
-      this.fat_counter, this.proteins_counter, this.calories_limit, this.carbs_limit,
+  DayFood(this.date, this.foodList, this.calories_counter,
+      this.carbs_counter,
+      this.fat_counter, this.proteins_counter,
+      this.calories_limit, this.carbs_limit,
       this.fat_limit, this.proteins_limit);
 }

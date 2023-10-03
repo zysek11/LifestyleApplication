@@ -7,7 +7,8 @@ import '';
 import '../../hive_classes/Gym.dart';
 
 class AddModExercise extends StatefulWidget {
-  const AddModExercise({Key? key, required this.editMode, required this.index, required this.boxName, required this.gymMode}) : super(key: key);
+  const AddModExercise({Key? key, required this.editMode, required this.index,
+    required this.boxName, required this.gymMode}) : super(key: key);
 
   final int index;
   final String boxName;
@@ -26,7 +27,7 @@ class _AddModExerciseState extends State<AddModExercise> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController nameController =  TextEditingController();
   TextEditingController typeController =  TextEditingController();
-  String defaultType = 'klata';
+  late String defaultType = 'klata';
   TextEditingController seriesController =  TextEditingController();
   TextEditingController repeatsController =  TextEditingController();
   TextEditingController seriesTimeController = TextEditingController();
@@ -52,6 +53,7 @@ class _AddModExerciseState extends State<AddModExercise> {
     if (item != null) {
       setState(() {
         nameController.text = item.name;
+        defaultType = item.type;
         if(widget.gymMode == true) {
             typeController.text = item.type.toString();
           }

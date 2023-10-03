@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'miniApps/BmiCalculator.dart';
 import 'miniApps/BmrCalculator.dart';
+import 'miniApps/Notes.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -150,55 +151,87 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           SizedBox(height: 10),
           Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            child: Column(
               children: [
-                InkWell(
-                  onTap: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const BmrCalculator()),
-                    );
-                  },
-                  child: Column(
-                    children: [
-                      Icon(
-                        Icons.calculate_rounded,
-                        size: 64,
-                        color: const Color(0xFF2E8B57),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InkWell(
+                      onTap: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const BmrCalculator()),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.calculate_rounded,
+                            size: 64,
+                            color: const Color(0xFF2E8B57),
+                          ),
+                          Text(
+                            "BMR",
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        "BMR",
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
+                    ),
+                    InkWell(
+                      onTap: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const BmiCalculator()),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.compare,
+                            size: 64,
+                            color: const Color(0xFF2E8B57),
+                          ),
+                          Text(
+                            "BMI",
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                InkWell(
-                  onTap: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const BmiCalculator()),
-                    );
-                  },
-                  child: Column(
-                    children: [
-                      Icon(
-                        Icons.compare,
-                        size: 64,
-                        color: const Color(0xFF2E8B57),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      onTap: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const Notes()),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.notes_rounded,
+                            size: 64,
+                            color: const Color(0xFF2E8B57),
+                          ),
+                          Text(
+                            "NOTES",
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        "BMI",
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                    ),
+                  ],
+                )
               ],
             ),
           ),

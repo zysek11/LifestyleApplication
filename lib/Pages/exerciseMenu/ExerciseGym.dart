@@ -31,6 +31,16 @@ class _ExerciseGymState extends State<ExerciseGym> {
     exercisesG = Hive.box('exercisesGym');
   }
 
+  void setOnlyOneType(int skip){
+    for(int i = 0; i < buttonList.length;i++){
+      if(i != skip){
+        setState(() {
+          buttonList[i] = false;
+        });
+      }
+    }
+  }
+
   bool checkIfFiltered(String type) {
     for (int i = 0; i < _types.length; i++) {
       if (_types[i] == type) {
@@ -58,7 +68,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                       return SizedBox
                           .shrink(); // Pomijanie marginesu separatora dla niepasujących elementów
                     } else {
-                      return SizedBox(height: 10);
+                      return SizedBox(height: 20);
                     }
                   },
                   shrinkWrap: true,
@@ -71,6 +81,27 @@ class _ExerciseGymState extends State<ExerciseGym> {
                     if (checkIfFiltered(item.type) == true) {
                       return Dismissible(
                         key: Key(keyString!),
+                        confirmDismiss: (direction) async {
+                          return await showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text("Usuwanie Ćwiczenia"),
+                                content: Text("Czy na pewno chcesz usunąć to ćwiczenie?"),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () => Navigator.of(context).pop(false), // Anuluj
+                                    child: Text("Anuluj"),
+                                  ),
+                                  TextButton(
+                                    onPressed: () => Navigator.of(context).pop(true), // Usuń
+                                    child: Text("Usuń"),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
                         onDismissed: (direction) {
                           setState(() {
                             exercisesG.deleteAt(index);
@@ -432,6 +463,9 @@ class _ExerciseGymState extends State<ExerciseGym> {
                         buttonList[0] = !buttonList[0];
                       });
                     },
+                    onLongPress: (){
+                      setOnlyOneType(0);
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor:
                           buttonList[0] ? Color(0xFF2E8B57) : Colors.white,
@@ -449,6 +483,9 @@ class _ExerciseGymState extends State<ExerciseGym> {
                       setState(() {
                         buttonList[1] = !buttonList[1];
                       });
+                    },
+                    onLongPress: (){
+                      setOnlyOneType(1);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor:
@@ -468,6 +505,9 @@ class _ExerciseGymState extends State<ExerciseGym> {
                         buttonList[2] = !buttonList[2];
                       });
                     },
+                    onLongPress: (){
+                      setOnlyOneType(2);
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor:
                           buttonList[2] ? Color(0xFF2E8B57) : Colors.white,
@@ -485,6 +525,9 @@ class _ExerciseGymState extends State<ExerciseGym> {
                       setState(() {
                         buttonList[3] = !buttonList[3];
                       });
+                    },
+                    onLongPress: (){
+                      setOnlyOneType(3);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor:
@@ -509,6 +552,9 @@ class _ExerciseGymState extends State<ExerciseGym> {
                         buttonList[4] = !buttonList[4];
                       });
                     },
+                    onLongPress: (){
+                      setOnlyOneType(4);
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor:
                           buttonList[4] ? Color(0xFF2E8B57) : Colors.white,
@@ -527,6 +573,9 @@ class _ExerciseGymState extends State<ExerciseGym> {
                         buttonList[5] = !buttonList[5];
                       });
                     },
+                    onLongPress: (){
+                      setOnlyOneType(5);
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor:
                           buttonList[5] ? Color(0xFF2E8B57) : Colors.white,
@@ -544,6 +593,9 @@ class _ExerciseGymState extends State<ExerciseGym> {
                       setState(() {
                         buttonList[6] = !buttonList[6];
                       });
+                    },
+                    onLongPress: (){
+                      setOnlyOneType(6);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor:

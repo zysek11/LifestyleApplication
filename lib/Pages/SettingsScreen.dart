@@ -1,20 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color:Colors.grey.shade200,
+      color: Colors.grey.shade200,
       child: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Praca w toku...',style: TextStyle(fontSize: 24,color: Colors.grey.shade700),),
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: Text(
+                'Ustawienia',
+                style: TextStyle(fontSize: 28, color: Colors.black),
+              ),
+            ),
+            SizedBox(height: 50,),
             Lottie.asset('assets/animations/work_in_progress.json',
-                width: 250, height: 250),
+                width: 300, height: 300),
           ],
         ),
       ),

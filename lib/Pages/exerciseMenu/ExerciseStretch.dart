@@ -33,7 +33,7 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
               child: ListView.separated(
                 padding:
                     const EdgeInsets.only(left: 15, right: 15, bottom: 10),
-                separatorBuilder: (context, index) => SizedBox(height: 10),
+                separatorBuilder: (context, index) => SizedBox(height: 20),
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: exercises.length,
@@ -44,6 +44,40 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                   final keyString = item?.key.toString();
                   return Dismissible(
                     key: Key(keyString!),
+                    confirmDismiss: (direction) async {
+                      return await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Usuwanie Ćwiczenia"),
+                            content: Text("Czy na pewno chcesz usunąć to ćwiczenie?"),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () => Navigator.of(context).pop(false), // Anuluj
+                                child: Text(
+                                  "Anuluj",
+                                  style: TextStyle(color: Colors.green),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () => Navigator.of(context).pop(true), // Usuń
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    color: Colors.green,
+                                  ),
+                                  padding: EdgeInsets.all(10),
+                                  child: Text(
+                                    "Usuń",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
                     onDismissed: (direction) {
                       setState(() {
                         exercises.deleteAt(index);

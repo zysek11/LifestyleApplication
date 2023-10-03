@@ -83,11 +83,13 @@ class _BmiCalculatorState extends State<BmiCalculator> {
                       setState(() {
                         calculateCalories = double.parse(weightController.text) /
                               ((double.parse(heightController.text)/100)*(double.parse(heightController.text)/100));
-                        _scrollController.animateTo(
-                          _scrollController.position.maxScrollExtent,
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                        );
+                        Future.delayed(const Duration(milliseconds: 100), () {
+                          _scrollController.animateTo(
+                            _scrollController.position.maxScrollExtent,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
+                        });
                         if (calculateCalories <= 16.99) {
                           bmiString = zakresyBmi[0]; // WYCHUDZENIE
                           kolor = kolory[0];
