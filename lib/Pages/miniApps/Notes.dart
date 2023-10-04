@@ -23,6 +23,7 @@ class _NotesState extends State<Notes> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 15),
+
       ),
     );
   }

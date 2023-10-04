@@ -56,7 +56,7 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                                 onPressed: () => Navigator.of(context).pop(false), // Anuluj
                                 child: Text(
                                   "Anuluj",
-                                  style: TextStyle(color: Colors.green),
+                                  style: TextStyle(color: const Color(0xFF2E8B57),),
                                 ),
                               ),
                               TextButton(
@@ -64,7 +64,7 @@ class _ExerciseStretchState extends State<ExerciseStretch> {
                                 child: Container(
                                   decoration: BoxDecoration(
                                     shape: BoxShape.rectangle,
-                                    color: Colors.green,
+                                    color: const Color(0xFF2E8B57),
                                   ),
                                   padding: EdgeInsets.all(10),
                                   child: Text(

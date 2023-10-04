@@ -94,67 +94,68 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10.0),
       width: double.infinity,
+      height: double.infinity,
       color: Colors.grey.shade200,
-      child: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.only(top: 10),
-            alignment: Alignment.topLeft,
-            child: Text(
-              'Witaj!',
-              style: TextStyle(fontSize: 25),
-            ),
-          ),
-          Lottie.asset('assets/animations/happy_fruit.json',
-              width: 200, height: 200),
-          Container(
-            width: double.infinity,
-            child: Card(
-              color: const Color(0xFF4FAD79),
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+      child: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.only(top: 10),
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'Witaj!',
+                  style: TextStyle(fontSize: 25),
+                ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: EdgeInsets.only(left: 10, right: 10, top: 10),
-                    child: Text(
-                      'Czy wiesz, że ...',
-                      style: TextStyle(fontSize: 20),
-                    ),
+              Lottie.asset('assets/animations/happy_fruit.json',
+                  width: 200, height: 200),
+              Container(
+                width: double.infinity,
+                child: Card(
+                  color: const Color(0xFF4FAD79),
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  Container(
-                    padding: EdgeInsets.only(
-                        left: 10, right: 10, top: 5, bottom: 10),
-                    child: Text(
-                      randomCiekawostka,
-                      style: TextStyle(fontSize: 20),
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(left: 10, right: 10, top: 10),
+                        child: Text(
+                          'Czy wiesz, że ...',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(
+                            left: 10, right: 10, top: 5, bottom: 10),
+                        child: Text(
+                          randomCiekawostka,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
-          SizedBox(height: 30),
-          Container(
-            alignment: Alignment.topLeft,
-            child: Text(
-              "Twoje mini-aplikacje",
-              style: TextStyle(
-                fontSize: 25,
+              SizedBox(height: 30),
+              Container(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "Twoje mini-aplikacje",
+                  style: TextStyle(
+                    fontSize: 25,
+                  ),
+                ),
               ),
-            ),
-          ),
-          SizedBox(height: 10),
-          Container(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              SizedBox(height: 15),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     InkWell(
                       onTap: () async {
@@ -202,11 +203,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
                     InkWell(
                       onTap: () async {
                         await Navigator.push(
@@ -231,11 +227,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ],
-                )
-              ],
-            ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

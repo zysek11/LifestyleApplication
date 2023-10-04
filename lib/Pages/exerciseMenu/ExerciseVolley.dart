@@ -53,11 +53,24 @@ class _ExerciseVolleyState extends State<ExerciseVolley> {
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () => Navigator.of(context).pop(false), // Anuluj
-                                child: Text("Anuluj"),
+                                child: Text(
+                                  "Anuluj",
+                                  style: TextStyle(color: const Color(0xFF2E8B57),),
+                                ),
                               ),
                               TextButton(
                                 onPressed: () => Navigator.of(context).pop(true), // Usuń
-                                child: Text("Usuń"),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    color: const Color(0xFF2E8B57),
+                                  ),
+                                  padding: EdgeInsets.all(10),
+                                  child: Text(
+                                    "Usuń",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
                               ),
                             ],
                           );

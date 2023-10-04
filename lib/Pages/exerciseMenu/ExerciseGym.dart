@@ -1,6 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../../hive_classes/Exercise.dart';
+import '../../hive_classes/Gym.dart';
 import 'AddModExercise.dart';
 
 class ExerciseGym extends StatefulWidget {
@@ -13,6 +15,7 @@ class ExerciseGym extends StatefulWidget {
 class _ExerciseGymState extends State<ExerciseGym> {
   int _selectedIndex = -1;
   late Box exercisesG;
+  List<Gym> exercisesCopy = [];
   bool isChecked = false;
   List<bool> buttonList = List<bool>.filled(7, true);
   List<String> _types = [
@@ -29,6 +32,20 @@ class _ExerciseGymState extends State<ExerciseGym> {
   void initState() {
     super.initState();
     exercisesG = Hive.box('exercisesGym');
+    sortListByType();
+  }
+
+  void sortListByType(){
+    exercisesCopy.clear();
+    for(int i=0; i < _types.length; i++){
+      for(int j =0; j < exercisesG.length; j++){
+        print("typ: "+exercisesG.getAt(j).type);
+        if(exercisesG.getAt(j).type == _types[i]){
+        dynamic item = exercisesG.getAt(j);
+        exercisesCopy.add(item);
+        }
+      }
+    }
   }
 
   void setOnlyOneType(int skip){
@@ -40,6 +57,8 @@ class _ExerciseGymState extends State<ExerciseGym> {
       }
     }
   }
+
+
 
   bool checkIfFiltered(String type) {
     for (int i = 0; i < _types.length; i++) {
@@ -63,7 +82,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                   padding: const EdgeInsets.only(
                       left: 15, right: 15, bottom: 10),
                   separatorBuilder: (context, index) {
-                    final item = exercisesG.getAt(index);
+                    final item = exercisesCopy[index];
                     if (item != null && !checkIfFiltered(item.type)) {
                       return SizedBox
                           .shrink(); // Pomijanie marginesu separatora dla niepasujących elementów
@@ -73,10 +92,10 @@ class _ExerciseGymState extends State<ExerciseGym> {
                   },
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: exercisesG.length,
+                  itemCount: exercisesCopy.length,
                   itemBuilder: (BuildContext context, int index) {
                     final bool showMore = _selectedIndex == index ? true : false;
-                    final item = exercisesG.getAt(index);
+                    final item = exercisesCopy[index];
                     final keyString = item?.key.toString();
                     if (checkIfFiltered(item.type) == true) {
                       return Dismissible(
@@ -91,11 +110,24 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () => Navigator.of(context).pop(false), // Anuluj
-                                    child: Text("Anuluj"),
+                                    child: Text(
+                                      "Anuluj",
+                                      style: TextStyle(color: const Color(0xFF2E8B57),),
+                                    ),
                                   ),
                                   TextButton(
                                     onPressed: () => Navigator.of(context).pop(true), // Usuń
-                                    child: Text("Usuń"),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.rectangle,
+                                        color: const Color(0xFF2E8B57),
+                                      ),
+                                      padding: EdgeInsets.all(10),
+                                      child: Text(
+                                        "Usuń",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
                                   ),
                                 ],
                               );
@@ -105,6 +137,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                         onDismissed: (direction) {
                           setState(() {
                             exercisesG.deleteAt(index);
+                            sortListByType();
                           });
                         },
                         background: Container(
@@ -138,6 +171,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                                 setState(() {
                                   // Zaktualizuj dane w stanie widoku
                                   exercisesG = Hive.box('exercisesGym');
+                                  sortListByType();
                                 });
                               }
                             });
@@ -638,6 +672,8 @@ class _ExerciseGymState extends State<ExerciseGym> {
                   setState(() {
                     // Zaktualizuj dane w stanie widoku
                     exercisesG = Hive.box('exercisesGym');
+                    sortListByType();
+
                   });
                 }
               });
