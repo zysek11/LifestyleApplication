@@ -14,6 +14,36 @@ class Notes extends StatefulWidget {
 class _NotesState extends State<Notes> {
   late Box notesBox;
 
+  void _addNote() {
+    Navigator.push(
+      context,
+      PageTransition(
+        type: PageTransitionType.fade,
+        alignment: Alignment.center,
+        duration: Duration(milliseconds: 300),
+        child: NotePage(index: -1),
+      ),
+    ).then((value) {
+      // Po powrocie z ekranu NotePage, odśwież GridView
+      setState(() {});
+    });
+  }
+
+  void _openExistingNote(int noteIndex){
+    Navigator.push(
+      context,
+      PageTransition(
+        type: PageTransitionType.fade,
+        alignment: Alignment.center,
+        duration: Duration(milliseconds: 300),
+        child: NotePage(index: noteIndex),
+      ),
+    ).then((value) {
+      // Po powrocie z ekranu NotePage, odśwież GridView
+      setState(() {});
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -35,32 +65,92 @@ class _NotesState extends State<Notes> {
           ),
           itemCount: notesBox.length + 1, // Dodajemy 1 dla pustego elementu "+"
           itemBuilder: (context, index) {
-            if (index < notesBox.length) {
-              final note = notesBox.getAt(index);
+            final reversedIndex = notesBox.length - index - 1;
+            if (reversedIndex >= 0 && reversedIndex < notesBox.length) {
+              final note = notesBox.getAt(reversedIndex);
               if (note != null) {
-                return Card(
-                  child: ListTile(
-                    title: Text(note.title),
-                    subtitle: Text(note.content),
-                    // Tutaj możesz dodać obsługę interakcji z notatką, np. edycję lub usunięcie
+                return InkWell(
+                  onTap: () => _openExistingNote(reversedIndex),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15),
+                        bottomLeft: Radius.circular(15),
+                        bottomRight: Radius.circular(30),
+                      ),
+                    ),
+                    child: Stack(
+                      children: [
+                        ListTile(
+                          title: Text(note.title),
+                          subtitle: Text(note.content),
+                          // Tutaj możesz dodać obsługę interakcji z notatką, np. edycję lub usunięcie
+                        ),
+                        Positioned(
+                          bottom: 10, // Dostosuj położenie ikonki kosza
+                          right: 10, // Dostosuj położenie ikonki kosza
+                          child: GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Usuwanie notatki'),
+                                    content: Text('Czy na pewno chcesz usunąć tę notatkę?'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          // Zamykanie alertDialog
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text(
+                                          "Anuluj",
+                                          style: TextStyle(
+                                            color: const Color(0xFF2E8B57),
+                                          ),
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          // Usuwanie notatki i zamykanie alertDialog
+                                          notesBox.deleteAt(reversedIndex);
+                                          setState(() {});
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.rectangle,
+                                            color: const Color(0xFF2E8B57),
+                                          ),
+                                          padding: EdgeInsets.all(10),
+                                          child: Text(
+                                            "Usuń",
+                                            style: TextStyle(color: Colors.white),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                            child: Icon(
+                              Icons.delete_outlined,
+                              size: 30.0,
+                              color: Colors.grey.shade300,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               }
             } else {
               // Jeśli jesteśmy na ostatnim indeksie (pusty element "+")
               return InkWell(
-                onTap: () {
-                  // Kliknięcie na "+" przeniesie użytkownika do strony tworzenia notatki
-                  Navigator.push(
-                    context,
-                    PageTransition(
-                      type: PageTransitionType.fade, // Wybierz rodzaj animacji, np. scale
-                      alignment: Alignment.center,
-                      duration: Duration(milliseconds: 300), // Czas trwania animacji
-                      child: NotePage(),
-                    ),
-                  );
-                },
+                onTap: _addNote,
                 child: Card(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(topLeft: Radius.circular(15),
@@ -71,7 +161,7 @@ class _NotesState extends State<Notes> {
                       child: Icon(
                         Icons.add,
                         size: 48.0,
-                        color: Colors.grey,
+                        color: Colors.grey.shade300,
                       ),
                     ),
                 )
