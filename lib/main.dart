@@ -3,6 +3,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:lifestyle_application/hive_classes/DayFood.dart';
 import 'package:lifestyle_application/hive_classes/Food.dart';
 import 'package:lifestyle_application/hive_classes/Gym.dart';
+import 'package:lifestyle_application/hive_classes/Note.dart';
 import 'package:lifestyle_application/hive_classes/Recipe.dart';
 import 'Pages/DietScreen.dart';
 import 'Pages/ExerciseScreen.dart';
@@ -23,12 +24,14 @@ void main() async{
   Hive.registerAdapter(FoodAdapter());
   Hive.registerAdapter(DayFoodAdapter());
   Hive.registerAdapter(GymAdapter());
+  Hive.registerAdapter(NoteAdapter());
   await Hive.openBox('exercises');
   await Hive.openBox('exercisesGym');
   await Hive.openBox('exercisesVolley');
   await Hive.openBox('recipes');
   await Hive.openBox('caloriesConst');
   await Hive.openBox('dayFood');
+  await Hive.openBox('note');
   runApp(MyApp());
 }
 
