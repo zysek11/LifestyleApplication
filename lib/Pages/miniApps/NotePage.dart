@@ -17,6 +17,16 @@ class _NotePageState extends State<NotePage> {
   TextEditingController _titleController = TextEditingController();
   TextEditingController _contentController = TextEditingController();
 
+  List<int> availableColors = [
+    0xFFFBF0C4, // Czerwony
+    0xFFEDC5CD, // Zielony
+    0xFFD2B6E1, // Niebieski
+    0xFFCACAED, // Żółty
+    0xFFDAF0E3, // Fioletowy
+  ];
+
+  int selectedColor = 0xFF000000; // Domyślnie czerwony
+
   @override
   void initState() {
     super.initState();
@@ -25,6 +35,7 @@ class _NotePageState extends State<NotePage> {
       setState(() {
         _titleController.text = notesBox.getAt(widget.index).title;
         _contentController.text = notesBox.getAt(widget.index).content;
+        selectedColor = notesBox.getAt(widget.index).color;
       });
     }
   }
@@ -33,14 +44,14 @@ class _NotePageState extends State<NotePage> {
   void _saveNote() {
     if(widget.index == -1){
       final newNote = Note(_titleController.text,
-          _contentController.text);
+          _contentController.text,selectedColor);
       setState(() {
         notesBox.add(newNote);
       });
     }
     else{
       final newNote = Note(_titleController.text,
-          _contentController.text);
+          _contentController.text,selectedColor);
       setState(() {
         notesBox.putAt(widget.index, newNote);
       });
@@ -61,10 +72,37 @@ class _NotePageState extends State<NotePage> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15),
+      body: Container(
+        color: Color(selectedColor),
+        padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 8),
         child: Column(
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                for (int color in availableColors)
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedColor = color; // Aktualizacja wybranego koloru
+                      });
+                    },
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      margin: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: Color(color),
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Colors.black,
+                          width: 1.0,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
             TextField(
               controller: _titleController,
               decoration: InputDecoration(

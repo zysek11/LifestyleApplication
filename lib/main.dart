@@ -32,10 +32,12 @@ void main() async{
   await Hive.openBox('caloriesConst');
   await Hive.openBox('dayFood');
   await Hive.openBox('note');
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
   State<MyApp> createState() => _MyAppState();
 }

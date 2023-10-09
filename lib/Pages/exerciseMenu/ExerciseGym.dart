@@ -16,6 +16,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
   int _selectedIndex = -1;
   late Box exercisesG;
   List<Gym> exercisesCopy = [];
+  List<int> indexListMirror = [];
   bool isChecked = false;
   List<bool> buttonList = List<bool>.filled(7, true);
   List<String> _types = [
@@ -37,12 +38,14 @@ class _ExerciseGymState extends State<ExerciseGym> {
 
   void sortListByType(){
     exercisesCopy.clear();
+    indexListMirror.clear();
     for(int i=0; i < _types.length; i++){
       for(int j =0; j < exercisesG.length; j++){
         print("typ: "+exercisesG.getAt(j).type);
         if(exercisesG.getAt(j).type == _types[i]){
         dynamic item = exercisesG.getAt(j);
         exercisesCopy.add(item);
+        indexListMirror.add(j);
         }
       }
     }
@@ -136,7 +139,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                         },
                         onDismissed: (direction) {
                           setState(() {
-                            exercisesG.deleteAt(index);
+                            exercisesG.deleteAt(indexListMirror[index]);
                             sortListByType();
                           });
                         },
@@ -162,7 +165,7 @@ class _ExerciseGymState extends State<ExerciseGym> {
                               MaterialPageRoute(
                                   builder: (context) => AddModExercise(
                                         editMode: true,
-                                        index: index,
+                                        index: indexListMirror[index],
                                         boxName: "exercisesGym",
                                         gymMode: true,
                                       )),

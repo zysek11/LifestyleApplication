@@ -65,13 +65,37 @@ class _NotesState extends State<Notes> {
           ),
           itemCount: notesBox.length + 1, // Dodajemy 1 dla pustego elementu "+"
           itemBuilder: (context, index) {
-            final reversedIndex = notesBox.length - index - 1;
-            if (reversedIndex >= 0 && reversedIndex < notesBox.length) {
+            if (index == 0) {
+              // Tworzenie pustego pola z plusem "+" na początek
+              return InkWell(
+                onTap: _addNote,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
+                      bottomLeft: Radius.circular(15),
+                      bottomRight: Radius.circular(30),
+                    ),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.add,
+                      size: 48.0,
+                      color: Colors.grey.shade300,
+                    ),
+                  ),
+                ),
+              );
+            } else {
+              final reversedIndex = notesBox.length - index;
               final note = notesBox.getAt(reversedIndex);
               if (note != null) {
+                // Tworzenie kart notatek po indeksach
                 return InkWell(
                   onTap: () => _openExistingNote(reversedIndex),
                   child: Card(
+                    color: Color(note.color),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(15),
@@ -88,8 +112,8 @@ class _NotesState extends State<Notes> {
                           // Tutaj możesz dodać obsługę interakcji z notatką, np. edycję lub usunięcie
                         ),
                         Positioned(
-                          bottom: 10, // Dostosuj położenie ikonki kosza
-                          right: 10, // Dostosuj położenie ikonki kosza
+                          bottom: 10,
+                          right: 10,
                           child: GestureDetector(
                             onTap: () {
                               showDialog(
@@ -147,25 +171,6 @@ class _NotesState extends State<Notes> {
                   ),
                 );
               }
-            } else {
-              // Jeśli jesteśmy na ostatnim indeksie (pusty element "+")
-              return InkWell(
-                onTap: _addNote,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(15),
-                        topRight: Radius.circular(15), bottomLeft: Radius.circular(15),
-                        bottomRight: Radius.circular(30))
-                  ),
-                    child: Center(
-                      child: Icon(
-                        Icons.add,
-                        size: 48.0,
-                        color: Colors.grey.shade300,
-                      ),
-                    ),
-                )
-              );
             }
             return const SizedBox();
           },
