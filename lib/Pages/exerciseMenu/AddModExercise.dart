@@ -53,8 +53,8 @@ class _AddModExerciseState extends State<AddModExercise> {
     if (item != null) {
       setState(() {
         nameController.text = item.name;
-        defaultType = item.type;
         if(widget.gymMode == true) {
+            defaultType = item.type;
             typeController.text = item.type.toString();
           }
         seriesController.text = item.series.toString();
