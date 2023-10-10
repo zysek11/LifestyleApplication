@@ -25,7 +25,7 @@ class _NotePageState extends State<NotePage> {
     0xFFDAF0E3, // Fioletowy
   ];
 
-  int selectedColor = 0xFF000000; // Domyślnie czerwony
+  int selectedColor = 0xFFFFFFFF; // Domyślnie czerwony
 
   @override
   void initState() {
