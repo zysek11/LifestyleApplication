@@ -18,11 +18,12 @@ class _NotePageState extends State<NotePage> {
   TextEditingController _contentController = TextEditingController();
 
   List<int> availableColors = [
-    0xFFFBF0C4, // Czerwony
-    0xFFEDC5CD, // Zielony
-    0xFFD2B6E1, // Niebieski
-    0xFFCACAED, // Żółty
-    0xFFDAF0E3, // Fioletowy
+    0xFFFFFFFF,
+    0xFFFFF8B8, // Czerwony
+    0xFFFDE9EA, // Zielony
+    0xFFF9E6FF, // Niebieski
+    0xFFE4F7F6, // Żółty
+    0xFFEBFFE5, // Fioletowy
   ];
 
   int selectedColor = 0xFFFFFFFF; // Domyślnie czerwony

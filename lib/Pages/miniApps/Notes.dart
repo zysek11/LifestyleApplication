@@ -162,7 +162,7 @@ class _NotesState extends State<Notes> {
                             child: Icon(
                               Icons.delete_outlined,
                               size: 30.0,
-                              color: Colors.grey.shade300,
+                              color: Colors.grey.shade500,
                             ),
                           ),
                         ),
