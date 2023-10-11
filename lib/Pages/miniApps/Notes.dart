@@ -106,10 +106,27 @@ class _NotesState extends State<Notes> {
                     ),
                     child: Stack(
                       children: [
-                        ListTile(
-                          title: Text(note.title),
-                          subtitle: Text(note.content),
-                          // Tutaj możesz dodać obsługę interakcji z notatką, np. edycję lub usunięcie
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical:8),
+                          child: ListTile(
+                            title: Padding(
+                              padding: const EdgeInsets.only(bottom: 5.0),
+                              child: Text(
+                                note.title,
+                                style: TextStyle(
+                                  fontSize: 18, // Dostosuj rozmiar czcionki
+                                ),
+                                maxLines: 1, // Maksymalnie 1 linia
+                                overflow: TextOverflow.ellipsis, // Dodanie "..." po skróceniu tekstu
+                              ),
+                            ),
+                              subtitle: Text(
+                                note.content,
+                                maxLines: 8, // Maksymalnie 2 linie
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            // Tutaj możesz dodać obsługę interakcji z notatką, np. edycję lub usunięcie
+                          ),
                         ),
                         Positioned(
                           bottom: 10,
@@ -159,10 +176,18 @@ class _NotesState extends State<Notes> {
                                 },
                               );
                             },
-                            child: Icon(
-                              Icons.delete_outlined,
-                              size: 30.0,
-                              color: Colors.grey.shade500,
+                            child: Container(
+                              width: 30,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                color: Color(note.color),
+                                borderRadius: BorderRadius.circular(7), // Ustaw zaokrąglone rogi
+                              ),
+                              child: Icon(
+                                Icons.delete_outlined,
+                                size: 30.0,
+                                color: Colors.grey.shade500,
+                              ),
                             ),
                           ),
                         ),

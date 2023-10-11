@@ -129,7 +129,7 @@ class _NotePageState extends State<NotePage> {
                     borderSide: BorderSide.none, // Usunięcie podświetlenia
                   ),
                 ),
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 20,height: 1.5),
                 maxLines: null, // Pozwala na wielolinijkowy tekst
               ),
             ),
